@@ -64,9 +64,21 @@ header {
     z-index: 100;
 }
 .logo { font-size: 22px; font-weight: bold; letter-spacing: 4px; color: #fff; }
-nav { display: flex; align-items: center; gap: 20px; }
+nav { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
 nav a { color: #ddd; text-decoration: none; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; }
 nav a:hover { color: #ff7f50; }
+
+/* Часы в шапке */
+.header-clock {
+    font-size: 13px;
+    color: #ff7f50;
+    font-weight: bold;
+    background: rgba(255, 127, 80, 0.1);
+    padding: 5px 12px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 127, 80, 0.3);
+    letter-spacing: 1px;
+}
 
 /* Кнопки языков */
 .lang-switcher {
@@ -150,13 +162,42 @@ h2 { font-size: 36px; margin: 12px 0; }
 .about { background: rgba(15, 23, 36, 0.7); backdrop-filter: blur(8px); border-radius: 12px; margin: 40px 7%; padding: 50px 6%; }
 .contact { border: 1px solid rgba(255,255,255,0.1); padding: 40px; margin-top: 20px; background: rgba(21, 29, 42, 0.8); backdrop-filter: blur(8px); border-radius: 8px; }
 .contact a { display: inline-block; color: #ff7f50; margin: 12px 20px 0 0; text-decoration: none; font-weight: bold; }
-footer { padding: 30px 7%; border-top: 1px solid rgba(255,255,255,0.1); color: #8e96a9; font-size: 12px; }
+
+/* Подвал и счётчик посетителей */
+footer {
+    padding: 30px 7%;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    color: #8e96a9;
+    font-size: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.visitor-counter {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 6px 14px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #bdc3d1;
+}
+
+.visitor-count-num {
+    color: #ff7f50;
+    font-weight: bold;
+}
 
 @media(max-width: 850px) {
     header { flex-direction: column; align-items: flex-start; gap: 15px; }
     .hero { grid-template-columns: 1fr; }
     .gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .about { margin: 20px 0; }
+    footer { flex-direction: column; align-items: flex-start; }
 }
 @media(max-width: 480px) {
     .gallery { grid-template-columns: 1fr; }
@@ -177,12 +218,15 @@ footer { padding: 30px 7%; border-top: 1px solid rgba(255,255,255,0.1); color: #
     <a href="#about" data-key="nav_about">Über mich</a>
     <a href="#contact" data-key="nav_contact">Kontakt</a>
     
+    <!-- Часы -->
+    <div class="header-clock" id="liveClock">00:00:00</div>
+
     <!-- Переключатель языков -->
     <div class="lang-switcher">
-      <button class="lang-btn active-lang" onclick="setLanguage('de')">DE</button>
-      <button class="lang-btn" onclick="setLanguage('en')">EN</button>
-      <button class="lang-btn" onclick="setLanguage('ru')">RU</button>
-      <button class="lang-btn" onclick="setLanguage('nl')">NL</button>
+      <button class="lang-btn active-lang" onclick="setLanguage('de', event)">DE</button>
+      <button class="lang-btn" onclick="setLanguage('en', event)">EN</button>
+      <button class="lang-btn" onclick="setLanguage('ru', event)">RU</button>
+      <button class="lang-btn" onclick="setLanguage('nl', event)">NL</button>
     </div>
   </nav>
 </header>
@@ -239,262 +283,4 @@ footer { padding: 30px 7%; border-top: 1px solid rgba(255,255,255,0.1); color: #
 
       <article class="card" data-style="modern">
         <img src="4.jpeg" alt="Gemälde 4">
-        <span class="card-style" data-key="style_modern">Moderne Kunst</span>
-        <h3 data-key="art_4">Kunstwerk Nr. 4</h3>
-        <p data-key="mat_acryl">Acryl auf Leinwand</p>
-        <div class="price" data-key="price_req">Preis auf Anfrage</div>
-      </article>
-
-      <article class="card" data-style="landscape">
-        <img src="5.jpeg" alt="Gemälde 5">
-        <span class="card-style" data-key="style_landscape">Landschaften</span>
-        <h3 data-key="art_5">Kunstwerk Nr. 5</h3>
-        <p data-key="mat_oil">Öl auf Leinwand</p>
-        <div class="price" data-key="price_req">Preis auf Anfrage</div>
-      </article>
-
-      <article class="card" data-style="modern">
-        <img src="7.jpeg" alt="Gemälde 6">
-        <span class="card-style" data-key="style_modern">Moderne Kunst</span>
-        <h3 data-key="art_6">Kunstwerk Nr. 6</h3>
-        <p data-key="mat_mix">Mischtechnik</p>
-        <div class="price" data-key="price_req">Preis auf Anfrage</div>
-      </article>
-
-      <article class="card" data-style="abstract">
-        <img src="22.jpeg" alt="Gemälde 7">
-        <span class="card-style" data-key="style_abstract">Abstrakt</span>
-        <h3 data-key="art_7">Kunstwerk Nr. 7</h3>
-        <p data-key="mat_acryl">Acryl auf Leinwand</p>
-        <div class="price" data-key="price_req">Preis auf Anfrage</div>
-      </article>
-
-      <article class="card" data-style="landscape">
-        <img src="56.jpeg" alt="Gemälde 8">
-        <span class="card-style" data-key="style_landscape">Landschaften</span>
-        <h3 data-key="art_8">Kunstwerk Nr. 8</h3>
-        <p data-key="mat_oil">Öl auf Leinwand</p>
-        <div class="price" data-key="price_req">Preis auf Anfrage</div>
-      </article>
-    </div>
-  </section>
-
-  <section id="about" class="about">
-    <div class="tag" data-key="about_tag">Die Künstlerin</div>
-    <h2 data-key="about_title">Über mich</h2>
-    <p data-key="about_text1">Mein Name ist Olga Morlang. In meinen Gemälden bringe ich meine persönliche Sicht auf Farben, Stimmungen und die Schönheit der Welt zum Ausdruck.</p>
-    <p data-key="about_text2">Jedes Werk entsteht mit Liebe zum Detail und hat seinen ganz eigenen Charakter.</p>
-  </section>
-
-  <section id="contact">
-    <div class="tag" data-key="contact_tag">Kontakt</div>
-    <div class="contact">
-      <h2 data-key="contact_title">Interessieren Sie sich für ein Kunstwerk?</h2>
-      <p data-key="contact_desc">Schreiben Sie mir gerne, um mehr über ein Gemälde, den Preis oder den Versand zu erfahren.</p>
-      <a href="https://www.instagram.com/">Instagram</a>
-      <a href="https://www.facebook.com/">Facebook</a>
-      <a href="mailto:" data-key="contact_email">E-Mail</a>
-    </div>
-  </section>
-</main>
-
-<footer data-key="footer_text">© 2026 Olga Morlang · Originalkunstwerke</footer>
-
-<!-- Скрипт фильтрации и точного перевода -->
-<script>
-const translations = {
-    de: {
-        nav_gallery: "Galerie",
-        nav_about: "Über mich",
-        nav_contact: "Kontakt",
-        hero_tag: "Originalkunstwerke",
-        hero_title: "Kunst, die<br>Geschichten erzählt.",
-        hero_desc: "Willkommen in meiner Galerie. Entdecken Sie einzigartige Gemälde, inspiriert von Farben, Gefühlen und den kleinen Wundern des Lebens.",
-        hero_btn: "KUNSTWERKE ENTDECKEN ↗️",
-        gallery_tag: "Ausgewählte Werke",
-        gallery_title: "Meine Kunstwerke",
-        gallery_sub: "Filtern Sie die Werke nach Malstil und Entstehungsart:",
-        filter_all: "Alle Werke",
-        filter_abstract: "Abstrakt",
-        filter_landscape: "Landschaften",
-        filter_modern: "Moderne Kunst",
-        style_abstract: "Abstrakt",
-        style_landscape: "Landschaften",
-        style_modern: "Moderne Kunst",
-        art_1: "Kunstwerk Nr. 1",
-        art_2: "Kunstwerk Nr. 2",
-        art_3: "Kunstwerk Nr. 3",
-        art_4: "Kunstwerk Nr. 4",
-        art_5: "Kunstwerk Nr. 5",
-        art_6: "Kunstwerk Nr. 6",
-        art_7: "Kunstwerk Nr. 7",
-        art_8: "Kunstwerk Nr. 8",
-        mat_acryl: "Acryl auf Leinwand",
-        mat_oil: "Öl auf Leinwand",
-        mat_mix: "Mischtechnik",
-        price_req: "Preis auf Anfrage",
-        about_tag: "Die Künstlerin",
-        about_title: "Über mich",
-        about_text1: "Mein Name ist Olga Morlang. In meinen Gemälden bringe ich meine persönliche Sicht auf Farben, Stimmungen und die Schönheit der Welt zum Ausdruck.",
-        about_text2: "Jedes Werk entsteht mit Liebe zum Detail und hat seinen ganz eigenen Charakter.",
-        contact_tag: "Kontakt",
-        contact_title: "Interessieren Sie sich für ein Kunstwerk?",
-        contact_desc: "Schreiben Sie mir gerne, um mehr über ein Gemälde, den Preis oder den Versand zu erfahren.",
-        contact_email: "E-Mail",
-        footer_text: "© 2026 Olga Morlang · Originalkunstwerke"
-    },
-    en: {
-        nav_gallery: "Gallery",
-        nav_about: "About me",
-        nav_contact: "Contact",
-        hero_tag: "Original Artworks",
-        hero_title: "Art that<br>tells stories.",
-        hero_desc: "Welcome to my gallery. Discover unique paintings inspired by colors, emotions, and the small wonders of life.",
-        hero_btn: "DISCOVER ARTWORKS ↗️",
-        gallery_tag: "Featured Works",
-        gallery_title: "My Artworks",
-        gallery_sub: "Filter the works by painting style:",
-        filter_all: "All Works",
-        filter_abstract: "Abstract",
-        filter_landscape: "Landscapes",
-        filter_modern: "Modern Art",
-        style_abstract: "Abstract",
-        style_landscape: "Landscapes",
-        style_modern: "Modern Art",
-        art_1: "Artwork No. 1",
-        art_2: "Artwork No. 2",
-        art_3: "Artwork No. 3",
-        art_4: "Artwork No. 4",
-        art_5: "Artwork No. 5",
-        art_6: "Artwork No. 6",
-        art_7: "Artwork No. 7",
-        art_8: "Artwork No. 8",
-        mat_acryl: "Acrylic on canvas",
-        mat_oil: "Oil on canvas",
-        mat_mix: "Mixed media",
-        price_req: "Price on request",
-        about_tag: "The Artist",
-        about_title: "About me",
-        about_text1: "My name is Olga Morlang. In my paintings, I express my personal perspective on colors, moods, and the beauty of the world.",
-        about_text2: "Every piece is created with attention to detail and has its own unique character.",
-        contact_tag: "Contact",
-        contact_title: "Interested in an artwork?",
-        contact_desc: "Feel free to write to me to learn more about a painting, price, or shipping.",
-        contact_email: "E-Mail",
-        footer_text: "© 2026 Olga Morlang · Original Artworks"
-    },
-    ru: {
-        nav_gallery: "Галерея",
-        nav_about: "Обо мне",
-        nav_contact: "Контакты",
-        hero_tag: "Оригинальные работы",
-        hero_title: "Искусство,<br>рассказывающее истории.",
-        hero_desc: "Добро пожаловать в мою галерею. Откройте для себя уникальные картины, вдохновленные цветами, эмоциями и маленькими чудесами жизни.",
-        hero_btn: "СМОТРЕТЬ РАБОТЫ ↗️",
-        gallery_tag: "Избранные работы",
-        gallery_title: "Мои картины",
-        gallery_sub: "Фильтруйте работы по стилю рисования:",
-        filter_all: "Все работы",
-        filter_abstract: "Абстракция",
-        filter_landscape: "Пейзажи",
-        filter_modern: "Модерн",
-        style_abstract: "Абстракция",
-        style_landscape: "Пейзажи",
-        style_modern: "Модерн",
-        art_1: "Картина № 1",
-        art_2: "Картина № 2",
-        art_3: "Картина № 3",
-        art_4: "Картина № 4",
-        art_5: "Картина № 5",
-        art_6: "Картина № 6",
-        art_7: "Картина № 7",
-        art_8: "Картина № 8",
-        mat_acryl: "Акрил на холсте",
-        mat_oil: "Холст, масло",
-        mat_mix: "Смешанная техника",
-        price_req: "Цена по запросу",
-        about_tag: "Художница",
-        about_title: "Обо мне",
-        about_text1: "Меня зовут Ольга Морланг. В своих картинах я выражаю свой личный взгляд на цвета, настроение и красоту окружающего мира.",
-        about_text2: "Каждое произведение создается с любовью к деталям и обладает уникальным характером.",
-        contact_tag: "Контакты",
-        contact_title: "Заинтересовала картина?",
-        contact_desc: "Напишите мне, чтобы узнать подробнее о работе, цене или условиях доставки.",
-        contact_email: "Эл. почта",
-        footer_text: "© 2026 Ольга Морланг · Оригинальные работы"
-    },
-    nl: {
-        nav_gallery: "Galerie",
-        nav_about: "Over mij",
-        nav_contact: "Contact",
-        hero_tag: "Originele kunstwerken",
-        hero_title: "Kunst die<br>verhalen vertelt.",
-        hero_desc: "Welkom in mijn galerie. Ontdek unieke schilderijen, geïnspireerd door kleuren, emoties en de kleine wonderen van het leven.",
-        hero_btn: "KUNSTWERKEN BEKIJKEN ↗️",
-        gallery_tag: "Uitgelichte werken",
-        gallery_title: "Mijn kunstwerken",
-        gallery_sub: "Filter de werken op schilderstijl:",
-        filter_all: "Alle werken",
-        filter_abstract: "Abstract",
-        filter_landscape: "Landschappen",
-        filter_modern: "Moderne kunst",
-        style_abstract: "Abstract",
-        style_landscape: "Landschappen",
-        style_modern: "Moderne kunst",
-        art_1: "Kunstwerk nr. 1",
-        art_2: "Kunstwerk nr. 2",
-        art_3: "Kunstwerk nr. 3",
-        art_4: "Kunstwerk nr. 4",
-        art_5: "Kunstwerk nr. 5",
-        art_6: "Kunstwerk nr. 6",
-        art_7: "Kunstwerk nr. 7",
-        art_8: "Kunstwerk nr. 8",
-        mat_acryl: "Acryl op doek",
-        mat_oil: "Olieverf op doek",
-        mat_mix: "Gemengde techniek",
-        price_req: "Prijs op aanvraag",
-        about_tag: "De kunstenares",
-        about_title: "Over mij",
-        about_text1: "Mijn naam is Olga Morlang. In mijn schilderijen breng ik mijn persoonlijke visie op kleuren, stemmingen en de schoonheid van de wereld tot uitdrukking.",
-        about_text2: "Elk werk ontstaat met liefde voor detail en heeft een heel eigen karakter.",
-        contact_tag: "Contact",
-        contact_title: "Heeft u interesse in een kunstwerk?",
-        contact_desc: "Schrijf me gerust om meer te weten te komen over een schilderij, de prijs of de verzending.",
-        contact_email: "E-mail",
-        footer_text: "© 2026 Olga Morlang · Originele kunstwerken"
-    }
-};
-
-function setLanguage(lang) {
-    // Подсветка активной кнопки
-    document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active-lang'));
-    event.target.classList.add('active-lang');
-
-    // Перевод всех элементов с атрибутом data-key
-    const elements = document.querySelectorAll('[data-key]');
-    elements.forEach(el => {
-        const key = el.getAttribute('data-key');
-        if (translations[lang] && translations[lang][key]) {
-            el.innerHTML = translations[lang][key];
-        }
-    });
-}
-
-function filterGallery(style, event) {
-    const buttons = document.querySelectorAll('.filter-btn');
-    buttons.forEach(btn => btn.classList.remove('active'));
-    event.target.classList.add('active');
-
-    const cards = document.querySelectorAll('.card');
-    cards.forEach(card => {
-        if (style === 'all' || card.getAttribute('data-style') === style) {
-            card.classList.remove('hide');
-        } else {
-            card.classList.add('hide');
-        }
-    });
-}
-</script>
-
-</body>
-</html>
+        <span class="card-style
