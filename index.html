@@ -52,7 +52,7 @@ body{
 
 /* Шапка сайта */
 header {
-    padding: 24px 7%;
+    padding: 18px 7%;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -64,8 +64,37 @@ header {
     z-index: 100;
 }
 .logo { font-size: 22px; font-weight: bold; letter-spacing: 4px; color: #fff; }
-nav a { color: #ddd; text-decoration: none; margin-left: 24px; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; }
+nav { display: flex; align-items: center; gap: 20px; }
+nav a { color: #ddd; text-decoration: none; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; }
 nav a:hover { color: #ff7f50; }
+
+/* Кнопки языков */
+.lang-switcher {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin-left: 10px;
+}
+.lang-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+.lang-btn:hover {
+    background: #ff7f50;
+    border-color: #ff7f50;
+}
+
+/* Скрываем стандартную верхнюю панель Google Translate, чтобы сайт выглядел красиво */
+.goog-te-banner-frame { display: none !important; }
+body { top: 0px !important; }
+#google_translate_element { display: none; }
 
 /* Hero-секция */
 .hero { padding: 80px 7%; display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center; }
@@ -76,7 +105,7 @@ h1 { font-size: clamp(40px, 5.5vw, 70px); line-height: 1.05; margin: 20px 0; }
 .btn:hover { background: #ff6b81; transform: translateY(-2px); }
 .hero img { width: 100%; height: 450px; object-fit: cover; background: #1b263b; padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); }
 
-/* Кнопки фильтрации по стилям */
+/* Фильтры категорий */
 .filter-container {
     display: flex;
     gap: 12px;
@@ -128,9 +157,8 @@ h2 { font-size: 36px; margin: 12px 0; }
 .contact a { display: inline-block; color: #ff7f50; margin: 12px 20px 0 0; text-decoration: none; font-weight: bold; }
 footer { padding: 30px 7%; border-top: 1px solid rgba(255,255,255,0.1); color: #8e96a9; font-size: 12px; }
 
-@media(max-width: 750px) {
+@media(max-width: 850px) {
     header { flex-direction: column; align-items: flex-start; gap: 15px; }
-    nav a { margin: 0 15px 0 0; }
     .hero { grid-template-columns: 1fr; }
     .gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .about { margin: 20px 0; }
@@ -147,12 +175,23 @@ footer { padding: 30px 7%; border-top: 1px solid rgba(255,255,255,0.1); color: #
     <svg class="brush-element brush-2" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>
 </div>
 
+<!-- Скрытый элемент для инициализации Google Переводчика -->
+<div id="google_translate_element"></div>
+
 <header>
   <div class="logo">OLGA MORLANG</div>
   <nav>
     <a href="#gallery">Galerie</a>
     <a href="#about">Über mich</a>
     <a href="#contact">Kontakt</a>
+    
+    <!-- Переключатель языков -->
+    <div class="lang-switcher">
+      <button class="lang-btn" onclick="changeLanguage('de')">DE</button>
+      <button class="lang-btn" onclick="changeLanguage('en')">EN</button>
+      <button class="lang-btn" onclick="changeLanguage('ru')">RU</button>
+      <button class="lang-btn" onclick="changeLanguage('nl')">NL</button>
+    </div>
   </nav>
 </header>
 
@@ -172,15 +211,15 @@ footer { padding: 30px 7%; border-top: 1px solid rgba(255,255,255,0.1); color: #
     <h2>Meine Kunstwerke</h2>
     <p class="sub">Filtern Sie die Werke nach Malstil und Entstehungsart:</p>
 
-    <!-- Фильтры категорий (Стили) -->
+    <!-- Фильтры категорий -->
     <div class="filter-container">
-      <button class="filter-btn active" onclick="filterGallery('all')">Alle Werke</button>
-      <button class="filter-btn" onclick="filterGallery('abstract')">Abstrakt</button>
-      <button class="filter-btn" onclick="filterGallery('landscape')">Landschaften</button>
-      <button class="filter-btn" onclick="filterGallery('modern')">Moderne Kunst</button>
+      <button class="filter-btn active" onclick="filterGallery('all', event)">Alle Werke</button>
+      <button class="filter-btn" onclick="filterGallery('abstract', event)">Abstrakt</button>
+      <button class="filter-btn" onclick="filterGallery('landscape', event)">Landschaften</button>
+      <button class="filter-btn" onclick="filterGallery('modern', event)">Moderne Kunst</button>
     </div>
 
-    <!-- Галерея с привязанными стилями (data-style) -->
+    <!-- Галерея -->
     <div class="gallery">
       <article class="card" data-style="abstract">
         <img src="1.jpeg" alt="Gemälde 1">
@@ -258,36 +297,4 @@ footer { padding: 30px 7%; border-top: 1px solid rgba(255,255,255,0.1); color: #
   <section id="contact">
     <div class="tag">Kontakt</div>
     <div class="contact">
-      <h2>Interessieren Sie sich für ein Kunstwerk?</h2>
-      <p>Schreiben Sie mir gerne, um mehr über ein Gemälde, den Preis oder den Versand zu erfahren.</p>
-      <a href="https://www.instagram.com/">Instagram</a>
-      <a href="https://www.facebook.com/">Facebook</a>
-      <a href="mailto:">E-Mail</a>
-    </div>
-  </section>
-</main>
-
-<footer>© 2026 Olga Morlang · Originalkunstwerke</footer>
-
-<!-- Скрипт переключения стилей -->
-<script>
-function filterGallery(style) {
-    // Обновляем активность кнопок
-    const buttons = document.querySelectorAll('.filter-btn');
-    buttons.forEach(btn => btn.classList.remove('active'));
-    event.target.classList.add('active');
-
-    // Фильтруем карточки
-    const cards = document.querySelectorAll('.card');
-    cards.forEach(card => {
-        if (style === 'all' || card.getAttribute('data-style') === style) {
-            card.classList.remove('hide');
-        } else {
-            card.classList.add('hide');
-        }
-    });
-}
-</script>
-
-</body>
-</html>
+      <h2>Interessieren Sie sich für ein Kunst
