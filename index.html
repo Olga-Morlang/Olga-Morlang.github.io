@@ -10,8 +10,12 @@
 html{scroll-behavior:smooth}
 body{
     margin:0;
-    /* Глубокий темно-синий градиентный фон в стиле GitHub Dark */
-    background: linear-gradient(135deg, #0d1117 0%, #161b22 50%, #090d16 100%);
+    /* Творческий живописный фон в стиле вашей картинки */
+    background: 
+        radial-gradient(circle at 80% 20%, rgba(235, 87, 87, 0.25) 0%, transparent 40%),
+        radial-gradient(circle at 20% 80%, rgba(242, 153, 74, 0.2) 0%, transparent 45%),
+        radial-gradient(circle at 50% 50%, rgba(19, 115, 122, 0.35) 0%, transparent 60%),
+        linear-gradient(135deg, #0d1b2a 0%, #1b263b 50%, #0d131a 100%);
     color:#f5f5f7;
     font-family:Arial,sans-serif;
     min-height: 100vh;
@@ -31,87 +35,88 @@ body{
     overflow: hidden;
 }
 
-/* Капли краски (абстрактные мягкие пятна) */
-.paint-splatter {
+/* Краски и брызги */
+.paint-spot {
     position: absolute;
     border-radius: 50%;
-    filter: blur(50px);
-    opacity: 0.2;
+    filter: blur(45px);
+    opacity: 0.3;
 }
 
-.splatter-1 {
+.spot-red {
+    width: 280px;
+    height: 280px;
+    background: #ff4757;
+    top: 15%;
+    left: 70%;
+    animation: float 10s ease-in-out infinite alternate;
+}
+
+.spot-orange {
     width: 350px;
     height: 350px;
-    background: #1f6feb; /* Синий акцент */
-    top: 10%;
+    background: #ff7f50;
+    bottom: 10%;
     left: 10%;
-    animation: float 9s ease-in-out infinite alternate;
+    animation: float 12s ease-in-out infinite alternate-reverse;
 }
 
-.splatter-2 {
-    width: 450px;
-    height: 450px;
-    background: #8957e5; /* Фиолетовый акцент */
-    bottom: 15%;
-    right: 5%;
-    animation: float 11s ease-in-out infinite alternate-reverse;
+.spot-teal {
+    width: 400px;
+    height: 400px;
+    background: #00cec9;
+    top: 40%;
+    left: 25%;
+    animation: float 14s ease-in-out infinite alternate;
 }
 
-.splatter-3 {
-    width: 300px;
-    height: 300px;
-    background: #238636; /* Зеленоватый акцент */
-    top: 45%;
-    right: 25%;
-    animation: float 13s ease-in-out infinite alternate;
-}
-
-/* Плавающие иконки (кисти, карандаши, инструменты) */
-.art-element {
+/* Элементы кистей на фоне */
+.brush-element {
     position: absolute;
-    opacity: 0.12;
-    fill: #58a6ff;
-    animation: drift 18s linear infinite;
+    opacity: 0.15;
+    fill: #e0e6ed;
+    animation: drift 20s linear infinite;
 }
 
-.el-1 { top: 15%; left: 8%; width: 55px; animation-duration: 22s; }
-.el-2 { top: 65%; left: 15%; width: 45px; animation-duration: 26s; animation-delay: -4s; }
-.el-3 { top: 25%; right: 12%; width: 65px; animation-duration: 20s; animation-delay: -2s; }
-.el-4 { top: 75%; right: 20%; width: 50px; animation-duration: 24s; animation-delay: -7s; }
+.brush-1 { top: 18%; left: 12%; width: 60px; transform: rotate(-25deg); animation-duration: 22s; }
+.brush-2 { top: 75%; right: 15%; width: 55px; transform: rotate(45deg); animation-duration: 25s; animation-delay: -5s; }
+.brush-3 { top: 30%; right: 22%; width: 50px; transform: rotate(15deg); animation-duration: 19s; animation-delay: -3s; }
+.brush-4 { top: 65%; left: 18%; width: 65px; transform: rotate(-50deg); animation-duration: 28s; animation-delay: -8s; }
 
 @keyframes float {
     0% { transform: translateY(0) scale(1); }
-    100% { transform: translateY(-35px) scale(1.06); }
+    100% { transform: translateY(-30px) scale(1.05); }
 }
 
 @keyframes drift {
     0% { transform: translateY(0) rotate(0deg); }
-    50% { transform: translateY(-25px) rotate(12deg); }
+    50% { transform: translateY(-20px) rotate(10deg); }
     100% { transform: translateY(0) rotate(0deg); }
 }
 
-header{padding:24px 7%;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #303647; background: rgba(16, 21, 34, 0.8); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 100;}
+header{padding:24px 7%;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(255,255,255,0.1); background: rgba(13, 27, 42, 0.85); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 100;}
 .logo{font-size:21px;font-weight:bold;letter-spacing:3px}
 nav a{color:#ddd;text-decoration:none;margin-left:22px;font-size:13px}
 .hero{padding:75px 7%;display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
-.tag{color:#8ca0ff;letter-spacing:3px;font-size:12px;text-transform:uppercase}
+.tag{color:#ff7f50;letter-spacing:3px;font-size:12px;text-transform:uppercase; font-weight: bold;}
 h1{font-size:clamp(42px,6vw,76px);line-height:1.02;margin:20px 0}
 .hero p,.about p,.contact p{color:#bdc3d1;line-height:1.8}
-.btn{display:inline-block;background:#4568ff;color:white;padding:15px 22px;text-decoration:none;margin-top:15px;font-size:13px}
-.hero img{width:100%;height:430px;object-fit:cover;background:#20283b;padding:10px}
+.btn{display:inline-block;background:#ff4757;color:white;padding:15px 22px;text-decoration:none;margin-top:15px;font-size:13px; font-weight: bold; transition: background 0.3s;}
+.btn:hover{background:#ff6b81;}
+.hero img{width:100%;height:430px;object-fit:cover;background:#1b263b;padding:10px;border: 1px solid rgba(255,255,255,0.1);}
 section{padding:60px 7%}
 h2{font-size:34px;margin:12px 0}
 .sub{color:#aeb5c5;line-height:1.7;margin-bottom:28px}
 .gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px}
-.card{background:rgba(26, 32, 48, 0.85);backdrop-filter: blur(5px);padding:12px;min-width:0;border: 1px solid #303647;}
-.card img{width:100%;height:300px;object-fit:contain;background:#252c3c;display:block}
+.card{background:rgba(27, 38, 59, 0.8);backdrop-filter: blur(6px);padding:12px;min-width:0;border: 1px solid rgba(255,255,255,0.08);}
+.card img{width:100%;height:300px;object-fit:contain;background:#111823;display:block}
 .card h3{font-size:17px;font-weight:normal;margin:14px 0 6px}
 .card p{font-size:13px;color:#aeb5c5}
-.price{color:#9aabff;font-weight:bold;font-size:14px}
-.about{background:rgba(25, 31, 46, 0.75);backdrop-filter: blur(5px);}
-.contact{border:1px solid #39425a;padding:30px;margin-top:20px;background:rgba(26, 32, 48, 0.75);backdrop-filter: blur(5px);}
-.contact a{display:inline-block;color:#a9b7ff;margin:10px 18px 0 0}
-footer{padding:25px 7%;border-top:1px solid #303647;color:#8e96a9;font-size:12px}
+.price{color:#ff7f50;font-weight:bold;font-size:14px}
+.about{background:rgba(20, 30, 48, 0.75);backdrop-filter: blur(6px);}
+.contact{border:1px solid rgba(255,255,255,0.1);padding:30px;margin-top:20px;background:rgba(27, 38, 59, 0.75);backdrop-filter: blur(6px);}
+.contact a{display:inline-block;color:#ff7f50;margin:10px 18px 0 0}
+footer{padding:25px 7%;border-top:1px solid rgba(255,255,255,0.1);color:#8e96a9;font-size:12px}
 @media(max-width:750px){
  header{align-items:flex-start;gap:18px;flex-direction:column}
  nav a{margin:0 15px 0 0}
@@ -129,24 +134,17 @@ footer{padding:25px 7%;border-top:1px solid #303647;color:#8e96a9;font-size:12px
 </head>
 <body>
 
-<!-- Фоновый творческий слой -->
+<!-- Художественный фон -->
 <div class="creative-bg">
-    <!-- Цветные капли краски -->
-    <div class="paint-splatter splatter-1"></div>
-    <div class="paint-splatter splatter-2"></div>
-    <div class="paint-splatter splatter-3"></div>
+    <div class="paint-spot spot-red"></div>
+    <div class="paint-spot spot-orange"></div>
+    <div class="paint-spot spot-teal"></div>
 
-    <!-- Иконка кисти -->
-    <svg class="art-element el-1" viewBox="0 0 24 24"><path d="M6 14l3 3m5.5-10.5l3 3M4 20l2-2.5L16.5 7c.8-.8 2-.8 2.8 0s.8 2 0 2.8L8.8 20.2 4 20z"/></svg>
-    
-    <!-- Иконка карандаша -->
-    <svg class="art-element el-2" viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
-
-    <!-- Иконка капли/палитры -->
-    <svg class="art-element el-3" viewBox="0 0 24 24"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
-
-    <!-- Иконка инструментов -->
-    <svg class="art-element el-4" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>
+    <!-- Иконки разных кистей -->
+    <svg class="brush-element brush-1" viewBox="0 0 24 24"><path d="M6 14l3 3m5.5-10.5l3 3M4 20l2-2.5L16.5 7c.8-.8 2-.8 2.8 0s.8 2 0 2.8L8.8 20.2 4 20z"/></svg>
+    <svg class="brush-element brush-2" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>
+    <svg class="brush-element brush-3" viewBox="0 0 24 24"><path d="M18 2H6c-1.1 0-2 .9-2 2v2h16V4c0-1.1-.9-2-2-2zM4 8v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8H4z"/></svg>
+    <svg class="brush-element brush-4" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
 </div>
 
 <header>
