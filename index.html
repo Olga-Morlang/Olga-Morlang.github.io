@@ -2,51 +2,33 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#101a35">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#193451">
 <title>Olga Morlang | Kunstgalerie</title>
 
 <style>
 :root {
-  --bg: #101a35;
-  --bg2: #18284a;
-  --text: #f7f2ea;
-  --muted: #c2c9d9;
-  --gold: #d8b77a;
-  --card: rgba(255,255,255,.07);
+  --navy: #172c49;
+  --blue: #385c83;
+  --gold: #f3cc78;
+  --cream: #fff6e8;
+  --text: #fffaf1;
+  --muted: #e5e6e9;
 }
 
-* {
-  box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 20px;
 }
 
 body {
   margin: 0;
-  color: var(--text);
   font-family: Georgia, "Times New Roman", serif;
-  background:
-    radial-gradient(ellipse at 15% 15%, rgba(94,119,180,.22), transparent 35%),
-    radial-gradient(ellipse at 90% 35%, rgba(179,119,92,.15), transparent 30%),
-    linear-gradient(135deg, #0c142a, #172748 55%, #101a35);
+  color: var(--text);
+  background: #203e5a;
   min-height: 100vh;
-}
-
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  opacity: .18;
-  background:
-    radial-gradient(ellipse at 8% 40%, #d9b777 0 2px, transparent 4px),
-    radial-gradient(ellipse at 90% 15%, #b8c7e8 0 3px, transparent 5px),
-    radial-gradient(ellipse at 80% 80%, #c78d70 0 2px, transparent 4px);
-  background-size: 180px 200px, 230px 240px, 190px 220px;
-  z-index: -1;
 }
 
 a {
@@ -54,91 +36,290 @@ a {
   text-decoration: none;
 }
 
-button {
-  font: inherit;
+button { font: inherit; }
+
+/* ===== ХУДОЖЕСТВЕННЫЙ ПРИРОДНЫЙ ФОН ===== */
+
+.scenery {
+  position: fixed;
+  inset: 0;
+  z-index: -3;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 84% 27%,
+      #fff3b3 0 2%,
+      #ffda8c 3%,
+      #f5a16c 9%,
+      transparent 23%),
+    linear-gradient(180deg,
+      #628bc0 0%,
+      #e5a5a1 24%,
+      #ffc98b 37%,
+      #6698b5 48%,
+      #244e6b 66%,
+      #64876c 83%,
+      #e6d1aa 100%);
 }
 
+.scenery::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg,
+      rgba(255,255,255,.08),
+      transparent 32%,
+      rgba(15,38,52,.15) 70%,
+      rgba(255,246,225,.25));
+}
+
+.mountain {
+  position: absolute;
+  left: -5%;
+  right: -5%;
+  top: 22%;
+  height: 35%;
+  background: #9aafc3;
+  opacity: .72;
+  clip-path: polygon(
+    0 66%, 14% 22%, 25% 62%, 42% 3%,
+    57% 57%, 72% 12%, 87% 58%, 100% 29%,
+    100% 100%, 0 100%
+  );
+}
+
+.mountain.front {
+  top: 29%;
+  background: #456b88;
+  opacity: .9;
+  clip-path: polygon(
+    0 54%, 11% 22%, 23% 67%, 37% 17%,
+    49% 61%, 63% 9%, 79% 60%, 90% 25%,
+    100% 50%, 100% 100%, 0 100%
+  );
+}
+
+.water {
+  position: absolute;
+  top: 45%;
+  left: 0;
+  right: 0;
+  height: 32%;
+  background:
+    linear-gradient(180deg,
+      rgba(248,183,136,.7),
+      rgba(72,128,154,.8) 40%,
+      rgba(21,61,83,.9)),
+    repeating-linear-gradient(
+      177deg,
+      transparent 0 15px,
+      rgba(255,255,255,.18) 16px 18px,
+      transparent 19px 32px
+    );
+  clip-path: polygon(
+    0 5%, 20% 10%, 42% 0, 61% 9%,
+    80% 2%, 100% 8%, 100% 100%, 0 100%
+  );
+}
+
+.tree-line {
+  position: absolute;
+  bottom: 12%;
+  left: -4%;
+  width: 36%;
+  height: 38%;
+  opacity: .85;
+  background:
+    radial-gradient(ellipse at 10% 30%, #315744 0 13%, transparent 14%),
+    radial-gradient(ellipse at 22% 22%, #54794f 0 15%, transparent 16%),
+    radial-gradient(ellipse at 33% 34%, #315845 0 16%, transparent 17%),
+    radial-gradient(ellipse at 47% 20%, #78965d 0 12%, transparent 13%),
+    radial-gradient(ellipse at 55% 45%, #3b674c 0 20%, transparent 21%),
+    linear-gradient(0deg, #355745 0 22%, transparent 23%);
+}
+
+.tree-line.right {
+  left: auto;
+  right: -7%;
+  width: 28%;
+  transform: scaleX(-1);
+  opacity: .65;
+}
+
+.paint-splash {
+  position: absolute;
+  width: 300px;
+  height: 330px;
+  border-radius: 47% 53% 60% 40%;
+  filter: blur(3px);
+  opacity: .38;
+  pointer-events: none;
+}
+
+.splash-one {
+  left: -130px;
+  top: 20%;
+  background: radial-gradient(
+    ellipse, #f6d17b, #d58e69 40%, transparent 72%
+  );
+  transform: rotate(25deg);
+}
+
+.splash-two {
+  right: -120px;
+  bottom: 3%;
+  background: radial-gradient(
+    ellipse, #88b5a2, #f0b0b0 45%, transparent 72%
+  );
+  transform: rotate(-25deg);
+}
+
+/* Декоративные кисти */
+
+.brush-decoration {
+  position: fixed;
+  left: -12px;
+  top: 15%;
+  width: 95px;
+  height: 285px;
+  opacity: .9;
+  z-index: -1;
+  pointer-events: none;
+  transform: rotate(-12deg);
+}
+
+.paint-dots {
+  position: fixed;
+  right: 10px;
+  bottom: 25px;
+  width: 110px;
+  height: 130px;
+  z-index: -1;
+  opacity: .8;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 25% 30%, #e6b5b2 0 6px, transparent 7px),
+    radial-gradient(circle at 60% 20%, #f1d178 0 4px, transparent 5px),
+    radial-gradient(circle at 80% 45%, #759db8 0 7px, transparent 8px),
+    radial-gradient(circle at 35% 65%, #c68b70 0 5px, transparent 6px),
+    radial-gradient(circle at 65% 80%, #8cae8b 0 8px, transparent 9px);
+}
+
+/* ===== ШАПКА ===== */
+
 header {
-  position: relative;
-  padding: 22px 6%;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 20px;
+  gap: 18px;
   flex-wrap: wrap;
-  border-bottom: 1px solid rgba(255,255,255,.12);
-  background: rgba(9,16,34,.42);
+  padding: 18px 6%;
+  background: rgba(15,35,59,.52);
+  border-bottom: 1px solid rgba(255,255,255,.22);
   backdrop-filter: blur(12px);
 }
 
 .logo {
-  font-size: 1.35rem;
-  letter-spacing: 2px;
+  font-size: 1.5rem;
   color: var(--gold);
+  font-style: italic;
+  white-space: nowrap;
 }
 
 nav {
   display: flex;
+  gap: 22px;
   flex-wrap: wrap;
-  gap: 20px;
 }
 
 nav a {
-  color: var(--muted);
+  color: white;
   transition: color .2s;
 }
 
-nav a:hover {
-  color: var(--gold);
+nav a:hover { color: var(--gold); }
+
+/* ===== ВЫДВИЖНОЙ ПЕРЕВОДЧИК ===== */
+
+.language-menu {
+  position: relative;
+  z-index: 100;
 }
 
-.languages {
+.language-toggle {
   display: flex;
-  gap: 6px;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 13px;
+  color: white;
+  background: rgba(17,40,68,.88);
+  border: 1px solid rgba(255,255,255,.4);
+  border-radius: 24px;
+  cursor: pointer;
 }
 
-.languages button {
+.language-toggle .arrow {
+  transition: transform .25s;
+}
+
+.language-menu.open .arrow {
+  transform: rotate(180deg);
+}
+
+.language-options {
+  display: none;
+  position: absolute;
+  top: calc(100% + 9px);
+  right: 0;
+  min-width: 160px;
+  padding: 7px;
+  background: #172c49;
   border: 1px solid rgba(255,255,255,.2);
-  color: var(--text);
-  background: rgba(255,255,255,.06);
-  padding: 7px 10px;
+  border-radius: 12px;
+  box-shadow: 0 12px 35px rgba(0,0,0,.3);
+}
+
+.language-menu.open .language-options {
+  display: grid;
+  gap: 4px;
+}
+
+.language-options button {
+  padding: 10px;
+  text-align: left;
+  color: white;
+  background: transparent;
+  border: 0;
   border-radius: 7px;
   cursor: pointer;
 }
 
-.languages button.active,
-.languages button:hover {
-  color: #18213a;
+.language-options button:hover,
+.language-options button.active {
+  color: #172c49;
   background: var(--gold);
-  border-color: var(--gold);
 }
+
+/* ===== ГЛАВНЫЙ ЭКРАН ===== */
 
 .hero {
-  min-height: 520px;
-  padding: 95px 7% 85px;
-  display: flex;
+  max-width: 1450px;
+  margin: auto;
+  min-height: 450px;
+  padding: 75px 8%;
+  display: grid;
+  grid-template-columns: 1.15fr .85fr;
+  gap: 45px;
   align-items: center;
-  position: relative;
-  overflow: hidden;
-}
-
-.hero::after {
-  content: "";
-  position: absolute;
-  right: 8%;
-  top: 12%;
-  width: 280px;
-  height: 350px;
-  border-radius: 50% 40% 55% 35%;
-  background: linear-gradient(135deg, rgba(218,183,122,.15), rgba(105,130,183,.08));
-  filter: blur(2px);
-  transform: rotate(-18deg);
+  background: linear-gradient(
+    90deg,
+    rgba(17,40,66,.52),
+    rgba(17,40,66,.08)
+  );
 }
 
 .hero-content {
-  max-width: 720px;
-  position: relative;
-  z-index: 1;
+  max-width: 700px;
 }
 
 .eyebrow {
@@ -149,118 +330,153 @@ nav a:hover {
 }
 
 h1 {
-  font-size: clamp(2.8rem, 7vw, 5.8rem);
-  line-height: 1.05;
+  font-size: clamp(2.7rem, 5vw, 5rem);
+  line-height: 1.07;
   font-weight: normal;
-  margin: 20px 0;
+  margin: 18px 0;
+  text-shadow: 0 3px 18px rgba(0,0,0,.22);
+}
+
+.hero h1 span {
+  display: block;
+  color: var(--gold);
+  font-style: italic;
 }
 
 .hero p {
-  color: var(--muted);
-  max-width: 580px;
-  line-height: 1.8;
-  font-size: 1.12rem;
+  color: white;
+  max-width: 560px;
+  line-height: 1.85;
+  font-size: 1.08rem;
+  text-shadow: 0 2px 8px rgba(0,0,0,.3);
 }
 
 .primary-button {
   display: inline-block;
   margin-top: 18px;
-  padding: 13px 24px;
+  padding: 14px 24px;
   background: var(--gold);
-  color: #17203a;
-  border-radius: 5px;
+  color: #172c49;
+  border-radius: 28px;
   transition: transform .2s, background .2s;
 }
 
 .primary-button:hover {
   transform: translateY(-2px);
-  background: #eed29a;
+  background: #ffe3a1;
 }
 
+.hero-art {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.art-circle {
+  width: min(100%, 310px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 4px solid var(--gold);
+  box-shadow: 0 12px 40px rgba(0,0,0,.25);
+  background:
+    radial-gradient(circle at 25% 25%, #f5d38c, transparent 35%),
+    radial-gradient(circle at 70% 70%, #749cb2, transparent 45%),
+    linear-gradient(135deg, #b98e70, #294969);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 25px;
+  color: white;
+  font-style: italic;
+}
+
+/* ===== СЕКЦИИ ===== */
+
 section {
-  padding: 70px 6%;
-  scroll-margin-top: 25px;
+  padding: 65px 6%;
+  scroll-margin-top: 20px;
 }
 
 .section-heading {
   text-align: center;
-  margin: 0 auto 38px;
+  margin: 0 auto 35px;
 }
 
 .section-heading h2 {
   font-size: clamp(2rem, 4vw, 3rem);
   font-weight: normal;
-  margin: 0 0 12px;
+  margin: 0 0 10px;
+  color: #fffaf1;
+  text-shadow: 0 2px 10px rgba(0,0,0,.35);
 }
 
 .section-heading p {
-  color: var(--muted);
+  color: white;
   margin: 0;
+  text-shadow: 0 2px 8px rgba(0,0,0,.3);
 }
+
+/* ===== ФИЛЬТРЫ ГАЛЕРЕИ ===== */
 
 .gallery-filters {
   display: flex;
   justify-content: center;
   gap: 10px;
   flex-wrap: wrap;
-  margin-bottom: 35px;
+  margin-bottom: 30px;
 }
 
 .gallery-filters button {
-  padding: 9px 16px;
-  border: 1px solid rgba(255,255,255,.2);
-  border-radius: 20px;
-  background: transparent;
-  color: var(--text);
+  padding: 9px 17px;
+  border: 1px solid rgba(255,255,255,.5);
+  border-radius: 22px;
+  background: rgba(20,43,67,.55);
+  color: white;
   cursor: pointer;
+  transition: .2s;
 }
 
 .gallery-filters button.active,
 .gallery-filters button:hover {
   background: var(--gold);
-  color: #18213a;
+  color: #172c49;
   border-color: var(--gold);
 }
 
-/* Галерея с картинами разной высоты */
+/* ===== ГАЛЕРЕЯ ===== */
+
 .gallery {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  grid-auto-rows: 115px;
+  grid-auto-rows: 110px;
   grid-auto-flow: dense;
-  gap: 18px;
+  gap: 17px;
   max-width: 1400px;
-  margin: 0 auto;
+  margin: auto;
 }
 
 .artwork {
   position: relative;
   overflow: hidden;
-  border-radius: 8px;
-  background: #202e4c;
-  border: 1px solid rgba(255,255,255,.1);
+  margin: 0;
+  border-radius: 10px;
+  background: #263e5c;
+  border: 1px solid rgba(255,255,255,.25);
+  box-shadow: 0 8px 22px rgba(10,25,43,.2);
   grid-row: span 3;
-  min-height: 0;
+  cursor: zoom-in;
 }
 
-.artwork:nth-child(3n + 1) {
-  grid-row: span 4;
-}
-
-.artwork:nth-child(4n + 2) {
-  grid-row: span 3;
-}
-
-.artwork:nth-child(5n) {
-  grid-row: span 5;
-}
+.artwork:nth-child(4n + 1) { grid-row: span 4; }
+.artwork:nth-child(5n) { grid-row: span 5; }
 
 .artwork img {
   display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform .6s;
+  transition: transform .5s;
 }
 
 .artwork:hover img {
@@ -272,64 +488,150 @@ section {
   left: 0;
   right: 0;
   bottom: 0;
-  padding: 28px 15px 14px;
+  padding: 32px 13px 13px;
   background: linear-gradient(transparent, rgba(5,10,24,.9));
+  color: white;
   font-size: 1rem;
 }
 
-.artwork.hidden {
-  display: none;
+.artwork.hidden { display: none; }
+
+.artwork:focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: 3px;
 }
 
-.about-wrap {
-  max-width: 1000px;
-  margin: auto;
-  display: grid;
-  grid-template-columns: 1fr 1.5fr;
-  gap: 45px;
+/* ===== ПРОСМОТР В ПОЛНЫЙ РАЗМЕР ===== */
+
+.lightbox {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  padding: 60px 20px 55px;
   align-items: center;
+  justify-content: center;
+  background: rgba(3,7,18,.95);
+  backdrop-filter: blur(8px);
+}
+
+.lightbox.open { display: flex; }
+
+.lightbox img {
+  display: block;
+  max-width: 95vw;
+  max-height: 84vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 4px;
+  box-shadow: 0 10px 60px rgba(0,0,0,.5);
+}
+
+.lightbox-close,
+.lightbox-prev,
+.lightbox-next {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  color: white;
+  background: rgba(255,255,255,.12);
+  border: 1px solid rgba(255,255,255,.35);
+  border-radius: 50%;
+  font-size: 26px;
+  cursor: pointer;
+}
+
+.lightbox-close {
+  top: 14px;
+  right: 18px;
+}
+
+.lightbox-prev {
+  left: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.lightbox-next {
+  right: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.lightbox-caption {
+  position: absolute;
+  bottom: 17px;
+  left: 15px;
+  right: 15px;
+  text-align: center;
+  color: white;
+}
+
+body.lightbox-open { overflow: hidden; }
+
+/* ===== ОБО МНЕ ===== */
+
+.about-wrap {
+  max-width: 1050px;
+  margin: auto;
+  padding: 30px;
+  display: grid;
+  grid-template-columns: .8fr 1.2fr;
+  gap: 40px;
+  align-items: center;
+  background: rgba(20,43,67,.52);
+  border: 1px solid rgba(255,255,255,.2);
+  border-radius: 16px;
+  backdrop-filter: blur(8px);
 }
 
 .about-art {
   min-height: 300px;
-  border-radius: 45% 45% 8px 8px;
+  border-radius: 48% 48% 10px 10px;
   background:
-    radial-gradient(ellipse at 30% 25%, rgba(220,179,119,.6), transparent 28%),
-    radial-gradient(ellipse at 70% 60%, rgba(115,142,185,.6), transparent 35%),
-    linear-gradient(145deg, #263b60, #121b36);
-  border: 1px solid rgba(255,255,255,.14);
+    radial-gradient(ellipse at 30% 25%, rgba(220,179,119,.8), transparent 28%),
+    radial-gradient(ellipse at 70% 60%, rgba(115,142,185,.8), transparent 35%),
+    linear-gradient(145deg, #567d9b, #172d49);
+  border: 2px solid rgba(255,255,255,.25);
 }
 
 .about-text h2 {
   font-size: 2.5rem;
   font-weight: normal;
-  margin-top: 0;
+  margin: 0 0 20px;
 }
 
 .about-text p {
-  color: var(--muted);
+  color: white;
   line-height: 1.9;
 }
 
+/* ===== КОНТАКТЫ ===== */
+
 .contact-box {
-  max-width: 800px;
+  max-width: 900px;
   margin: auto;
   padding: 35px;
   text-align: center;
-  border: 1px solid rgba(255,255,255,.13);
-  border-radius: 12px;
-  background: rgba(255,255,255,.045);
+  background: rgba(20,43,67,.58);
+  border: 1px solid rgba(255,255,255,.2);
+  border-radius: 15px;
+  backdrop-filter: blur(8px);
 }
 
 .contact-box p {
-  color: var(--muted);
+  color: white;
   line-height: 1.8;
 }
 
 .socials {
   display: flex;
   justify-content: center;
-  gap: 14px;
+  gap: 13px;
   flex-wrap: wrap;
   margin-top: 25px;
 }
@@ -340,7 +642,7 @@ section {
   gap: 9px;
   padding: 12px 17px;
   color: white;
-  border-radius: 7px;
+  border-radius: 8px;
   transition: transform .2s, opacity .2s;
 }
 
@@ -359,27 +661,41 @@ section {
   background: linear-gradient(45deg, #f9ce34, #ee2a7b, #6228d7);
 }
 
-.facebook {
-  background: #1877f2;
-}
-
-.email {
-  background: #b54d4d;
-}
+.facebook { background: #1877f2; }
+.email { background: #b54d4d; }
 
 footer {
   text-align: center;
-  padding: 28px 15px;
-  border-top: 1px solid rgba(255,255,255,.12);
-  color: var(--muted);
+  padding: 27px 15px;
+  background: rgba(14,32,51,.45);
+  border-top: 1px solid rgba(255,255,255,.2);
+  color: white;
   font-size: .9rem;
 }
 
 .visitor-counter {
   margin-top: 8px;
+  opacity: .85;
   font-size: .85rem;
-  opacity: .75;
 }
+
+.back-to-top {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 45px;
+  height: 45px;
+  border: none;
+  border-radius: 50%;
+  color: #172c49;
+  background: var(--gold);
+  font-size: 23px;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(0,0,0,.2);
+  z-index: 50;
+}
+
+/* ===== АДАПТИВНОСТЬ ===== */
 
 @media (max-width: 950px) {
   .gallery {
@@ -387,45 +703,71 @@ footer {
     grid-auto-rows: 100px;
   }
 
-  .about-wrap {
-    grid-template-columns: 1fr 1.3fr;
+  .hero {
+    padding: 60px 6%;
     gap: 25px;
   }
+
+  .about-wrap { gap: 25px; }
 }
 
-@media (max-width: 650px) {
+@media (max-width: 680px) {
   header {
     justify-content: center;
     text-align: center;
+    padding: 17px 5%;
   }
 
   nav {
     justify-content: center;
-    gap: 13px;
+    gap: 14px;
     width: 100%;
   }
 
   .hero {
-    min-height: 420px;
-    padding: 70px 7%;
+    grid-template-columns: 1fr;
+    text-align: center;
+    padding: 55px 7%;
+    gap: 35px;
   }
+
+  .hero p { margin-left: auto; margin-right: auto; }
+
+  .hero-art { order: -1; }
+
+  .art-circle { max-width: 200px; }
 
   .gallery {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    grid-auto-rows: 100px;
-    gap: 12px;
+    grid-auto-rows: 95px;
+    gap: 11px;
   }
+
+  section { padding: 48px 5%; }
 
   .about-wrap {
     grid-template-columns: 1fr;
+    padding: 20px;
   }
 
-  .about-art {
-    min-height: 200px;
+  .about-art { min-height: 200px; }
+
+  .contact-box { padding: 25px 15px; }
+
+  .brush-decoration {
+    width: 60px;
+    height: 200px;
+    opacity: .5;
   }
 
-  .contact-box {
-    padding: 25px 15px;
+  .lightbox-prev { left: 5px; }
+  .lightbox-next { right: 5px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    transition-duration: .01ms !important;
   }
 }
 </style>
@@ -433,21 +775,58 @@ footer {
 
 <body>
 
+<!-- Природный фон -->
+<div class="scenery" aria-hidden="true">
+  <div class="mountain back"></div>
+  <div class="mountain"></div>
+  <div class="water"></div>
+  <div class="tree-line"></div>
+  <div class="tree-line right"></div>
+  <div class="paint-splash splash-one"></div>
+  <div class="paint-splash splash-two"></div>
+</div>
+
+<!-- Декоративные кисти -->
+<svg class="brush-decoration" viewBox="0 0 100 300" aria-hidden="true">
+  <g transform="rotate(14 50 150)">
+    <rect x="38" y="70" width="18" height="200" rx="7" fill="#d6a55f"/>
+    <rect x="41" y="70" width="12" height="200" rx="4" fill="#8b5d43"/>
+    <rect x="37" y="72" width="20" height="22" rx="3" fill="#c4c9c9"/>
+    <path d="M37 70 L39 37 Q47 10 55 37 L57 70Z" fill="#b7a08a"/>
+    <path d="M40 65 L42 38 Q47 22 52 38 L54 65Z" fill="#344d68"/>
+    <path d="M39 70 L56 70 L53 82 L42 82Z" fill="#d6d6cf"/>
+  </g>
+  <g transform="rotate(-18 50 150)">
+    <rect x="68" y="110" width="9" height="160" rx="4" fill="#e1bd7d"/>
+    <path d="M67 112 Q72 78 78 112Z" fill="#d7b1a0"/>
+  </g>
+</svg>
+
+<div class="paint-dots" aria-hidden="true"></div>
+
 <header>
   <a href="#home" class="logo">Olga Morlang</a>
 
   <nav>
     <a href="#home" data-key="navHome">Startseite</a>
-    <a href="#gallery" data-key="navGallery">Galerie</a>
     <a href="#about" data-key="navAbout">Über mich</a>
+    <a href="#gallery" data-key="navGallery">Galerie</a>
     <a href="#contact" data-key="navContact">Kontakt</a>
   </nav>
 
-  <div class="languages" aria-label="Sprache wählen">
-    <button class="active" data-lang-button="de" onclick="changeLang('de')">DE</button>
-    <button data-lang-button="en" onclick="changeLang('en')">EN</button>
-    <button data-lang-button="ru" onclick="changeLang('ru')">RU</button>
-    <button data-lang-button="nl" onclick="changeLang('nl')">NL</button>
+  <div class="language-menu" id="languageMenu">
+    <button class="language-toggle" id="languageToggle"
+      type="button" aria-expanded="false" aria-controls="languageOptions">
+      <span id="currentLanguage">DE</span>
+      <span class="arrow">▼</span>
+    </button>
+
+    <div class="language-options" id="languageOptions">
+      <button type="button" data-lang-button="de" onclick="changeLang('de')">🇩🇪 Deutsch</button>
+      <button type="button" data-lang-button="en" onclick="changeLang('en')">🇬🇧 English</button>
+      <button type="button" data-lang-button="ru" onclick="changeLang('ru')">🇷🇺 Русский</button>
+      <button type="button" data-lang-button="nl" onclick="changeLang('nl')">🇳🇱 Nederlands</button>
+    </div>
   </div>
 </header>
 
@@ -455,21 +834,30 @@ footer {
   <section class="hero" id="home">
     <div class="hero-content">
       <div class="eyebrow" data-key="eyebrow">Kunst aus Leidenschaft</div>
-      <h1 data-key="heroTitle">Farben, Gefühle und Geschichten</h1>
+      <h1>
+        <span data-key="heroTitle">Farben, Gefühle</span>
+        <span data-key="heroTitle2">und Geschichten</span>
+      </h1>
       <p data-key="heroText">
         Willkommen in meiner Kunstwelt. Entdecken Sie einzigartige Gemälde,
         inspiriert von Emotionen, Natur und den kleinen Momenten des Lebens.
       </p>
       <a class="primary-button" href="#gallery" data-key="heroButton">
-        Gemälde entdecken
+        Gemälde entdecken →
       </a>
+    </div>
+
+    <div class="hero-art">
+      <div class="art-circle" data-key="artistLabel">
+        Olga Morlang<br>Originalkunst
+      </div>
     </div>
   </section>
 
   <section id="gallery">
     <div class="section-heading">
       <h2 data-key="galleryTitle">Meine Galerie</h2>
-      <p data-key="gallerySubtitle">Jedes Bild erzählt seine eigene Geschichte.</p>
+      <p data-key="gallerySubtitle">Inspiration in jedem Pinselstrich</p>
     </div>
 
     <div class="gallery-filters">
@@ -480,42 +868,42 @@ footer {
     </div>
 
     <div class="gallery">
-      <figure class="artwork" data-category="abstract">
+      <figure class="artwork" data-category="landscape" tabindex="0">
         <img src="1.jpeg" alt="Gemälde 1" loading="lazy">
-        <figcaption data-key="art1">Farben der Seele</figcaption>
+        <figcaption data-key="art1">Farben der Natur</figcaption>
       </figure>
 
-      <figure class="artwork" data-category="landscape">
+      <figure class="artwork" data-category="abstract" tabindex="0">
         <img src="2.jpeg" alt="Gemälde 2" loading="lazy">
-        <figcaption data-key="art2">Stille Natur</figcaption>
+        <figcaption data-key="art2">Farben der Seele</figcaption>
       </figure>
 
-      <figure class="artwork" data-category="modern">
+      <figure class="artwork" data-category="modern" tabindex="0">
         <img src="3.jpeg" alt="Gemälde 3" loading="lazy">
         <figcaption data-key="art3">Moderner Ausdruck</figcaption>
       </figure>
 
-      <figure class="artwork" data-category="abstract">
+      <figure class="artwork" data-category="abstract" tabindex="0">
         <img src="4.jpeg" alt="Gemälde 4" loading="lazy">
         <figcaption data-key="art4">Farbenspiel</figcaption>
       </figure>
 
-      <figure class="artwork" data-category="landscape">
+      <figure class="artwork" data-category="landscape" tabindex="0">
         <img src="5.jpeg" alt="Gemälde 5" loading="lazy">
-        <figcaption data-key="art5">Naturmomente</figcaption>
+        <figcaption data-key="art5">Stille Natur</figcaption>
       </figure>
 
-      <figure class="artwork" data-category="modern">
+      <figure class="artwork" data-category="modern" tabindex="0">
         <img src="7.jpeg" alt="Gemälde 6" loading="lazy">
         <figcaption data-key="art6">Neue Perspektive</figcaption>
       </figure>
 
-      <figure class="artwork" data-category="abstract">
+      <figure class="artwork" data-category="abstract" tabindex="0">
         <img src="22.jpeg" alt="Gemälde 7" loading="lazy">
         <figcaption data-key="art7">Emotionen in Farbe</figcaption>
       </figure>
 
-      <figure class="artwork" data-category="modern">
+      <figure class="artwork" data-category="landscape" tabindex="0">
         <img src="56.jpeg" alt="Gemälde 8" loading="lazy">
         <figcaption data-key="art8">Einzigartiger Moment</figcaption>
       </figure>
@@ -558,8 +946,8 @@ footer {
 
       <div class="socials">
         <a class="social-link instagram"
-           href="https://www.instagram.com/morlang643art?psln=MXAzZTEwdGlwdXJreA=="
-           target="_blank" rel="noopener noreferrer">
+          href="https://www.instagram.com/morlang643art?psln=MXAzZTEwdGlwdXJreA=="
+          target="_blank" rel="noopener noreferrer">
           <svg viewBox="0 0 24 24" aria-hidden="true">
             <path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm0 2.2A2.8 2.8 0 0 0 4.2 7v10A2.8 2.8 0 0 0 7 19.8h10a2.8 2.8 0 0 0 2.8-2.8V7A2.8 2.8 0 0 0 17 4.2H7zm5 3a4.8 4.8 0 1 1 0 9.6 4.8 4.8 0 0 1 0-9.6zm0 2.2a2.6 2.6 0 1 0 0 5.2 2.6 2.6 0 0 0 0-5.2zm5.1-3.8a1.1 1.1 0 1 1 0 2.2 1.1 1.1 0 0 1 0-2.2z"/>
           </svg>
@@ -567,8 +955,8 @@ footer {
         </a>
 
         <a class="social-link facebook"
-           href="https://www.facebook.com/share/19STKtEPq9/"
-           target="_blank" rel="noopener noreferrer">
+          href="https://www.facebook.com/share/19STKtEPq9/"
+          target="_blank" rel="noopener noreferrer">
           <svg viewBox="0 0 24 24" aria-hidden="true">
             <path d="M13.5 21v-8h2.7l.4-3.1h-3.1v-2c0-.9.3-1.5 1.6-1.5h1.7V3.6c-.3 0-1.3-.1-2.5-.1-2.5 0-4.2 1.5-4.2 4.3v2.1H7.3V13h2.8v8h3.4z"/>
           </svg>
@@ -589,90 +977,102 @@ footer {
 <footer>
   <div>© <span id="year"></span> Olga Morlang. <span data-key="footerText">Alle Rechte vorbehalten.</span></div>
   <div class="visitor-counter">
-    <span data-key="visitorLabel">Besuche auf diesem Browser:</span>
+    <span data-key="visitorLabel">Besuche in diesem Browser:</span>
     <span id="visitorCount">0</span>
   </div>
 </footer>
 
+<button class="back-to-top" id="backToTop" type="button"
+  aria-label="Nach oben" title="Nach oben">↑</button>
+
+<!-- Полноэкранный просмотр -->
+<div class="lightbox" id="lightbox"
+  role="dialog" aria-modal="true" aria-label="Bildansicht">
+  <button class="lightbox-close" id="lightboxClose"
+    type="button" aria-label="Schließen">×</button>
+  <button class="lightbox-prev" id="lightboxPrev"
+    type="button" aria-label="Vorheriges Bild">‹</button>
+  <img id="lightboxImage" src="" alt="">
+  <button class="lightbox-next" id="lightboxNext"
+    type="button" aria-label="Nächstes Bild">›</button>
+  <div class="lightbox-caption" id="lightboxCaption"></div>
+</div>
+
 <script>
 const translations = {
   de: {
-    navHome:"Startseite", navGallery:"Galerie", navAbout:"Über mich", navContact:"Kontakt",
+    navHome:"Startseite", navAbout:"Über mich", navGallery:"Galerie", navContact:"Kontakt",
     eyebrow:"Kunst aus Leidenschaft",
-    heroTitle:"Farben, Gefühle und Geschichten",
+    heroTitle:"Farben, Gefühle", heroTitle2:"und Geschichten",
     heroText:"Willkommen in meiner Kunstwelt. Entdecken Sie einzigartige Gemälde, inspiriert von Emotionen, Natur und den kleinen Momenten des Lebens.",
-    heroButton:"Gemälde entdecken",
-    galleryTitle:"Meine Galerie",
-    gallerySubtitle:"Jedes Bild erzählt seine eigene Geschichte.",
+    heroButton:"Galerie entdecken →", artistLabel:"Olga Morlang · Originalkunst",
+    galleryTitle:"Meine Galerie", gallerySubtitle:"Inspiration in jedem Pinselstrich",
     filterAll:"Alle Werke", filterAbstract:"Abstrakt", filterLandscape:"Landschaften", filterModern:"Modern",
-    art1:"Farben der Seele", art2:"Stille Natur", art3:"Moderner Ausdruck", art4:"Farbenspiel",
-    art5:"Naturmomente", art6:"Neue Perspektive", art7:"Emotionen in Farbe", art8:"Einzigartiger Moment",
+    art1:"Farben der Natur", art2:"Farben der Seele", art3:"Moderner Ausdruck", art4:"Farbenspiel",
+    art5:"Stille Natur", art6:"Neue Perspektive", art7:"Emotionen in Farbe", art8:"Einzigartiger Moment",
     aboutEyebrow:"Die Künstlerin", aboutTitle:"Über mich",
     aboutText1:"Willkommen in meiner kreativen Welt. Malerei ist für mich eine Möglichkeit, Gefühle auszudrücken und besondere Augenblicke in Farben und Formen festzuhalten.",
     aboutText2:"Jedes Werk entsteht mit Liebe zum Detail und dem Wunsch, Menschen zu berühren und ihre Fantasie anzuregen.",
-    contactTitle:"Kontakt",
-    contactSubtitle:"Haben Sie Interesse an einem Gemälde? Schreiben Sie mir gerne.",
+    contactTitle:"Kontakt", contactSubtitle:"Haben Sie Interesse an einem Gemälde? Schreiben Sie mir gerne.",
     contactText:"Für Fragen zu meinen Bildern, Preisen oder individuellen Anfragen erreichen Sie mich über die folgenden Kanäle.",
-    footerText:"Alle Rechte vorbehalten.", visitorLabel:"Besuche auf diesem Browser:"
+    footerText:"Alle Rechte vorbehalten.", visitorLabel:"Besuche in diesem Browser:"
   },
   en: {
-    navHome:"Home", navGallery:"Gallery", navAbout:"About me", navContact:"Contact",
+    navHome:"Home", navAbout:"About me", navGallery:"Gallery", navContact:"Contact",
     eyebrow:"Art with passion",
-    heroTitle:"Colours, emotions and stories",
+    heroTitle:"Colours, emotions", heroTitle2:"and stories",
     heroText:"Welcome to my world of art. Discover unique paintings inspired by emotions, nature and the little moments of life.",
-    heroButton:"Explore paintings",
-    galleryTitle:"My Gallery",
-    gallerySubtitle:"Every painting tells its own story.",
+    heroButton:"Explore gallery →", artistLabel:"Olga Morlang · Original art",
+    galleryTitle:"My Gallery", gallerySubtitle:"Inspiration in every brushstroke",
     filterAll:"All works", filterAbstract:"Abstract", filterLandscape:"Landscapes", filterModern:"Modern",
-    art1:"Colours of the Soul", art2:"Quiet Nature", art3:"Modern Expression", art4:"Play of Colours",
-    art5:"Moments in Nature", art6:"New Perspective", art7:"Emotions in Colour", art8:"A Unique Moment",
+    art1:"Colours of Nature", art2:"Colours of the Soul", art3:"Modern Expression", art4:"Play of Colours",
+    art5:"Quiet Nature", art6:"New Perspective", art7:"Emotions in Colour", art8:"A Unique Moment",
     aboutEyebrow:"The Artist", aboutTitle:"About Me",
     aboutText1:"Welcome to my creative world. Painting is a way for me to express feelings and capture special moments through colours and shapes.",
     aboutText2:"Each work is created with attention to detail and the desire to move people and inspire their imagination.",
-    contactTitle:"Contact",
-    contactSubtitle:"Interested in a painting? Feel free to get in touch.",
+    contactTitle:"Contact", contactSubtitle:"Interested in a painting? Feel free to get in touch.",
     contactText:"For questions about my paintings, prices or custom requests, you can reach me through the channels below.",
-    footerText:"All rights reserved.", visitorLabel:"Visits on this browser:"
+    footerText:"All rights reserved.", visitorLabel:"Visits in this browser:"
   },
   ru: {
-    navHome:"Главная", navGallery:"Галерея", navAbout:"Обо мне", navContact:"Контакты",
+    navHome:"Главная", navAbout:"Обо мне", navGallery:"Галерея", navContact:"Контакты",
     eyebrow:"Искусство с душой",
-    heroTitle:"Цвета, чувства и истории",
+    heroTitle:"Цвета, чувства", heroTitle2:"и истории",
     heroText:"Добро пожаловать в мой мир искусства. Откройте для себя картины, вдохновлённые эмоциями, природой и маленькими моментами жизни.",
-    heroButton:"Смотреть картины",
-    galleryTitle:"Моя галерея",
-    gallerySubtitle:"Каждая картина рассказывает свою историю.",
+    heroButton:"Смотреть галерею →", artistLabel:"Ольга Морланг · Авторские картины",
+    galleryTitle:"Моя галерея", gallerySubtitle:"Вдохновение в каждом мазке",
     filterAll:"Все работы", filterAbstract:"Абстракция", filterLandscape:"Пейзажи", filterModern:"Современное",
-    art1:"Цвета души", art2:"Тишина природы", art3:"Современное выражение", art4:"Игра цвета",
-    art5:"Мгновения природы", art6:"Новый взгляд", art7:"Эмоции в цвете", art8:"Особенный момент",
+    art1:"Краски природы", art2:"Цвета души", art3:"Современное выражение", art4:"Игра цвета",
+    art5:"Тишина природы", art6:"Новый взгляд", art7:"Эмоции в цвете", art8:"Особенный момент",
     aboutEyebrow:"Художница", aboutTitle:"Обо мне",
     aboutText1:"Добро пожаловать в мой творческий мир. Живопись для меня — способ выражать чувства и сохранять особенные мгновения с помощью цвета и формы.",
     aboutText2:"Каждая работа создаётся с любовью к деталям и желанием тронуть зрителя и вдохновить его воображение.",
-    contactTitle:"Контакты",
-    contactSubtitle:"Заинтересовала картина? Буду рада вашему сообщению.",
+    contactTitle:"Контакты", contactSubtitle:"Заинтересовала картина? Буду рада вашему сообщению.",
     contactText:"По вопросам о картинах, ценах или индивидуальных заказах вы можете связаться со мной через следующие каналы.",
     footerText:"Все права защищены.", visitorLabel:"Посещения в этом браузере:"
   },
   nl: {
-    navHome:"Home", navGallery:"Galerij", navAbout:"Over mij", navContact:"Contact",
+    navHome:"Home", navAbout:"Over mij", navGallery:"Galerij", navContact:"Contact",
     eyebrow:"Kunst met passie",
-    heroTitle:"Kleuren, gevoelens en verhalen",
+    heroTitle:"Kleuren, gevoelens", heroTitle2:"en verhalen",
     heroText:"Welkom in mijn kunstwereld. Ontdek unieke schilderijen, geïnspireerd door emoties, de natuur en de kleine momenten van het leven.",
-    heroButton:"Ontdek de schilderijen",
-    galleryTitle:"Mijn galerij",
-    gallerySubtitle:"Elk schilderij vertelt zijn eigen verhaal.",
+    heroButton:"Bekijk de galerij →", artistLabel:"Olga Morlang · Originele kunst",
+    galleryTitle:"Mijn galerij", gallerySubtitle:"Inspiratie in elke penseelstreek",
     filterAll:"Alle werken", filterAbstract:"Abstract", filterLandscape:"Landschappen", filterModern:"Modern",
-    art1:"Kleuren van de ziel", art2:"Stille natuur", art3:"Moderne expressie", art4:"Kleurenspel",
-    art5:"Momenten in de natuur", art6:"Nieuw perspectief", art7:"Emoties in kleur", art8:"Een uniek moment",
+    art1:"Kleuren van de natuur", art2:"Kleuren van de ziel", art3:"Moderne expressie", art4:"Kleurenspel",
+    art5:"Stille natuur", art6:"Nieuw perspectief", art7:"Emoties in kleur", art8:"Een uniek moment",
     aboutEyebrow:"De kunstenares", aboutTitle:"Over mij",
     aboutText1:"Welkom in mijn creatieve wereld. Schilderen is voor mij een manier om gevoelens uit te drukken en bijzondere momenten vast te leggen in kleuren en vormen.",
     aboutText2:"Elk werk wordt met oog voor detail gemaakt, met de wens om mensen te raken en hun verbeelding te prikkelen.",
-    contactTitle:"Contact",
-    contactSubtitle:"Interesse in een schilderij? Stuur gerust een bericht.",
+    contactTitle:"Contact", contactSubtitle:"Interesse in een schilderij? Stuur gerust een bericht.",
     contactText:"Voor vragen over mijn schilderijen, prijzen of persoonlijke opdrachten kunt u contact opnemen via onderstaande kanalen.",
     footerText:"Alle rechten voorbehouden.", visitorLabel:"Bezoeken in deze browser:"
   }
 };
+
+const languageMenu = document.getElementById("languageMenu");
+const languageToggle = document.getElementById("languageToggle");
+const currentLanguage = document.getElementById("currentLanguage");
 
 function changeLang(lang) {
   const dict = translations[lang];
@@ -682,18 +1082,37 @@ function changeLang(lang) {
 
   document.querySelectorAll("[data-key]").forEach(element => {
     const key = element.dataset.key;
-    if (dict[key]) element.textContent = dict[key];
+    if (Object.prototype.hasOwnProperty.call(dict, key)) {
+      element.textContent = dict[key];
+    }
   });
 
   document.querySelectorAll("[data-lang-button]").forEach(button => {
     button.classList.toggle("active", button.dataset.langButton === lang);
   });
 
+  currentLanguage.textContent = lang.toUpperCase();
+  languageMenu.classList.remove("open");
+  languageToggle.setAttribute("aria-expanded", "false");
+
   try {
     localStorage.setItem("olgaSiteLanguage", lang);
   } catch (error) {}
 }
 
+languageToggle.addEventListener("click", () => {
+  const open = languageMenu.classList.toggle("open");
+  languageToggle.setAttribute("aria-expanded", String(open));
+});
+
+document.addEventListener("click", event => {
+  if (!languageMenu.contains(event.target)) {
+    languageMenu.classList.remove("open");
+    languageToggle.setAttribute("aria-expanded", "false");
+  }
+});
+
+/* Фильтры галереи */
 document.querySelectorAll("[data-filter]").forEach(button => {
   button.addEventListener("click", () => {
     const filter = button.dataset.filter;
@@ -703,15 +1122,98 @@ document.querySelectorAll("[data-filter]").forEach(button => {
     });
 
     document.querySelectorAll(".artwork").forEach(artwork => {
-      const matches = filter === "all" || artwork.dataset.category === filter;
+      const matches =
+        filter === "all" || artwork.dataset.category === filter;
       artwork.classList.toggle("hidden", !matches);
     });
   });
 });
 
+/* Просмотр картин в полном размере */
+const lightbox = document.getElementById("lightbox");
+const lightboxImage = document.getElementById("lightboxImage");
+const lightboxCaption = document.getElementById("lightboxCaption");
+const lightboxClose = document.getElementById("lightboxClose");
+const lightboxPrev = document.getElementById("lightboxPrev");
+const lightboxNext = document.getElementById("lightboxNext");
+
+let currentArtworkIndex = 0;
+let visibleArtworks = [];
+
+function updateVisibleArtworks() {
+  visibleArtworks = [...document.querySelectorAll(".artwork")]
+    .filter(artwork => !artwork.classList.contains("hidden"));
+}
+
+function showArtwork(index) {
+  updateVisibleArtworks();
+  if (!visibleArtworks.length) return;
+
+  currentArtworkIndex =
+    (index + visibleArtworks.length) % visibleArtworks.length;
+
+  const artwork = visibleArtworks[currentArtworkIndex];
+  const img = artwork.querySelector("img");
+  const caption = artwork.querySelector("figcaption");
+
+  lightboxImage.src = img.src;
+  lightboxImage.alt = img.alt || "";
+  lightboxCaption.textContent = caption ? caption.textContent : "";
+
+  lightbox.classList.add("open");
+  document.body.classList.add("lightbox-open");
+  lightboxClose.focus();
+}
+
+function closeLightbox() {
+  lightbox.classList.remove("open");
+  document.body.classList.remove("lightbox-open");
+  lightboxImage.src = "";
+}
+
+document.querySelectorAll(".artwork").forEach(artwork => {
+  artwork.setAttribute("role", "button");
+  artwork.setAttribute("aria-label", "Bild in voller Größe öffnen");
+
+  artwork.addEventListener("click", () => {
+    updateVisibleArtworks();
+    showArtwork(visibleArtworks.indexOf(artwork));
+  });
+
+  artwork.addEventListener("keydown", event => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      updateVisibleArtworks();
+      showArtwork(visibleArtworks.indexOf(artwork));
+    }
+  });
+});
+
+lightboxClose.addEventListener("click", closeLightbox);
+lightboxPrev.addEventListener("click", () => showArtwork(currentArtworkIndex - 1));
+lightboxNext.addEventListener("click", () => showArtwork(currentArtworkIndex + 1));
+
+lightbox.addEventListener("click", event => {
+  if (event.target === lightbox) closeLightbox();
+});
+
+document.addEventListener("keydown", event => {
+  if (!lightbox.classList.contains("open")) return;
+
+  if (event.key === "Escape") closeLightbox();
+  if (event.key === "ArrowLeft") showArtwork(currentArtworkIndex - 1);
+  if (event.key === "ArrowRight") showArtwork(currentArtworkIndex + 1);
+});
+
+/* Кнопка наверх */
+document.getElementById("backToTop").addEventListener("click", () => {
+  window.scrollTo({ top: 0, behavior: "smooth" });
+});
+
+/* Год в подвале */
 document.getElementById("year").textContent = new Date().getFullYear();
 
-/* Это локальный счётчик в данном браузере, а не общий счётчик сайта. */
+/* Локальный счётчик — только для этого браузера */
 try {
   const key = "olgaMorlangVisits";
   const visits = Number(localStorage.getItem(key) || 0) + 1;
@@ -721,6 +1223,7 @@ try {
   document.getElementById("visitorCount").textContent = "—";
 }
 
+/* Сохраняем выбранный язык */
 let savedLanguage = "de";
 try {
   savedLanguage = localStorage.getItem("olgaSiteLanguage") || "de";
@@ -731,3 +1234,6 @@ changeLang(savedLanguage);
 
 </body>
 </html>
+
+
+
