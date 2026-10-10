@@ -22,7 +22,7 @@ body{
     overflow-x: hidden;
 }
 
-/* Элементы фона */
+/* Фоновые кисти */
 .creative-bg {
     position: fixed;
     top: 0;
@@ -57,18 +57,18 @@ header {
     justify-content: space-between;
     align-items: center;
     border-bottom: 1px solid rgba(255,255,255,0.1);
-    background: rgba(11, 19, 31, 0.85);
+    background: rgba(11, 19, 31, 0.9);
     backdrop-filter: blur(12px);
     position: sticky;
     top: 0;
-    z-index: 100;
+    z-index: 1000;
 }
 .logo { font-size: 22px; font-weight: bold; letter-spacing: 4px; color: #fff; }
 nav { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
 nav a { color: #ddd; text-decoration: none; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; }
 nav a:hover { color: #ff7f50; }
 
-/* Кнопки языков */
+/* Кнопки переключения языков */
 .lang-switcher {
     display: flex;
     gap: 6px;
@@ -90,7 +90,7 @@ nav a:hover { color: #ff7f50; }
     border-color: #ff7f50;
 }
 
-/* Hero-секция */
+/* Главная секция */
 .hero { padding: 80px 7%; display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center; }
 .tag { color: #ff7f50; letter-spacing: 3px; font-size: 12px; text-transform: uppercase; font-weight: bold; }
 h1 { font-size: clamp(40px, 5.5vw, 70px); line-height: 1.05; margin: 20px 0; }
@@ -122,7 +122,7 @@ h1 { font-size: clamp(40px, 5.5vw, 70px); line-height: 1.05; margin: 20px 0; }
     border-color: #ff7f50;
 }
 
-/* Сетка галереи */
+/* Галерея */
 section { padding: 60px 7%; }
 h2 { font-size: 36px; margin: 12px 0; }
 .sub { color: #aeb5c5; line-height: 1.7; }
@@ -145,49 +145,39 @@ h2 { font-size: 36px; margin: 12px 0; }
 .card-style { display: inline-block; font-size: 11px; background: rgba(255,127,80,0.15); color: #ff7f50; padding: 3px 8px; border-radius: 4px; margin-bottom: 8px; text-transform: uppercase; }
 .price { color: #ff7f50; font-weight: bold; font-size: 14px; }
 
-/* Секция "Über mich" */
+/* О художнике */
 .about { background: rgba(15, 23, 36, 0.7); backdrop-filter: blur(8px); border-radius: 12px; margin: 40px 7%; padding: 50px 6%; }
 
-/* Секция социальных сетей и контактов */
-.contact { border: 1px solid rgba(255,255,255,0.1); padding: 40px; margin-top: 20px; background: rgba(21, 29, 42, 0.8); backdrop-filter: blur(8px); border-radius: 8px; }
+/* Контакты */
+.contact-box {
+    border: 1px solid rgba(255,255,255,0.1);
+    padding: 40px;
+    margin-top: 20px;
+    background: rgba(21, 29, 42, 0.85);
+    backdrop-filter: blur(8px);
+    border-radius: 8px;
+}
 .contact-links { margin-top: 25px; display: flex; gap: 18px; flex-wrap: wrap; }
 
 .social-btn {
     display: inline-flex;
     align-items: center;
     gap: 10px;
-    padding: 10px 20px;
+    padding: 12px 24px;
     border-radius: 30px;
     text-decoration: none;
     font-weight: bold;
     font-size: 14px;
     color: #fff;
-    transition: transform 0.2s, box-shadow 0.2s;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: transform 0.2s;
 }
-.social-btn:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-}
+.social-btn:hover { transform: translateY(-3px); }
+.social-btn.instagram { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); }
+.social-btn.facebook { background: #1877f2; }
+.social-btn.email { background: #ff4757; }
+.social-btn svg { width: 18px; height: 18px; fill: #fff; }
 
-.social-btn.instagram {
-    background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
-}
-.social-btn.facebook {
-    background: #1877f2;
-}
-.social-btn.email {
-    background: #ff4757;
-}
-
-.social-btn svg {
-    width: 20px;
-    height: 20px;
-    fill: currentColor;
-}
-
-/* Подвал и счётчик посетителей */
+/* Подвал */
 footer {
     padding: 30px 7%;
     border-top: 1px solid rgba(255,255,255,0.1);
@@ -211,10 +201,7 @@ footer {
     color: #bdc3d1;
 }
 
-.visitor-count-num {
-    color: #ff7f50;
-    font-weight: bold;
-}
+.visitor-count-num { color: #ff7f50; font-weight: bold; }
 
 @media(max-width: 850px) {
     header { flex-direction: column; align-items: flex-start; gap: 15px; }
@@ -242,7 +229,6 @@ footer {
     <a href="#about" data-key="nav_about">Über mich</a>
     <a href="#contact" data-key="nav_contact">Kontakt</a>
 
-    <!-- Переключатель языков -->
     <div class="lang-switcher">
       <button class="lang-btn active-lang" onclick="changeLang('de', this)">DE</button>
       <button class="lang-btn" onclick="changeLang('en', this)">EN</button>
@@ -268,7 +254,6 @@ footer {
     <h2 data-key="gallery_title">Meine Kunstwerke</h2>
     <p class="sub" data-key="gallery_sub">Filtern Sie die Werke nach Malstil und Entstehungsart:</p>
 
-    <!-- Фильтры категорий -->
     <div class="filter-container">
       <button class="filter-btn active" onclick="filterGallery('all', this)" data-key="filter_all">Alle Werke</button>
       <button class="filter-btn" onclick="filterGallery('abstract', this)" data-key="filter_abstract">Abstrakt</button>
@@ -276,7 +261,6 @@ footer {
       <button class="filter-btn" onclick="filterGallery('modern', this)" data-key="filter_modern">Moderne Kunst</button>
     </div>
 
-    <!-- Галерея -->
     <div class="gallery">
       <article class="card" data-style="abstract">
         <img src="1.jpeg" alt="Gemälde 1">
@@ -305,4 +289,63 @@ footer {
       <article class="card" data-style="modern">
         <img src="4.jpeg" alt="Gemälde 4">
         <span class="card-style" data-key="style_modern">Moderne Kunst</span>
-        <h3 data-key="art_4">
+        <h3 data-key="art_4">Kunstwerk Nr. 4</h3>
+        <p data-key="mat_acryl">Acryl auf Leinwand</p>
+        <div class="price" data-key="price_req">Preis auf Anfrage</div>
+      </article>
+
+      <article class="card" data-style="landscape">
+        <img src="5.jpeg" alt="Gemälde 5">
+        <span class="card-style" data-key="style_landscape">Landschaften</span>
+        <h3 data-key="art_5">Kunstwerk Nr. 5</h3>
+        <p data-key="mat_oil">Öl auf Leinwand</p>
+        <div class="price" data-key="price_req">Preis auf Anfrage</div>
+      </article>
+
+      <article class="card" data-style="modern">
+        <img src="7.jpeg" alt="Gemälde 6">
+        <span class="card-style" data-key="style_modern">Moderne Kunst</span>
+        <h3 data-key="art_6">Kunstwerk Nr. 6</h3>
+        <p data-key="mat_mix">Mischtechnik</p>
+        <div class="price" data-key="price_req">Preis auf Anfrage</div>
+      </article>
+
+      <article class="card" data-style="abstract">
+        <img src="22.jpeg" alt="Gemälde 7">
+        <span class="card-style" data-key="style_abstract">Abstrakt</span>
+        <h3 data-key="art_7">Kunstwerk Nr. 7</h3>
+        <p data-key="mat_acryl">Acryl auf Leinwand</p>
+        <div class="price" data-key="price_req">Preis auf Anfrage</div>
+      </article>
+
+      <article class="card" data-style="landscape">
+        <img src="56.jpeg" alt="Gemälde 8">
+        <span class="card-style" data-key="style_landscape">Landschaften</span>
+        <h3 data-key="art_8">Kunstwerk Nr. 8</h3>
+        <p data-key="mat_oil">Öl auf Leinwand</p>
+        <div class="price" data-key="price_req">Preis auf Anfrage</div>
+      </article>
+    </div>
+  </section>
+
+  <section id="about" class="about">
+    <div class="tag" data-key="about_tag">Die Künstlerin</div>
+    <h2 data-key="about_title">Über mich</h2>
+    <p data-key="about_text1">Mein Name ist Olga Morlang. In meinen Gemälden bringe ich meine persönliche Sicht auf Farben, Stimmungen und die Schönheit der Welt zum Ausdruck.</p>
+    <p data-key="about_text2">Jedes Werk entsteht mit Liebe zum Detail und hat seinen ganz eigenen Charakter.</p>
+  </section>
+
+  <section id="contact">
+    <div class="tag" data-key="contact_tag">Kontakt</div>
+    <div class="contact-box">
+      <h2 data-key="contact_title">Interessieren Sie sich für ein Kunstwerk?</h2>
+      <p data-key="contact_desc">Schreiben Sie mir gerne, um mehr über ein Gemälde, den Preis oder den Versand zu erfahren.</p>
+      
+      <div class="contact-links">
+        <a href="https://www.instagram.com/morlang643art?psln=MXAzZTEwdGlwdXJreA==" target="_blank" class="social-btn instagram">
+          <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          Instagram
+        </a>
+        
+        <a href="https://www.facebook.com/share/19STKtEPq9/" target="_blank" class="social-btn facebook">
+          <svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24
