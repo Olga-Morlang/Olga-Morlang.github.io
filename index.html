@@ -2,358 +2,583 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Entdecken Sie die Originalgemälde von Olga Morlang.">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#101a35">
 <title>Olga Morlang | Kunstgalerie</title>
+
 <style>
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{
-    margin:0;
-    background: 
-        radial-gradient(circle at 80% 20%, rgba(235, 87, 87, 0.2) 0%, transparent 40%),
-        radial-gradient(circle at 20% 80%, rgba(242, 153, 74, 0.18) 0%, transparent 45%),
-        radial-gradient(circle at 50% 50%, rgba(19, 115, 122, 0.28) 0%, transparent 60%),
-        linear-gradient(135deg, #0b131f 0%, #151d2a 50%, #090e18 100%);
-    color:#f5f5f7;
-    font-family: Arial, sans-serif;
-    min-height: 100vh;
-    position: relative;
-    overflow-x: hidden;
+:root {
+  --bg: #101a35;
+  --bg2: #18284a;
+  --text: #f7f2ea;
+  --muted: #c2c9d9;
+  --gold: #d8b77a;
+  --card: rgba(255,255,255,.07);
 }
 
-/* Фоновые кисти */
-.creative-bg {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: -1;
-    overflow: hidden;
+* {
+  box-sizing: border-box;
 }
 
-.brush-element {
-    position: absolute;
-    opacity: 0.12;
-    fill: #e0e6ed;
-    animation: drift 20s linear infinite;
+html {
+  scroll-behavior: smooth;
 }
 
-.brush-1 { top: 15%; left: 8%; width: 60px; transform: rotate(-25deg); }
-.brush-2 { top: 75%; right: 12%; width: 55px; transform: rotate(45deg); }
-
-@keyframes drift {
-    0% { transform: translateY(0) rotate(0deg); }
-    50% { transform: translateY(-20px) rotate(10deg); }
-    100% { transform: translateY(0) rotate(0deg); }
+body {
+  margin: 0;
+  color: var(--text);
+  font-family: Georgia, "Times New Roman", serif;
+  background:
+    radial-gradient(ellipse at 15% 15%, rgba(94,119,180,.22), transparent 35%),
+    radial-gradient(ellipse at 90% 35%, rgba(179,119,92,.15), transparent 30%),
+    linear-gradient(135deg, #0c142a, #172748 55%, #101a35);
+  min-height: 100vh;
 }
 
-/* Шапка сайта */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: .18;
+  background:
+    radial-gradient(ellipse at 8% 40%, #d9b777 0 2px, transparent 4px),
+    radial-gradient(ellipse at 90% 15%, #b8c7e8 0 3px, transparent 5px),
+    radial-gradient(ellipse at 80% 80%, #c78d70 0 2px, transparent 4px);
+  background-size: 180px 200px, 230px 240px, 190px 220px;
+  z-index: -1;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+}
+
 header {
-    padding: 18px 7%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
-    background: rgba(11, 19, 31, 0.9);
-    backdrop-filter: blur(12px);
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-}
-.logo { font-size: 22px; font-weight: bold; letter-spacing: 4px; color: #fff; }
-nav { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
-nav a { color: #ddd; text-decoration: none; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; }
-nav a:hover { color: #ff7f50; }
-
-/* Кнопки переключения языков */
-.lang-switcher {
-    display: flex;
-    gap: 6px;
-    align-items: center;
-}
-.lang-btn {
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    color: #fff;
-    padding: 5px 9px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 12px;
-    font-weight: bold;
-    transition: 0.3s;
-}
-.lang-btn:hover, .lang-btn.active-lang {
-    background: #ff7f50;
-    border-color: #ff7f50;
+  position: relative;
+  padding: 22px 6%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+  border-bottom: 1px solid rgba(255,255,255,.12);
+  background: rgba(9,16,34,.42);
+  backdrop-filter: blur(12px);
 }
 
-/* Главная секция */
-.hero { padding: 80px 7%; display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center; }
-.tag { color: #ff7f50; letter-spacing: 3px; font-size: 12px; text-transform: uppercase; font-weight: bold; }
-h1 { font-size: clamp(40px, 5.5vw, 70px); line-height: 1.05; margin: 20px 0; }
-.hero p, .about p, .contact p { color: #bdc3d1; line-height: 1.8; }
-.btn { display: inline-block; background: #ff4757; color: white; padding: 15px 28px; text-decoration: none; margin-top: 20px; font-size: 13px; font-weight: bold; border-radius: 4px; transition: 0.3s; }
-.btn:hover { background: #ff6b81; transform: translateY(-2px); }
-.hero img { width: 100%; height: 430px; object-fit: cover; background: #1b263b; padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); }
-
-/* Фильтры категорий */
-.filter-container {
-    display: flex;
-    gap: 12px;
-    flex-wrap: wrap;
-    margin: 25px 0 35px 0;
-}
-.filter-btn {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    color: #bdc3d1;
-    padding: 10px 20px;
-    border-radius: 30px;
-    cursor: pointer;
-    font-size: 13px;
-    transition: all 0.3s ease;
-}
-.filter-btn:hover, .filter-btn.active {
-    background: #ff7f50;
-    color: #fff;
-    border-color: #ff7f50;
+.logo {
+  font-size: 1.35rem;
+  letter-spacing: 2px;
+  color: var(--gold);
 }
 
-/* Галерея */
-section { padding: 60px 7%; }
-h2 { font-size: 36px; margin: 12px 0; }
-.sub { color: #aeb5c5; line-height: 1.7; }
-.gallery { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
-
-.card {
-    background: rgba(21, 29, 42, 0.85);
-    backdrop-filter: blur(8px);
-    padding: 16px;
-    border-radius: 8px;
-    border: 1px solid rgba(255,255,255,0.08);
-    transition: transform 0.3s ease, opacity 0.3s ease;
+nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
 }
-.card:hover { transform: translateY(-5px); border-color: rgba(255,127,80,0.4); }
-.card.hide { display: none; }
 
-.card img { width: 100%; height: 280px; object-fit: contain; background: #0c121c; border-radius: 4px; display: block; }
-.card h3 { font-size: 18px; font-weight: 500; margin: 14px 0 6px; }
-.card p { font-size: 13px; color: #aeb5c5; margin: 0 0 10px 0; }
-.card-style { display: inline-block; font-size: 11px; background: rgba(255,127,80,0.15); color: #ff7f50; padding: 3px 8px; border-radius: 4px; margin-bottom: 8px; text-transform: uppercase; }
-.price { color: #ff7f50; font-weight: bold; font-size: 14px; }
+nav a {
+  color: var(--muted);
+  transition: color .2s;
+}
 
-/* О художнике */
-.about { background: rgba(15, 23, 36, 0.7); backdrop-filter: blur(8px); border-radius: 12px; margin: 40px 7%; padding: 50px 6%; }
+nav a:hover {
+  color: var(--gold);
+}
 
-/* Контакты */
+.languages {
+  display: flex;
+  gap: 6px;
+}
+
+.languages button {
+  border: 1px solid rgba(255,255,255,.2);
+  color: var(--text);
+  background: rgba(255,255,255,.06);
+  padding: 7px 10px;
+  border-radius: 7px;
+  cursor: pointer;
+}
+
+.languages button.active,
+.languages button:hover {
+  color: #18213a;
+  background: var(--gold);
+  border-color: var(--gold);
+}
+
+.hero {
+  min-height: 520px;
+  padding: 95px 7% 85px;
+  display: flex;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  right: 8%;
+  top: 12%;
+  width: 280px;
+  height: 350px;
+  border-radius: 50% 40% 55% 35%;
+  background: linear-gradient(135deg, rgba(218,183,122,.15), rgba(105,130,183,.08));
+  filter: blur(2px);
+  transform: rotate(-18deg);
+}
+
+.hero-content {
+  max-width: 720px;
+  position: relative;
+  z-index: 1;
+}
+
+.eyebrow {
+  color: var(--gold);
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  font-size: .8rem;
+}
+
+h1 {
+  font-size: clamp(2.8rem, 7vw, 5.8rem);
+  line-height: 1.05;
+  font-weight: normal;
+  margin: 20px 0;
+}
+
+.hero p {
+  color: var(--muted);
+  max-width: 580px;
+  line-height: 1.8;
+  font-size: 1.12rem;
+}
+
+.primary-button {
+  display: inline-block;
+  margin-top: 18px;
+  padding: 13px 24px;
+  background: var(--gold);
+  color: #17203a;
+  border-radius: 5px;
+  transition: transform .2s, background .2s;
+}
+
+.primary-button:hover {
+  transform: translateY(-2px);
+  background: #eed29a;
+}
+
+section {
+  padding: 70px 6%;
+  scroll-margin-top: 25px;
+}
+
+.section-heading {
+  text-align: center;
+  margin: 0 auto 38px;
+}
+
+.section-heading h2 {
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: normal;
+  margin: 0 0 12px;
+}
+
+.section-heading p {
+  color: var(--muted);
+  margin: 0;
+}
+
+.gallery-filters {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 35px;
+}
+
+.gallery-filters button {
+  padding: 9px 16px;
+  border: 1px solid rgba(255,255,255,.2);
+  border-radius: 20px;
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+}
+
+.gallery-filters button.active,
+.gallery-filters button:hover {
+  background: var(--gold);
+  color: #18213a;
+  border-color: var(--gold);
+}
+
+/* Галерея с картинами разной высоты */
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-auto-rows: 115px;
+  grid-auto-flow: dense;
+  gap: 18px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.artwork {
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+  background: #202e4c;
+  border: 1px solid rgba(255,255,255,.1);
+  grid-row: span 3;
+  min-height: 0;
+}
+
+.artwork:nth-child(3n + 1) {
+  grid-row: span 4;
+}
+
+.artwork:nth-child(4n + 2) {
+  grid-row: span 3;
+}
+
+.artwork:nth-child(5n) {
+  grid-row: span 5;
+}
+
+.artwork img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .6s;
+}
+
+.artwork:hover img {
+  transform: scale(1.06);
+}
+
+.artwork figcaption {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 28px 15px 14px;
+  background: linear-gradient(transparent, rgba(5,10,24,.9));
+  font-size: 1rem;
+}
+
+.artwork.hidden {
+  display: none;
+}
+
+.about-wrap {
+  max-width: 1000px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  gap: 45px;
+  align-items: center;
+}
+
+.about-art {
+  min-height: 300px;
+  border-radius: 45% 45% 8px 8px;
+  background:
+    radial-gradient(ellipse at 30% 25%, rgba(220,179,119,.6), transparent 28%),
+    radial-gradient(ellipse at 70% 60%, rgba(115,142,185,.6), transparent 35%),
+    linear-gradient(145deg, #263b60, #121b36);
+  border: 1px solid rgba(255,255,255,.14);
+}
+
+.about-text h2 {
+  font-size: 2.5rem;
+  font-weight: normal;
+  margin-top: 0;
+}
+
+.about-text p {
+  color: var(--muted);
+  line-height: 1.9;
+}
+
 .contact-box {
-    border: 1px solid rgba(255,255,255,0.1);
-    padding: 40px;
-    margin-top: 20px;
-    background: rgba(21, 29, 42, 0.85);
-    backdrop-filter: blur(8px);
-    border-radius: 8px;
+  max-width: 800px;
+  margin: auto;
+  padding: 35px;
+  text-align: center;
+  border: 1px solid rgba(255,255,255,.13);
+  border-radius: 12px;
+  background: rgba(255,255,255,.045);
 }
-.contact-links { margin-top: 25px; display: flex; gap: 18px; flex-wrap: wrap; }
 
-.social-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    padding: 12px 24px;
-    border-radius: 30px;
-    text-decoration: none;
-    font-weight: bold;
-    font-size: 14px;
-    color: #fff;
-    transition: transform 0.2s;
+.contact-box p {
+  color: var(--muted);
+  line-height: 1.8;
 }
-.social-btn:hover { transform: translateY(-3px); }
-.social-btn.instagram { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); }
-.social-btn.facebook { background: #1877f2; }
-.social-btn.email { background: #ff4757; }
-.social-btn svg { width: 18px; height: 18px; fill: #fff; }
 
-/* Подвал */
+.socials {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-top: 25px;
+}
+
+.social-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 12px 17px;
+  color: white;
+  border-radius: 7px;
+  transition: transform .2s, opacity .2s;
+}
+
+.social-link:hover {
+  transform: translateY(-3px);
+  opacity: .9;
+}
+
+.social-link svg {
+  width: 21px;
+  height: 21px;
+  fill: currentColor;
+}
+
+.instagram {
+  background: linear-gradient(45deg, #f9ce34, #ee2a7b, #6228d7);
+}
+
+.facebook {
+  background: #1877f2;
+}
+
+.email {
+  background: #b54d4d;
+}
+
 footer {
-    padding: 30px 7%;
-    border-top: 1px solid rgba(255,255,255,0.1);
-    color: #8e96a9;
-    font-size: 12px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 15px;
+  text-align: center;
+  padding: 28px 15px;
+  border-top: 1px solid rgba(255,255,255,.12);
+  color: var(--muted);
+  font-size: .9rem;
 }
 
 .visitor-counter {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    background: rgba(255, 255, 255, 0.05);
-    padding: 6px 14px;
-    border-radius: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    color: #bdc3d1;
+  margin-top: 8px;
+  font-size: .85rem;
+  opacity: .75;
 }
 
-.visitor-count-num { color: #ff7f50; font-weight: bold; }
+@media (max-width: 950px) {
+  .gallery {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-auto-rows: 100px;
+  }
 
-@media(max-width: 850px) {
-    header { flex-direction: column; align-items: flex-start; gap: 15px; }
-    .hero { grid-template-columns: 1fr; }
-    .gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .about { margin: 20px 0; }
-    footer { flex-direction: column; align-items: flex-start; }
+  .about-wrap {
+    grid-template-columns: 1fr 1.3fr;
+    gap: 25px;
+  }
 }
-@media(max-width: 480px) {
-    .gallery { grid-template-columns: 1fr; }
+
+@media (max-width: 650px) {
+  header {
+    justify-content: center;
+    text-align: center;
+  }
+
+  nav {
+    justify-content: center;
+    gap: 13px;
+    width: 100%;
+  }
+
+  .hero {
+    min-height: 420px;
+    padding: 70px 7%;
+  }
+
+  .gallery {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-auto-rows: 100px;
+    gap: 12px;
+  }
+
+  .about-wrap {
+    grid-template-columns: 1fr;
+  }
+
+  .about-art {
+    min-height: 200px;
+  }
+
+  .contact-box {
+    padding: 25px 15px;
+  }
 }
 </style>
 </head>
+
 <body>
 
-<div class="creative-bg">
-    <svg class="brush-element brush-1" viewBox="0 0 24 24"><path d="M6 14l3 3m5.5-10.5l3 3M4 20l2-2.5L16.5 7c.8-.8 2-.8 2.8 0s.8 2 0 2.8L8.8 20.2 4 20z"/></svg>
-    <svg class="brush-element brush-2" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>
-</div>
-
 <header>
-  <div class="logo">OLGA MORLANG</div>
-  <nav>
-    <a href="#gallery" data-key="nav_gallery">Galerie</a>
-    <a href="#about" data-key="nav_about">Über mich</a>
-    <a href="#contact" data-key="nav_contact">Kontakt</a>
+  <a href="#home" class="logo">Olga Morlang</a>
 
-    <div class="lang-switcher">
-      <button class="lang-btn active-lang" onclick="changeLang('de', this)">DE</button>
-      <button class="lang-btn" onclick="changeLang('en', this)">EN</button>
-      <button class="lang-btn" onclick="changeLang('ru', this)">RU</button>
-      <button class="lang-btn" onclick="changeLang('nl', this)">NL</button>
-    </div>
+  <nav>
+    <a href="#home" data-key="navHome">Startseite</a>
+    <a href="#gallery" data-key="navGallery">Galerie</a>
+    <a href="#about" data-key="navAbout">Über mich</a>
+    <a href="#contact" data-key="navContact">Kontakt</a>
   </nav>
+
+  <div class="languages" aria-label="Sprache wählen">
+    <button class="active" data-lang-button="de" onclick="changeLang('de')">DE</button>
+    <button data-lang-button="en" onclick="changeLang('en')">EN</button>
+    <button data-lang-button="ru" onclick="changeLang('ru')">RU</button>
+    <button data-lang-button="nl" onclick="changeLang('nl')">NL</button>
+  </div>
 </header>
 
 <main>
-  <div class="hero">
-    <div>
-      <div class="tag" data-key="hero_tag">Originalkunstwerke</div>
-      <h1 data-key="hero_title">Kunst, die<br>Geschichten erzählt.</h1>
-      <p data-key="hero_desc">Willkommen in meiner Galerie. Entdecken Sie einzigartige Gemälde, inspiriert von Farben, Gefühlen und den kleinen Wundern des Lebens.</p>
-      <a class="btn" href="#gallery" data-key="hero_btn">KUNSTWERKE ENTDECKEN ↗️</a>
+  <section class="hero" id="home">
+    <div class="hero-content">
+      <div class="eyebrow" data-key="eyebrow">Kunst aus Leidenschaft</div>
+      <h1 data-key="heroTitle">Farben, Gefühle und Geschichten</h1>
+      <p data-key="heroText">
+        Willkommen in meiner Kunstwelt. Entdecken Sie einzigartige Gemälde,
+        inspiriert von Emotionen, Natur und den kleinen Momenten des Lebens.
+      </p>
+      <a class="primary-button" href="#gallery" data-key="heroButton">
+        Gemälde entdecken
+      </a>
     </div>
-    <img src="1.jpeg" alt="Gemälde von Olga Morlang">
-  </div>
+  </section>
 
   <section id="gallery">
-    <div class="tag" data-key="gallery_tag">Ausgewählte Werke</div>
-    <h2 data-key="gallery_title">Meine Kunstwerke</h2>
-    <p class="sub" data-key="gallery_sub">Filtern Sie die Werke nach Malstil und Entstehungsart:</p>
+    <div class="section-heading">
+      <h2 data-key="galleryTitle">Meine Galerie</h2>
+      <p data-key="gallerySubtitle">Jedes Bild erzählt seine eigene Geschichte.</p>
+    </div>
 
-    <div class="filter-container">
-      <button class="filter-btn active" onclick="filterGallery('all', this)" data-key="filter_all">Alle Werke</button>
-      <button class="filter-btn" onclick="filterGallery('abstract', this)" data-key="filter_abstract">Abstrakt</button>
-      <button class="filter-btn" onclick="filterGallery('landscape', this)" data-key="filter_landscape">Landschaften</button>
-      <button class="filter-btn" onclick="filterGallery('modern', this)" data-key="filter_modern">Moderne Kunst</button>
+    <div class="gallery-filters">
+      <button class="active" data-filter="all" data-key="filterAll">Alle Werke</button>
+      <button data-filter="abstract" data-key="filterAbstract">Abstrakt</button>
+      <button data-filter="landscape" data-key="filterLandscape">Landschaften</button>
+      <button data-filter="modern" data-key="filterModern">Modern</button>
     </div>
 
     <div class="gallery">
-      <article class="card" data-style="abstract">
-        <img src="1.jpeg" alt="Gemälde 1">
-        <span class="card-style" data-key="style_abstract">Abstrakt</span>
-        <h3 data-key="art_1">Kunstwerk Nr. 1</h3>
-        <p data-key="mat_acryl">Acryl auf Leinwand</p>
-        <div class="price" data-key="price_req">Preis auf Anfrage</div>
-      </article>
+      <figure class="artwork" data-category="abstract">
+        <img src="1.jpeg" alt="Gemälde 1" loading="lazy">
+        <figcaption data-key="art1">Farben der Seele</figcaption>
+      </figure>
 
-      <article class="card" data-style="landscape">
-        <img src="2.jpeg" alt="Gemälde 2">
-        <span class="card-style" data-key="style_landscape">Landschaften</span>
-        <h3 data-key="art_2">Kunstwerk Nr. 2</h3>
-        <p data-key="mat_oil">Öl auf Leinwand</p>
-        <div class="price" data-key="price_req">Preis auf Anfrage</div>
-      </article>
+      <figure class="artwork" data-category="landscape">
+        <img src="2.jpeg" alt="Gemälde 2" loading="lazy">
+        <figcaption data-key="art2">Stille Natur</figcaption>
+      </figure>
 
-      <article class="card" data-style="abstract">
-        <img src="3.jpeg" alt="Gemälde 3">
-        <span class="card-style" data-key="style_abstract">Abstrakt</span>
-        <h3 data-key="art_3">Kunstwerk Nr. 3</h3>
-        <p data-key="mat_mix">Mischtechnik</p>
-        <div class="price" data-key="price_req">Preis auf Anfrage</div>
-      </article>
+      <figure class="artwork" data-category="modern">
+        <img src="3.jpeg" alt="Gemälde 3" loading="lazy">
+        <figcaption data-key="art3">Moderner Ausdruck</figcaption>
+      </figure>
 
-      <article class="card" data-style="modern">
-        <img src="4.jpeg" alt="Gemälde 4">
-        <span class="card-style" data-key="style_modern">Moderne Kunst</span>
-        <h3 data-key="art_4">Kunstwerk Nr. 4</h3>
-        <p data-key="mat_acryl">Acryl auf Leinwand</p>
-        <div class="price" data-key="price_req">Preis auf Anfrage</div>
-      </article>
+      <figure class="artwork" data-category="abstract">
+        <img src="4.jpeg" alt="Gemälde 4" loading="lazy">
+        <figcaption data-key="art4">Farbenspiel</figcaption>
+      </figure>
 
-      <article class="card" data-style="landscape">
-        <img src="5.jpeg" alt="Gemälde 5">
-        <span class="card-style" data-key="style_landscape">Landschaften</span>
-        <h3 data-key="art_5">Kunstwerk Nr. 5</h3>
-        <p data-key="mat_oil">Öl auf Leinwand</p>
-        <div class="price" data-key="price_req">Preis auf Anfrage</div>
-      </article>
+      <figure class="artwork" data-category="landscape">
+        <img src="5.jpeg" alt="Gemälde 5" loading="lazy">
+        <figcaption data-key="art5">Naturmomente</figcaption>
+      </figure>
 
-      <article class="card" data-style="modern">
-        <img src="7.jpeg" alt="Gemälde 6">
-        <span class="card-style" data-key="style_modern">Moderne Kunst</span>
-        <h3 data-key="art_6">Kunstwerk Nr. 6</h3>
-        <p data-key="mat_mix">Mischtechnik</p>
-        <div class="price" data-key="price_req">Preis auf Anfrage</div>
-      </article>
+      <figure class="artwork" data-category="modern">
+        <img src="7.jpeg" alt="Gemälde 6" loading="lazy">
+        <figcaption data-key="art6">Neue Perspektive</figcaption>
+      </figure>
 
-      <article class="card" data-style="abstract">
-        <img src="22.jpeg" alt="Gemälde 7">
-        <span class="card-style" data-key="style_abstract">Abstrakt</span>
-        <h3 data-key="art_7">Kunstwerk Nr. 7</h3>
-        <p data-key="mat_acryl">Acryl auf Leinwand</p>
-        <div class="price" data-key="price_req">Preis auf Anfrage</div>
-      </article>
+      <figure class="artwork" data-category="abstract">
+        <img src="22.jpeg" alt="Gemälde 7" loading="lazy">
+        <figcaption data-key="art7">Emotionen in Farbe</figcaption>
+      </figure>
 
-      <article class="card" data-style="landscape">
-        <img src="56.jpeg" alt="Gemälde 8">
-        <span class="card-style" data-key="style_landscape">Landschaften</span>
-        <h3 data-key="art_8">Kunstwerk Nr. 8</h3>
-        <p data-key="mat_oil">Öl auf Leinwand</p>
-        <div class="price" data-key="price_req">Preis auf Anfrage</div>
-      </article>
+      <figure class="artwork" data-category="modern">
+        <img src="56.jpeg" alt="Gemälde 8" loading="lazy">
+        <figcaption data-key="art8">Einzigartiger Moment</figcaption>
+      </figure>
     </div>
   </section>
 
-  <section id="about" class="about">
-    <div class="tag" data-key="about_tag">Die Künstlerin</div>
-    <h2 data-key="about_title">Über mich</h2>
-    <p data-key="about_text1">Mein Name ist Olga Morlang. In meinen Gemälden bringe ich meine persönliche Sicht auf Farben, Stimmungen und die Schönheit der Welt zum Ausdruck.</p>
-    <p data-key="about_text2">Jedes Werk entsteht mit Liebe zum Detail und hat seinen ganz eigenen Charakter.</p>
+  <section id="about">
+    <div class="about-wrap">
+      <div class="about-art" aria-hidden="true"></div>
+
+      <div class="about-text">
+        <div class="eyebrow" data-key="aboutEyebrow">Die Künstlerin</div>
+        <h2 data-key="aboutTitle">Über mich</h2>
+        <p data-key="aboutText1">
+          Willkommen in meiner kreativen Welt. Malerei ist für mich eine
+          Möglichkeit, Gefühle auszudrücken und besondere Augenblicke
+          in Farben und Formen festzuhalten.
+        </p>
+        <p data-key="aboutText2">
+          Jedes Werk entsteht mit Liebe zum Detail und dem Wunsch,
+          Menschen zu berühren und ihre Fantasie anzuregen.
+        </p>
+      </div>
+    </div>
   </section>
 
   <section id="contact">
-    <div class="tag" data-key="contact_tag">Kontakt</div>
+    <div class="section-heading">
+      <h2 data-key="contactTitle">Kontakt</h2>
+      <p data-key="contactSubtitle">
+        Haben Sie Interesse an einem Gemälde? Schreiben Sie mir gerne.
+      </p>
+    </div>
+
     <div class="contact-box">
-      <h2 data-key="contact_title">Interessieren Sie sich für ein Kunstwerk?</h2>
-      <p data-key="contact_desc">Schreiben Sie mir gerne, um mehr über ein Gemälde, den Preis oder den Versand zu erfahren.</p>
-      
-      <div class="contact-links">
-        <a href="https://www.instagram.com/morlang643art?psln=MXAzZTEwdGlwdXJreA==" target="_blank" class="social-btn instagram">
-          <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+      <p data-key="contactText">
+        Für Fragen zu meinen Bildern, Preisen oder individuellen Anfragen
+        erreichen Sie mich über die folgenden Kanäle.
+      </p>
+
+      <div class="socials">
+        <a class="social-link instagram"
+           href="https://www.instagram.com/morlang643art?psln=MXAzZTEwdGlwdXJreA=="
+           target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm0 2.2A2.8 2.8 0 0 0 4.2 7v10A2.8 2.8 0 0 0 7 19.8h10a2.8 2.8 0 0 0 2.8-2.8V7A2.8 2.8 0 0 0 17 4.2H7zm5 3a4.8 4.8 0 1 1 0 9.6 4.8 4.8 0 0 1 0-9.6zm0 2.2a2.6 2.6 0 1 0 0 5.2 2.6 2.6 0 0 0 0-5.2zm5.1-3.8a1.1 1.1 0 1 1 0 2.2 1.1 1.1 0 0 1 0-2.2z"/>
+          </svg>
           Instagram
         </a>
-        
-        <a href="https://www.facebook.com/share/19STKtEPq9/" target="_blank" class="social-btn facebook">
-          <svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+
+        <a class="social-link facebook"
+           href="https://www.facebook.com/share/19STKtEPq9/"
+           target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M13.5 21v-8h2.7l.4-3.1h-3.1v-2c0-.9.3-1.5 1.6-1.5h1.7V3.6c-.3 0-1.3-.1-2.5-.1-2.5 0-4.2 1.5-4.2 4.3v2.1H7.3V13h2.8v8h3.4z"/>
+          </svg>
           Facebook
         </a>
 
-        <a href="mailto:info@olgamorlang.com" class="social-btn email">
-          <svg viewBox="0 0 24 24"><path d="M0 3v18h24v-18h-24zm21.518 2l-9.518 7.713-9.518-7.713h19.036zm-19.518 14v-11.817l10 8.104 10-8.104v11.817h-20z"/></svg>
+        <a class="social-link email" href="mailto:info@olgamorlang.com">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M3 5h18a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2zm9 7L3.5 6.8 3 7.5v.2l9 5.8 9-5.8v-.2l-.5-.7L12 12z"/>
+          </svg>
           E-Mail
         </a>
       </div>
@@ -362,125 +587,146 @@ footer {
 </main>
 
 <footer>
-  <span data-key="footer_text">© 2026 Olga Morlang · Originalkunstwerke</span>
+  <div>© <span id="year"></span> Olga Morlang. <span data-key="footerText">Alle Rechte vorbehalten.</span></div>
   <div class="visitor-counter">
-    <span>👁️ <span data-key="visitors_label">Besucher</span>:</span>
-    <span class="visitor-count-num" id="visitCount">1</span>
+    <span data-key="visitorLabel">Besuche auf diesem Browser:</span>
+    <span id="visitorCount">0</span>
   </div>
 </footer>
 
 <script>
-const dict = {
-    de: {
-        nav_gallery: "Galerie", nav_about: "Über mich", nav_contact: "Kontakt",
-        hero_tag: "Originalkunstwerke", hero_title: "Kunst, die<br>Geschichten erzählt.",
-        hero_desc: "Willkommen in meiner Galerie. Entdecken Sie einzigartige Gemälde, inspiriert von Farben, Gefühlen und den kleinen Wundern des Lebens.",
-        hero_btn: "KUNSTWERKE ENTDECKEN ↗️",
-        gallery_tag: "Ausgewählte Werke", gallery_title: "Meine Kunstwerke",
-        gallery_sub: "Filtern Sie die Werke nach Malstil und Entstehungsart:",
-        filter_all: "Alle Werke", filter_abstract: "Abstrakt", filter_landscape: "Landschaften", filter_modern: "Moderne Kunst",
-        style_abstract: "Abstrakt", style_landscape: "Landschaften", style_modern: "Moderne Kunst",
-        art_1: "Kunstwerk Nr. 1", art_2: "Kunstwerk Nr. 2", art_3: "Kunstwerk Nr. 3", art_4: "Kunstwerk Nr. 4",
-        art_5: "Kunstwerk Nr. 5", art_6: "Kunstwerk Nr. 6", art_7: "Kunstwerk Nr. 7", art_8: "Kunstwerk Nr. 8",
-        mat_acryl: "Acryl auf Leinwand", mat_oil: "Öl auf Leinwand", mat_mix: "Mischtechnik", price_req: "Preis auf Anfrage",
-        about_tag: "Die Künstlerin", about_title: "Über mich",
-        about_text1: "Mein Name ist Olga Morlang. In meinen Gemälden bringe ich meine persönliche Sicht auf Farben, Stimmungen und die Schönheit der Welt zum Ausdruck.",
-        about_text2: "Jedes Werk entsteht mit Liebe zum Detail und hat seinen ganz eigenen Charakter.",
-        contact_tag: "Kontakt", contact_title: "Interessieren Sie sich für ein Kunstwerk?",
-        contact_desc: "Schreiben Sie mir gerne, um mehr über ein Gemälde, den Preis oder den Versand zu erfahren.",
-        footer_text: "© 2026 Olga Morlang · Originalkunstwerke", visitors_label: "Besucher"
-    },
-    en: {
-        nav_gallery: "Gallery", nav_about: "About me", nav_contact: "Contact",
-        hero_tag: "Original Artworks", hero_title: "Art that<br>tells stories.",
-        hero_desc: "Welcome to my gallery. Discover unique paintings inspired by colors, emotions, and the small wonders of life.",
-        hero_btn: "DISCOVER ARTWORKS ↗️",
-        gallery_tag: "Featured Works", gallery_title: "My Artworks",
-        gallery_sub: "Filter the works by painting style:",
-        filter_all: "All Works", filter_abstract: "Abstract", filter_landscape: "Landscapes", filter_modern: "Modern Art",
-        style_abstract: "Abstract", style_landscape: "Landscapes", style_modern: "Modern Art",
-        art_1: "Artwork No. 1", art_2: "Artwork No. 2", art_3: "Artwork No. 3", art_4: "Artwork No. 4",
-        art_5: "Artwork No. 5", art_6: "Artwork No. 6", art_7: "Artwork No. 7", art_8: "Artwork No. 8",
-        mat_acryl: "Acrylic on canvas", mat_oil: "Oil on canvas", mat_mix: "Mixed media", price_req: "Price on request",
-        about_tag: "The Artist", about_title: "About me",
-        about_text1: "My name is Olga Morlang. In my paintings, I express my personal perspective on colors, moods, and the beauty of the world.",
-        about_text2: "Every piece is created with attention to detail and has its own unique character.",
-        contact_tag: "Contact", contact_title: "Interested in an artwork?",
-        contact_desc: "Feel free to write to me to learn more about a painting, price, or shipping.",
-        footer_text: "© 2026 Olga Morlang · Original Artworks", visitors_label: "Visitors"
-    },
-    ru: {
-        nav_gallery: "Галерея", nav_about: "Обо мне", nav_contact: "Контакты",
-        hero_tag: "Оригинальные работы", hero_title: "Искусство,<br>рассказывающее истории.",
-        hero_desc: "Добро пожаловать в мою галерею. Откройте для себя уникальные картины, вдохновленные цветами, эмоциями и маленькими чудесами жизни.",
-        hero_btn: "СМОТРЕТЬ РАБОТЫ ↗️",
-        gallery_tag: "Избранные работы", gallery_title: "Мои картины",
-        gallery_sub: "Фильтруйте работы по стилю рисования:",
-        filter_all: "Все работы", filter_abstract: "Абстракция", filter_landscape: "Пейзажи", filter_modern: "Модерн",
-        style_abstract: "Абстракция", style_landscape: "Пейзажи", style_modern: "Модерн",
-        art_1: "Картина № 1", art_2: "Картина № 2", art_3: "Картина № 3", art_4: "Картина № 4",
-        art_5: "Картина № 5", art_6: "Картина № 6", art_7: "Картина № 7", art_8: "Картина № 8",
-        mat_acryl: "Акрил на холсте", mat_oil: "Холст, масло", mat_mix: "Смешанная техника", price_req: "Цена по запросу",
-        about_tag: "Художница", about_title: "Обо мне",
-        about_text1: "Меня зовут Ольга Морланг. В своих картинах я выражаю свой личный взгляд на цвета, настроение и красоту окружающего мира.",
-        about_text2: "Каждое произведение создается с любовью к деталям и обладает уникальным характером.",
-        contact_tag: "Контакты", contact_title: "Заинтересовала картина?",
-        contact_desc: "Напишите мне, чтобы узнать подробнее о работе, цене или условиях доставки.",
-        footer_text: "© 2026 Ольга Морланг · Оригинальные работы", visitors_label: "Посетители"
-    },
-    nl: {
-        nav_gallery: "Galerie", nav_about: "Over mij", nav_contact: "Contact",
-        hero_tag: "Originele kunstwerken", hero_title: "Kunst die<br>verhalen vertelt.",
-        hero_desc: "Welkom in mijn galerie. Ontdek unieke schilderijen, geïnspireerd door kleuren, emoties en de kleine wonderen van het leven.",
-        hero_btn: "KUNSTWERKEN BEKIJKEN ↗️",
-        gallery_tag: "Uitgelichte werken", gallery_title: "Mijn kunstwerken",
-        gallery_sub: "Filter de werken op schilderstijl:",
-        filter_all: "Alle werken", filter_abstract: "Abstract", filter_landscape: "Landschappen", filter_modern: "Moderne kunst",
-        style_abstract: "Abstract", style_landscape: "Landschappen", style_modern: "Moderne kunst",
-        art_1: "Kunstwerk nr. 1", art_2: "Kunstwerk nr. 2", art_3: "Kunstwerk nr. 3", art_4: "Kunstwerk nr. 4",
-        art_5: "Kunstwerk nr. 5", art_6: "Kunstwerk nr. 6", art_7: "Kunstwerk nr. 7", art_8: "Kunstwerk nr. 8",
-        mat_acryl: "Acryl op doek", mat_oil: "Olieverf op doek", mat_mix: "Gemengde techniek", price_req: "Prijs op aanvraag",
-        about_tag: "De kunstenares", about_title: "Over mij",
-        about_text1: "Mijn naam is Olga Morlang. In mijn schilderijen breng ik mijn persoonlijke visie op kleuren, stemmingen en de schoonheid van de wereld tot uitdrukking.",
-        about_text2: "Elk werk ontstaat met liefde voor detail en heeft een heel eigen karakter.",
-        contact_tag: "Contact", contact_title: "Heeft u interesse in een kunstwerk?",
-        contact_desc: "Schrijf me gerust om meer te weten te komen over een schilderij, de prijs of de verzending.",
-        footer_text: "© 2026 Olga Morlang · Originele kunstwerken", visitors_label: "Bezoekers"
-    }
+const translations = {
+  de: {
+    navHome:"Startseite", navGallery:"Galerie", navAbout:"Über mich", navContact:"Kontakt",
+    eyebrow:"Kunst aus Leidenschaft",
+    heroTitle:"Farben, Gefühle und Geschichten",
+    heroText:"Willkommen in meiner Kunstwelt. Entdecken Sie einzigartige Gemälde, inspiriert von Emotionen, Natur und den kleinen Momenten des Lebens.",
+    heroButton:"Gemälde entdecken",
+    galleryTitle:"Meine Galerie",
+    gallerySubtitle:"Jedes Bild erzählt seine eigene Geschichte.",
+    filterAll:"Alle Werke", filterAbstract:"Abstrakt", filterLandscape:"Landschaften", filterModern:"Modern",
+    art1:"Farben der Seele", art2:"Stille Natur", art3:"Moderner Ausdruck", art4:"Farbenspiel",
+    art5:"Naturmomente", art6:"Neue Perspektive", art7:"Emotionen in Farbe", art8:"Einzigartiger Moment",
+    aboutEyebrow:"Die Künstlerin", aboutTitle:"Über mich",
+    aboutText1:"Willkommen in meiner kreativen Welt. Malerei ist für mich eine Möglichkeit, Gefühle auszudrücken und besondere Augenblicke in Farben und Formen festzuhalten.",
+    aboutText2:"Jedes Werk entsteht mit Liebe zum Detail und dem Wunsch, Menschen zu berühren und ihre Fantasie anzuregen.",
+    contactTitle:"Kontakt",
+    contactSubtitle:"Haben Sie Interesse an einem Gemälde? Schreiben Sie mir gerne.",
+    contactText:"Für Fragen zu meinen Bildern, Preisen oder individuellen Anfragen erreichen Sie mich über die folgenden Kanäle.",
+    footerText:"Alle Rechte vorbehalten.", visitorLabel:"Besuche auf diesem Browser:"
+  },
+  en: {
+    navHome:"Home", navGallery:"Gallery", navAbout:"About me", navContact:"Contact",
+    eyebrow:"Art with passion",
+    heroTitle:"Colours, emotions and stories",
+    heroText:"Welcome to my world of art. Discover unique paintings inspired by emotions, nature and the little moments of life.",
+    heroButton:"Explore paintings",
+    galleryTitle:"My Gallery",
+    gallerySubtitle:"Every painting tells its own story.",
+    filterAll:"All works", filterAbstract:"Abstract", filterLandscape:"Landscapes", filterModern:"Modern",
+    art1:"Colours of the Soul", art2:"Quiet Nature", art3:"Modern Expression", art4:"Play of Colours",
+    art5:"Moments in Nature", art6:"New Perspective", art7:"Emotions in Colour", art8:"A Unique Moment",
+    aboutEyebrow:"The Artist", aboutTitle:"About Me",
+    aboutText1:"Welcome to my creative world. Painting is a way for me to express feelings and capture special moments through colours and shapes.",
+    aboutText2:"Each work is created with attention to detail and the desire to move people and inspire their imagination.",
+    contactTitle:"Contact",
+    contactSubtitle:"Interested in a painting? Feel free to get in touch.",
+    contactText:"For questions about my paintings, prices or custom requests, you can reach me through the channels below.",
+    footerText:"All rights reserved.", visitorLabel:"Visits on this browser:"
+  },
+  ru: {
+    navHome:"Главная", navGallery:"Галерея", navAbout:"Обо мне", navContact:"Контакты",
+    eyebrow:"Искусство с душой",
+    heroTitle:"Цвета, чувства и истории",
+    heroText:"Добро пожаловать в мой мир искусства. Откройте для себя картины, вдохновлённые эмоциями, природой и маленькими моментами жизни.",
+    heroButton:"Смотреть картины",
+    galleryTitle:"Моя галерея",
+    gallerySubtitle:"Каждая картина рассказывает свою историю.",
+    filterAll:"Все работы", filterAbstract:"Абстракция", filterLandscape:"Пейзажи", filterModern:"Современное",
+    art1:"Цвета души", art2:"Тишина природы", art3:"Современное выражение", art4:"Игра цвета",
+    art5:"Мгновения природы", art6:"Новый взгляд", art7:"Эмоции в цвете", art8:"Особенный момент",
+    aboutEyebrow:"Художница", aboutTitle:"Обо мне",
+    aboutText1:"Добро пожаловать в мой творческий мир. Живопись для меня — способ выражать чувства и сохранять особенные мгновения с помощью цвета и формы.",
+    aboutText2:"Каждая работа создаётся с любовью к деталям и желанием тронуть зрителя и вдохновить его воображение.",
+    contactTitle:"Контакты",
+    contactSubtitle:"Заинтересовала картина? Буду рада вашему сообщению.",
+    contactText:"По вопросам о картинах, ценах или индивидуальных заказах вы можете связаться со мной через следующие каналы.",
+    footerText:"Все права защищены.", visitorLabel:"Посещения в этом браузере:"
+  },
+  nl: {
+    navHome:"Home", navGallery:"Galerij", navAbout:"Over mij", navContact:"Contact",
+    eyebrow:"Kunst met passie",
+    heroTitle:"Kleuren, gevoelens en verhalen",
+    heroText:"Welkom in mijn kunstwereld. Ontdek unieke schilderijen, geïnspireerd door emoties, de natuur en de kleine momenten van het leven.",
+    heroButton:"Ontdek de schilderijen",
+    galleryTitle:"Mijn galerij",
+    gallerySubtitle:"Elk schilderij vertelt zijn eigen verhaal.",
+    filterAll:"Alle werken", filterAbstract:"Abstract", filterLandscape:"Landschappen", filterModern:"Modern",
+    art1:"Kleuren van de ziel", art2:"Stille natuur", art3:"Moderne expressie", art4:"Kleurenspel",
+    art5:"Momenten in de natuur", art6:"Nieuw perspectief", art7:"Emoties in kleur", art8:"Een uniek moment",
+    aboutEyebrow:"De kunstenares", aboutTitle:"Over mij",
+    aboutText1:"Welkom in mijn creatieve wereld. Schilderen is voor mij een manier om gevoelens uit te drukken en bijzondere momenten vast te leggen in kleuren en vormen.",
+    aboutText2:"Elk werk wordt met oog voor detail gemaakt, met de wens om mensen te raken en hun verbeelding te prikkelen.",
+    contactTitle:"Contact",
+    contactSubtitle:"Interesse in een schilderij? Stuur gerust een bericht.",
+    contactText:"Voor vragen over mijn schilderijen, prijzen of persoonlijke opdrachten kunt u contact opnemen via onderstaande kanalen.",
+    footerText:"Alle rechten voorbehouden.", visitorLabel:"Bezoeken in deze browser:"
+  }
 };
 
-function changeLang(lang, btn) {
-    document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active-lang'));
-    btn.classList.add('active-lang');
-    
-    document.querySelectorAll('[data-key]').forEach(el => {
-        const key = el.getAttribute('data-key');
-        if (dict[lang] && dict[lang][key]) {
-            el.innerHTML = dict[lang][key];
-        }
-    });
+function changeLang(lang) {
+  const dict = translations[lang];
+  if (!dict) return;
+
+  document.documentElement.lang = lang;
+
+  document.querySelectorAll("[data-key]").forEach(element => {
+    const key = element.dataset.key;
+    if (dict[key]) element.textContent = dict[key];
+  });
+
+  document.querySelectorAll("[data-lang-button]").forEach(button => {
+    button.classList.toggle("active", button.dataset.langButton === lang);
+  });
+
+  try {
+    localStorage.setItem("olgaSiteLanguage", lang);
+  } catch (error) {}
 }
 
-function filterGallery(style, btn) {
-    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
+document.querySelectorAll("[data-filter]").forEach(button => {
+  button.addEventListener("click", () => {
+    const filter = button.dataset.filter;
 
-    document.querySelectorAll('.card').forEach(card => {
-        if (style === 'all' || card.getAttribute('data-style') === style) {
-            card.classList.remove('hide');
-        } else {
-            card.classList.add('hide');
-        }
+    document.querySelectorAll("[data-filter]").forEach(item => {
+      item.classList.toggle("active", item === button);
     });
-}
 
-window.addEventListener('DOMContentLoaded', () => {
-    let visits = localStorage.getItem('om_visits');
-    if (!visits) visits = 142;
-    else visits = parseInt(visits) + 1;
-    localStorage.setItem('om_visits', visits);
-    document.getElementById('visitCount').textContent = visits;
+    document.querySelectorAll(".artwork").forEach(artwork => {
+      const matches = filter === "all" || artwork.dataset.category === filter;
+      artwork.classList.toggle("hidden", !matches);
+    });
+  });
 });
+
+document.getElementById("year").textContent = new Date().getFullYear();
+
+/* Это локальный счётчик в данном браузере, а не общий счётчик сайта. */
+try {
+  const key = "olgaMorlangVisits";
+  const visits = Number(localStorage.getItem(key) || 0) + 1;
+  localStorage.setItem(key, visits);
+  document.getElementById("visitorCount").textContent = visits;
+} catch (error) {
+  document.getElementById("visitorCount").textContent = "—";
+}
+
+let savedLanguage = "de";
+try {
+  savedLanguage = localStorage.getItem("olgaSiteLanguage") || "de";
+} catch (error) {}
+
+changeLang(savedLanguage);
 </script>
 
 </body>
