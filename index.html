@@ -10,20 +10,19 @@
 html{scroll-behavior:smooth}
 body{
     margin:0;
-    /* Творческий живописный фон в стиле вашей картинки */
     background: 
-        radial-gradient(circle at 80% 20%, rgba(235, 87, 87, 0.25) 0%, transparent 40%),
-        radial-gradient(circle at 20% 80%, rgba(242, 153, 74, 0.2) 0%, transparent 45%),
-        radial-gradient(circle at 50% 50%, rgba(19, 115, 122, 0.35) 0%, transparent 60%),
-        linear-gradient(135deg, #0d1b2a 0%, #1b263b 50%, #0d131a 100%);
+        radial-gradient(circle at 80% 20%, rgba(235, 87, 87, 0.2) 0%, transparent 40%),
+        radial-gradient(circle at 20% 80%, rgba(242, 153, 74, 0.18) 0%, transparent 45%),
+        radial-gradient(circle at 50% 50%, rgba(19, 115, 122, 0.28) 0%, transparent 60%),
+        linear-gradient(135deg, #0b131f 0%, #151d2a 50%, #090e18 100%);
     color:#f5f5f7;
-    font-family:Arial,sans-serif;
+    font-family: Arial, sans-serif;
     min-height: 100vh;
     position: relative;
     overflow-x: hidden;
 }
 
-/* Контейнер для фоновых творческих элементов */
+/* Элементы фона */
 .creative-bg {
     position: fixed;
     top: 0;
@@ -35,58 +34,15 @@ body{
     overflow: hidden;
 }
 
-/* Краски и брызги */
-.paint-spot {
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(45px);
-    opacity: 0.3;
-}
-
-.spot-red {
-    width: 280px;
-    height: 280px;
-    background: #ff4757;
-    top: 15%;
-    left: 70%;
-    animation: float 10s ease-in-out infinite alternate;
-}
-
-.spot-orange {
-    width: 350px;
-    height: 350px;
-    background: #ff7f50;
-    bottom: 10%;
-    left: 10%;
-    animation: float 12s ease-in-out infinite alternate-reverse;
-}
-
-.spot-teal {
-    width: 400px;
-    height: 400px;
-    background: #00cec9;
-    top: 40%;
-    left: 25%;
-    animation: float 14s ease-in-out infinite alternate;
-}
-
-/* Элементы кистей на фоне */
 .brush-element {
     position: absolute;
-    opacity: 0.15;
+    opacity: 0.12;
     fill: #e0e6ed;
     animation: drift 20s linear infinite;
 }
 
-.brush-1 { top: 18%; left: 12%; width: 60px; transform: rotate(-25deg); animation-duration: 22s; }
-.brush-2 { top: 75%; right: 15%; width: 55px; transform: rotate(45deg); animation-duration: 25s; animation-delay: -5s; }
-.brush-3 { top: 30%; right: 22%; width: 50px; transform: rotate(15deg); animation-duration: 19s; animation-delay: -3s; }
-.brush-4 { top: 65%; left: 18%; width: 65px; transform: rotate(-50deg); animation-duration: 28s; animation-delay: -8s; }
-
-@keyframes float {
-    0% { transform: translateY(0) scale(1); }
-    100% { transform: translateY(-30px) scale(1.05); }
-}
+.brush-1 { top: 15%; left: 8%; width: 60px; transform: rotate(-25deg); }
+.brush-2 { top: 75%; right: 12%; width: 55px; transform: rotate(45deg); }
 
 @keyframes drift {
     0% { transform: translateY(0) rotate(0deg); }
@@ -94,57 +50,101 @@ body{
     100% { transform: translateY(0) rotate(0deg); }
 }
 
-header{padding:24px 7%;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(255,255,255,0.1); background: rgba(13, 27, 42, 0.85); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 100;}
-.logo{font-size:21px;font-weight:bold;letter-spacing:3px}
-nav a{color:#ddd;text-decoration:none;margin-left:22px;font-size:13px}
-.hero{padding:75px 7%;display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
-.tag{color:#ff7f50;letter-spacing:3px;font-size:12px;text-transform:uppercase; font-weight: bold;}
-h1{font-size:clamp(42px,6vw,76px);line-height:1.02;margin:20px 0}
-.hero p,.about p,.contact p{color:#bdc3d1;line-height:1.8}
-.btn{display:inline-block;background:#ff4757;color:white;padding:15px 22px;text-decoration:none;margin-top:15px;font-size:13px; font-weight: bold; transition: background 0.3s;}
-.btn:hover{background:#ff6b81;}
-.hero img{width:100%;height:430px;object-fit:cover;background:#1b263b;padding:10px;border: 1px solid rgba(255,255,255,0.1);}
-section{padding:60px 7%}
-h2{font-size:34px;margin:12px 0}
-.sub{color:#aeb5c5;line-height:1.7;margin-bottom:28px}
-.gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px}
-.card{background:rgba(27, 38, 59, 0.8);backdrop-filter: blur(6px);padding:12px;min-width:0;border: 1px solid rgba(255,255,255,0.08);}
-.card img{width:100%;height:300px;object-fit:contain;background:#111823;display:block}
-.card h3{font-size:17px;font-weight:normal;margin:14px 0 6px}
-.card p{font-size:13px;color:#aeb5c5}
-.price{color:#ff7f50;font-weight:bold;font-size:14px}
-.about{background:rgba(20, 30, 48, 0.75);backdrop-filter: blur(6px);}
-.contact{border:1px solid rgba(255,255,255,0.1);padding:30px;margin-top:20px;background:rgba(27, 38, 59, 0.75);backdrop-filter: blur(6px);}
-.contact a{display:inline-block;color:#ff7f50;margin:10px 18px 0 0}
-footer{padding:25px 7%;border-top:1px solid rgba(255,255,255,0.1);color:#8e96a9;font-size:12px}
-@media(max-width:750px){
- header{align-items:flex-start;gap:18px;flex-direction:column}
- nav a{margin:0 15px 0 0}
- .hero{grid-template-columns:1fr;padding-top:45px}
- .hero img{height:320px}
- .gallery{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
- .card img{height:230px}
- section{padding:42px 6%}
+/* Шапка сайта */
+header {
+    padding: 24px 7%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    background: rgba(11, 19, 31, 0.85);
+    backdrop-filter: blur(12px);
+    position: sticky;
+    top: 0;
+    z-index: 100;
 }
-@media(max-width:450px){
- .gallery{grid-template-columns:1fr}
- .card img{height:320px}
+.logo { font-size: 22px; font-weight: bold; letter-spacing: 4px; color: #fff; }
+nav a { color: #ddd; text-decoration: none; margin-left: 24px; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; }
+nav a:hover { color: #ff7f50; }
+
+/* Hero-секция */
+.hero { padding: 80px 7%; display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center; }
+.tag { color: #ff7f50; letter-spacing: 3px; font-size: 12px; text-transform: uppercase; font-weight: bold; }
+h1 { font-size: clamp(40px, 5.5vw, 70px); line-height: 1.05; margin: 20px 0; }
+.hero p, .about p, .contact p { color: #bdc3d1; line-height: 1.8; }
+.btn { display: inline-block; background: #ff4757; color: white; padding: 15px 28px; text-decoration: none; margin-top: 20px; font-size: 13px; font-weight: bold; border-radius: 4px; transition: 0.3s; }
+.btn:hover { background: #ff6b81; transform: translateY(-2px); }
+.hero img { width: 100%; height: 450px; object-fit: cover; background: #1b263b; padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); }
+
+/* Кнопки фильтрации по стилям */
+.filter-container {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin: 25px 0 35px 0;
+}
+.filter-btn {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #bdc3d1;
+    padding: 10px 20px;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 13px;
+    transition: all 0.3s ease;
+}
+.filter-btn:hover, .filter-btn.active {
+    background: #ff7f50;
+    color: #fff;
+    border-color: #ff7f50;
+}
+
+/* Сетка галереи */
+section { padding: 60px 7%; }
+h2 { font-size: 36px; margin: 12px 0; }
+.sub { color: #aeb5c5; line-height: 1.7; }
+.gallery { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+
+.card {
+    background: rgba(21, 29, 42, 0.85);
+    backdrop-filter: blur(8px);
+    padding: 16px;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.08);
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+.card:hover { transform: translateY(-5px); border-color: rgba(255,127,80,0.4); }
+.card.hide { display: none; }
+
+.card img { width: 100%; height: 280px; object-fit: contain; background: #0c121c; border-radius: 4px; display: block; }
+.card h3 { font-size: 18px; font-weight: 500; margin: 14px 0 6px; }
+.card p { font-size: 13px; color: #aeb5c5; margin: 0 0 10px 0; }
+.card-style { display: inline-block; font-size: 11px; background: rgba(255,127,80,0.15); color: #ff7f50; padding: 3px 8px; border-radius: 4px; margin-bottom: 8px; text-transform: uppercase; }
+.price { color: #ff7f50; font-weight: bold; font-size: 14px; }
+
+/* Другие секции */
+.about { background: rgba(15, 23, 36, 0.7); backdrop-filter: blur(8px); border-radius: 12px; margin: 40px 7%; padding: 50px 6%; }
+.contact { border: 1px solid rgba(255,255,255,0.1); padding: 40px; margin-top: 20px; background: rgba(21, 29, 42, 0.8); backdrop-filter: blur(8px); border-radius: 8px; }
+.contact a { display: inline-block; color: #ff7f50; margin: 12px 20px 0 0; text-decoration: none; font-weight: bold; }
+footer { padding: 30px 7%; border-top: 1px solid rgba(255,255,255,0.1); color: #8e96a9; font-size: 12px; }
+
+@media(max-width: 750px) {
+    header { flex-direction: column; align-items: flex-start; gap: 15px; }
+    nav a { margin: 0 15px 0 0; }
+    .hero { grid-template-columns: 1fr; }
+    .gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .about { margin: 20px 0; }
+}
+@media(max-width: 480px) {
+    .gallery { grid-template-columns: 1fr; }
 }
 </style>
 </head>
 <body>
 
-<!-- Художественный фон -->
 <div class="creative-bg">
-    <div class="paint-spot spot-red"></div>
-    <div class="paint-spot spot-orange"></div>
-    <div class="paint-spot spot-teal"></div>
-
-    <!-- Иконки разных кистей -->
     <svg class="brush-element brush-1" viewBox="0 0 24 24"><path d="M6 14l3 3m5.5-10.5l3 3M4 20l2-2.5L16.5 7c.8-.8 2-.8 2.8 0s.8 2 0 2.8L8.8 20.2 4 20z"/></svg>
     <svg class="brush-element brush-2" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>
-    <svg class="brush-element brush-3" viewBox="0 0 24 24"><path d="M18 2H6c-1.1 0-2 .9-2 2v2h16V4c0-1.1-.9-2-2-2zM4 8v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8H4z"/></svg>
-    <svg class="brush-element brush-4" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
 </div>
 
 <header>
@@ -170,39 +170,80 @@ footer{padding:25px 7%;border-top:1px solid rgba(255,255,255,0.1);color:#8e96a9;
   <section id="gallery">
     <div class="tag">Ausgewählte Werke</div>
     <h2>Meine Kunstwerke</h2>
-    <p class="sub">Jedes Gemälde ist ein Unikat mit seiner eigenen Geschichte. Preise und Details erhalten Sie gerne auf Anfrage.</p>
+    <p class="sub">Filtern Sie die Werke nach Malstil und Entstehungsart:</p>
+
+    <!-- Фильтры категорий (Стили) -->
+    <div class="filter-container">
+      <button class="filter-btn active" onclick="filterGallery('all')">Alle Werke</button>
+      <button class="filter-btn" onclick="filterGallery('abstract')">Abstrakt</button>
+      <button class="filter-btn" onclick="filterGallery('landscape')">Landschaften</button>
+      <button class="filter-btn" onclick="filterGallery('modern')">Moderne Kunst</button>
+    </div>
+
+    <!-- Галерея с привязанными стилями (data-style) -->
     <div class="gallery">
-      <article class="card">
-        <img src="1.jpeg" alt="Gemälde 1 von Olga Morlang">
-        <h3>Kunstwerk Nr. 1</h3><p>Details auf Anfrage</p><div class="price">Preis auf Anfrage</div>
+      <article class="card" data-style="abstract">
+        <img src="1.jpeg" alt="Gemälde 1">
+        <span class="card-style">Abstrakt</span>
+        <h3>Kunstwerk Nr. 1</h3>
+        <p>Acryl auf Leinwand</p>
+        <div class="price">Preis auf Anfrage</div>
       </article>
-      <article class="card">
-        <img src="2.jpeg" alt="Gemälde 2 von Olga Morlang">
-        <h3>Kunstwerk Nr. 2</h3><p>Details auf Anfrage</p><div class="price">Preis auf Anfrage</div>
+
+      <article class="card" data-style="landscape">
+        <img src="2.jpeg" alt="Gemälde 2">
+        <span class="card-style">Landschaften</span>
+        <h3>Kunstwerk Nr. 2</h3>
+        <p>Öl auf Leinwand</p>
+        <div class="price">Preis auf Anfrage</div>
       </article>
-      <article class="card">
-        <img src="3.jpeg" alt="Gemälde 3 von Olga Morlang">
-        <h3>Kunstwerk Nr. 3</h3><p>Details auf Anfrage</p><div class="price">Preis auf Anfrage</div>
+
+      <article class="card" data-style="abstract">
+        <img src="3.jpeg" alt="Gemälde 3">
+        <span class="card-style">Abstrakt</span>
+        <h3>Kunstwerk Nr. 3</h3>
+        <p>Mischtechnik</p>
+        <div class="price">Preis auf Anfrage</div>
       </article>
-      <article class="card">
-        <img src="4.jpeg" alt="Gemälde 4 von Olga Morlang">
-        <h3>Kunstwerk Nr. 4</h3><p>Details auf Anfrage</p><div class="price">Preis auf Anfrage</div>
+
+      <article class="card" data-style="modern">
+        <img src="4.jpeg" alt="Gemälde 4">
+        <span class="card-style">Moderne Kunst</span>
+        <h3>Kunstwerk Nr. 4</h3>
+        <p>Acryl auf Leinwand</p>
+        <div class="price">Preis auf Anfrage</div>
       </article>
-      <article class="card">
-        <img src="5.jpeg" alt="Gemälde 5 von Olga Morlang">
-        <h3>Kunstwerk Nr. 5</h3><p>Details auf Anfrage</p><div class="price">Preis auf Anfrage</div>
+
+      <article class="card" data-style="landscape">
+        <img src="5.jpeg" alt="Gemälde 5">
+        <span class="card-style">Landschaften</span>
+        <h3>Kunstwerk Nr. 5</h3>
+        <p>Öl auf Leinwand</p>
+        <div class="price">Preis auf Anfrage</div>
       </article>
-      <article class="card">
-        <img src="7.jpeg" alt="Gemälde 6 von Olga Morlang">
-        <h3>Kunstwerk Nr. 6</h3><p>Details auf Anfrage</p><div class="price">Preis auf Anfrage</div>
+
+      <article class="card" data-style="modern">
+        <img src="7.jpeg" alt="Gemälde 6">
+        <span class="card-style">Moderne Kunst</span>
+        <h3>Kunstwerk Nr. 6</h3>
+        <p>Mischtechnik</p>
+        <div class="price">Preis auf Anfrage</div>
       </article>
-      <article class="card">
-        <img src="22.jpeg" alt="Gemälde 7 von Olga Morlang">
-        <h3>Kunstwerk Nr. 7</h3><p>Details auf Anfrage</p><div class="price">Preis auf Anfrage</div>
+
+      <article class="card" data-style="abstract">
+        <img src="22.jpeg" alt="Gemälde 7">
+        <span class="card-style">Abstrakt</span>
+        <h3>Kunstwerk Nr. 7</h3>
+        <p>Acryl auf Leinwand</p>
+        <div class="price">Preis auf Anfrage</div>
       </article>
-      <article class="card">
-        <img src="56.jpeg" alt="Gemälde 8 von Olga Morlang">
-        <h3>Kunstwerk Nr. 8</h3><p>Details auf Anfrage</p><div class="price">Preis auf Anfrage</div>
+
+      <article class="card" data-style="landscape">
+        <img src="56.jpeg" alt="Gemälde 8">
+        <span class="card-style">Landschaften</span>
+        <h3>Kunstwerk Nr. 8</h3>
+        <p>Öl auf Leinwand</p>
+        <div class="price">Preis auf Anfrage</div>
       </article>
     </div>
   </section>
@@ -227,5 +268,26 @@ footer{padding:25px 7%;border-top:1px solid rgba(255,255,255,0.1);color:#8e96a9;
 </main>
 
 <footer>© 2026 Olga Morlang · Originalkunstwerke</footer>
+
+<!-- Скрипт переключения стилей -->
+<script>
+function filterGallery(style) {
+    // Обновляем активность кнопок
+    const buttons = document.querySelectorAll('.filter-btn');
+    buttons.forEach(btn => btn.classList.remove('active'));
+    event.target.classList.add('active');
+
+    // Фильтруем карточки
+    const cards = document.querySelectorAll('.card');
+    cards.forEach(card => {
+        if (style === 'all' || card.getAttribute('data-style') === style) {
+            card.classList.remove('hide');
+        } else {
+            card.classList.add('hide');
+        }
+    });
+}
+</script>
+
 </body>
 </html>
