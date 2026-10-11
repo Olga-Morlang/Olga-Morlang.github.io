@@ -1,0 +1,1318 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Администратор | Olga Morlang</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+:root {
+    --bg: #071525;
+    --panel: #10243b;
+    --panel2: #162e49;
+    --gold: #d8b779;
+    --text: #f3f0e9;
+    --muted: #b7c4d2;
+    --border: rgba(255,255,255,.12);
+    --danger: #e56b6b;
+    --success: #70d6a0;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background:
+        radial-gradient(
+            circle at top right,
+            #1b3a58 0,
+            transparent 40%
+        ),
+        var(--bg);
+    color: var(--text);
+    font-family: Arial, sans-serif;
+    min-height: 100vh;
+}
+
+button,
+input,
+textarea,
+select {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+header {
+    padding: 22px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.logo {
+    color: var(--gold);
+    font-family: Georgia, serif;
+    font-size: 25px;
+}
+
+header a {
+    color: var(--text);
+    text-decoration: none;
+}
+
+.container {
+    width: min(1100px, 94%);
+    margin: 30px auto;
+}
+
+.card {
+    background: rgba(16,36,59,.96);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 24px;
+    box-shadow: 0 12px 35px rgba(0,0,0,.18);
+}
+
+h1, h2, h3 {
+    font-family: Georgia, serif;
+}
+
+h1 {
+    color: var(--gold);
+}
+
+h2 {
+    margin-top: 0;
+}
+
+p {
+    color: var(--muted);
+    line-height: 1.6;
+}
+
+label {
+    display: block;
+    color: var(--muted);
+    margin-bottom: 7px;
+    font-size: 14px;
+}
+
+input,
+textarea,
+select {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 16px;
+    background: #09192b;
+    color: white;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+}
+
+input[type="checkbox"] {
+    width: auto;
+    margin-right: 8px;
+}
+
+textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+button,
+.button {
+    display: inline-block;
+    padding: 12px 17px;
+    border: 0;
+    border-radius: 8px;
+    background: var(--gold);
+    color: #152337;
+    font-weight: bold;
+    text-decoration: none;
+    margin: 3px;
+}
+
+button:hover,
+.button:hover {
+    filter: brightness(1.1);
+}
+
+.secondary {
+    background: var(--panel2);
+    color: white;
+    border: 1px solid var(--border);
+}
+
+.danger {
+    background: #812e3b;
+    color: white;
+}
+
+.success {
+    color: var(--success);
+}
+
+.error {
+    color: #ff9999;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0 16px;
+}
+
+.full {
+    grid-column: 1 / -1;
+}
+
+.toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.toolbar select {
+    max-width: 300px;
+    margin: 0;
+}
+
+.artworks {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: 18px;
+}
+
+.artwork {
+    background: #09192b;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.artwork img {
+    display: block;
+    width: 100%;
+    height: 220px;
+    object-fit: contain;
+    background: #06101d;
+}
+
+.artwork-info {
+    padding: 14px;
+}
+
+.artwork-info h3 {
+    margin: 0 0 8px;
+    color: var(--gold);
+    overflow-wrap: anywhere;
+}
+
+.artwork-info p {
+    font-size: 14px;
+    margin: 5px 0;
+}
+
+.status {
+    display: inline-block;
+    border-radius: 20px;
+    padding: 5px 9px;
+    font-size: 12px;
+    margin: 7px 0;
+}
+
+.status.published {
+    color: #9af0bd;
+    background: #174a36;
+}
+
+.status.draft {
+    color: #ffcf8d;
+    background: #594020;
+}
+
+#message {
+    padding: 12px;
+    border-radius: 8px;
+    margin: 15px 0;
+    overflow-wrap: anywhere;
+}
+
+#loginPanel {
+    max-width: 460px;
+    margin: 60px auto;
+}
+
+#loginPanel h1 {
+    text-align: center;
+}
+
+.small {
+    font-size: 13px;
+}
+
+@media (max-width: 600px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .full {
+        grid-column: auto;
+    }
+
+    .card {
+        padding: 16px;
+    }
+
+    header {
+        padding: 16px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">Olga Morlang</div>
+    <a href="index.html">← Вернуться на сайт</a>
+</header>
+
+<main class="container">
+
+    <div id="message" class="hidden"></div>
+
+    <!-- ВХОД -->
+    <section id="loginPanel" class="card">
+        <h1>Administrator</h1>
+
+        <p>
+            Войди, чтобы управлять картинами и категориями
+            художественной галереи.
+        </p>
+
+        <form id="loginForm">
+            <label for="email">Электронная почта</label>
+            <input
+                id="email"
+                type="email"
+                autocomplete="username"
+                required
+            >
+
+            <label for="password">Пароль</label>
+            <input
+                id="password"
+                type="password"
+                autocomplete="current-password"
+                required
+            >
+
+            <button type="submit">Войти</button>
+        </form>
+
+        <p class="small">
+            Используй учётную запись, которую создал в Supabase.
+        </p>
+    </section>
+
+    <!-- ПАНЕЛЬ УПРАВЛЕНИЯ -->
+    <section id="dashboard" class="hidden">
+
+        <div class="card">
+            <h1>Панель управления</h1>
+            <p>
+                Здесь ты можешь добавлять картины, менять цены,
+                управлять категориями и публиковать работы.
+            </p>
+
+            <button id="logoutButton" class="secondary">
+                Выйти из аккаунта
+            </button>
+        </div>
+
+        <!-- КАТЕГОРИИ -->
+        <div class="card">
+            <h2>📁 Категории</h2>
+
+            <form id="categoryForm">
+                <label for="categoryName">Название новой категории</label>
+
+                <input
+                    id="categoryName"
+                    type="text"
+                    placeholder="Например: Landschaften"
+                    required
+                >
+
+                <button type="submit">Создать категорию</button>
+            </form>
+
+            <div id="categoryList"></div>
+        </div>
+
+        <!-- ДОБАВЛЕНИЕ КАРТИН -->
+        <div class="card">
+            <h2>🖼️ Добавить картины</h2>
+
+            <p>
+                Можно выбрать несколько фотографий одновременно.
+                Для каждой фотографии будет создана отдельная запись.
+            </p>
+
+            <form id="uploadForm">
+
+                <label for="images">Фотографии картин</label>
+                <input
+                    id="images"
+                    type="file"
+                    accept="image/jpeg,image/png,image/webp"
+                    multiple
+                    required
+                >
+
+                <p class="small">
+                    Поддерживаются JPG, PNG и WebP.
+                    Рекомендуемый размер одной фотографии — до 10 МБ.
+                </p>
+
+                <label for="uploadCategory">Категория</label>
+                <select id="uploadCategory">
+                    <option value="">Без категории</option>
+                </select>
+
+                <label for="uploadPrice">Цена в евро (€)</label>
+                <input
+                    id="uploadPrice"
+                    type="number"
+                    min="0"
+                    step="0.01"
+                    placeholder="Оставь пустым, если цена по запросу"
+                >
+
+                <label>
+                    <input id="publishOnUpload" type="checkbox">
+                    Сразу публиковать картины на сайте
+                </label>
+
+                <button type="submit">Загрузить выбранные картины</button>
+
+                <p id="uploadProgress"></p>
+            </form>
+        </div>
+
+        <!-- СПИСОК КАРТИН -->
+        <div class="card">
+            <h2>🎨 Мои картины</h2>
+
+            <div class="toolbar">
+                <select id="filterCategory">
+                    <option value="">Все категории</option>
+                </select>
+
+                <button id="refreshButton" class="secondary">
+                    Обновить список
+                </button>
+            </div>
+
+            <div id="artworkList" class="artworks"></div>
+        </div>
+
+    </section>
+
+</main>
+
+<script>
+/*
+==================================================
+НАСТРОЙКИ SUPABASE
+ВСТАВЬ СВОИ ЗНАЧЕНИЯ В ЭТИ ДВЕ СТРОКИ.
+==================================================
+*/
+
+const SUPABASE_URL = "https://lcjtsyxeklltyoxovvzr.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_Z5y2_ni_klXhEFU7I-OljA_JZcsyCVJ";
+
+/*
+Не вставляй сюда Secret key или пароль базы данных.
+*/
+
+const BUCKET = "artworks";
+
+const configReady =
+    SUPABASE_URL.startsWith("https://") &&
+    !SUPABASE_URL.includes("ВСТАВЬ") &&
+    SUPABASE_PUBLISHABLE_KEY.startsWith("sb_publishable_") &&
+    !SUPABASE_PUBLISHABLE_KEY.includes("ВСТАВЬ");
+
+const loginPanel = document.getElementById("loginPanel");
+const dashboard = document.getElementById("dashboard");
+const messageBox = document.getElementById("message");
+
+let db = null;
+let categories = [];
+let artworks = [];
+
+function showMessage(text, type = "") {
+    messageBox.textContent = text;
+    messageBox.className = type;
+    messageBox.classList.remove("hidden");
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+}
+
+function clearMessage() {
+    messageBox.textContent = "";
+    messageBox.className = "hidden";
+}
+
+function escapeHTML(value) {
+    return String(value ?? "").replace(/[&<>"']/g, char => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#039;"
+    })[char]);
+}
+
+function formatPrice(price) {
+    if (price === null || price === undefined || price === "") {
+        return "Цена по запросу";
+    }
+
+    return new Intl.NumberFormat("de-DE", {
+        style: "currency",
+        currency: "EUR"
+    }).format(Number(price));
+}
+
+function getCategoryName(id) {
+    const category = categories.find(
+        item => String(item.id) === String(id)
+    );
+
+    return category ? category.name : "Без категории";
+}
+
+function setLoggedIn(isLoggedIn) {
+    loginPanel.classList.toggle("hidden", isLoggedIn);
+    dashboard.classList.toggle("hidden", !isLoggedIn);
+}
+
+function getFileExtension(file) {
+    const name = file.name.toLowerCase();
+    const match = name.match(/\.(jpg|jpeg|png|webp)$/);
+
+    if (!match) {
+        throw new Error(
+            "Неподдерживаемый формат файла: " + file.name
+        );
+    }
+
+    return match[1] === "jpeg" ? "jpg" : match[1];
+}
+
+function getTitleFromFilename(filename) {
+    return filename
+        .replace(/\.[^.]+$/, "")
+        .replace(/[_-]+/g, " ")
+        .trim();
+}
+
+async function checkAdmin() {
+    const {
+        data: { user },
+        error
+    } = await db.auth.getUser();
+
+    if (error || !user) {
+        setLoggedIn(false);
+        return false;
+    }
+
+    /*
+    Проверяем права через защищённую функцию базы данных.
+    */
+
+    const { data: isAdmin, error: adminError } =
+        await db.rpc("is_admin");
+
+    if (adminError || isAdmin !== true) {
+        setLoggedIn(false);
+
+        await db.auth.signOut();
+
+        showMessage(
+            "У этой учётной записи нет прав администратора. " +
+            "Проверь, что UID пользователя добавлен в таблицу admins.",
+            "error"
+        );
+
+        return false;
+    }
+
+    setLoggedIn(true);
+    return true;
+}
+
+async function loadCategories() {
+    const { data, error } = await db
+        .from("categories")
+        .select("*")
+        .order("name");
+
+    if (error) throw error;
+
+    categories = data || [];
+
+    renderCategories();
+    renderCategoryOptions();
+}
+
+function renderCategories() {
+    const container = document.getElementById("categoryList");
+
+    if (!categories.length) {
+        container.innerHTML =
+            "<p>Категорий пока нет. Создай первую категорию.</p>";
+        return;
+    }
+
+    container.innerHTML = categories.map(category => `
+        <div style="
+            padding:12px 0;
+            border-bottom:1px solid var(--border);
+            display:flex;
+            justify-content:space-between;
+            gap:12px;
+            align-items:center;
+        ">
+            <span>${escapeHTML(category.name)}</span>
+
+            <button
+                class="danger"
+                data-delete-category="${category.id}"
+            >
+                Удалить
+            </button>
+        </div>
+    `).join("");
+
+    container.querySelectorAll("[data-delete-category]")
+        .forEach(button => {
+            button.addEventListener("click", async () => {
+                const id = button.dataset.deleteCategory;
+
+                const category = categories.find(
+                    item => String(item.id) === String(id)
+                );
+
+                if (!category) return;
+
+                if (!confirm(
+                    Удалить категорию «${category.name}»?
+                )) return;
+
+                const { error } = await db
+                    .from("categories")
+                    .delete()
+                    .eq("id", id);
+
+                if (error) {
+                    showMessage(error.message, "error");
+                    return;
+                }
+
+                await reloadData();
+
+                showMessage("Категория удалена.", "success");
+            });
+        });
+}
+
+function renderCategoryOptions() {
+    const uploadSelect = document.getElementById("uploadCategory");
+    const filterSelect = document.getElementById("filterCategory");
+
+    const oldUpload = uploadSelect.value;
+    const oldFilter = filterSelect.value;
+
+    uploadSelect.innerHTML =
+        '<option value="">Без категории</option>';
+
+    filterSelect.innerHTML =
+        '<option value="">Все категории</option>';
+
+    categories.forEach(category => {
+        const option1 = document.createElement("option");
+        option1.value = category.id;
+        option1.textContent = category.name;
+        uploadSelect.appendChild(option1);
+
+        const option2 = document.createElement("option");
+        option2.value = category.id;
+        option2.textContent = category.name;
+        filterSelect.appendChild(option2);
+    });
+
+    uploadSelect.value = oldUpload;
+    filterSelect.value = oldFilter;
+}
+
+async function loadArtworks() {
+    const { data, error } = await db
+        .from("artworks")
+        .select("*")
+        .order("sort_order")
+        .order("created_at", { ascending: false });
+
+    if (error) throw error;
+
+    artworks = data || [];
+
+    renderArtworks();
+}
+
+function renderArtworks() {
+    const container = document.getElementById("artworkList");
+    const filter = document.getElementById("filterCategory").value;
+
+    const filtered = artworks.filter(item => {
+        return !filter ||
+            String(item.category_id) === String(filter);
+    });
+
+    if (!filtered.length) {
+        container.innerHTML =
+            "<p>Картины не найдены. Загрузи первую работу.</p>";
+        return;
+    }
+
+    container.innerHTML = filtered.map(item => `
+        <article class="artwork">
+            ${
+                item.image_url
+                    ? `<img
+                        src="${escapeHTML(item.image_url)}"
+                        alt="${escapeHTML(item.title)}"
+                        loading="lazy"
+                    >`
+                    : `<div style="padding:60px 10px;text-align:center">
+                        Нет фотографии
+                    </div>`
+            }
+
+            <div class="artwork-info">
+                <h3>${escapeHTML(item.title)}</h3>
+
+                <p>${escapeHTML(getCategoryName(item.category_id))}</p>
+
+                <p><strong>${escapeHTML(formatPrice(item.price))}</strong></p>
+
+                <p>
+                    ${
+                        item.width_cm && item.height_cm
+                            ? ${escapeHTML(item.width_cm)} × ${escapeHTML(item.height_cm)} см
+                            : "Размер не указан"
+                    }
+                </p>
+
+                <span class="status ${item.published ? "published" : "draft"}">
+                    ${item.published ? "Опубликована" : "Черновик"}
+                </span>
+
+                <div>
+                    <button data-edit="${item.id}">
+                        Редактировать
+                    </button>
+
+                    <button class="secondary" data-toggle="${item.id}">
+                        ${item.published ? "Скрыть" : "Опубликовать"}
+                    </button>
+
+                    <button class="danger" data-delete="${item.id}">
+                        Удалить
+                    </button>
+                </div>
+            </div>
+        </article>
+    `).join("");
+
+    container.querySelectorAll("[data-edit]").forEach(button => {
+        button.addEventListener("click", () => {
+            editArtwork(button.dataset.edit);
+        });
+    });
+
+    container.querySelectorAll("[data-toggle]").forEach(button => {
+        button.addEventListener("click", async () => {
+            const item = artworks.find(
+                artwork => String(artwork.id) === button.dataset.toggle
+            );
+
+            if (!item) return;
+
+            const { error } = await db
+                .from("artworks")
+                .update({ published: !item.published })
+                .eq("id", item.id);
+
+            if (error) {
+                showMessage(error.message, "error");
+                return;
+            }
+
+            await loadArtworks();
+
+            showMessage(
+                item.published
+                    ? "Картина скрыта."
+                    : "Картина опубликована.",
+                "success"
+            );
+        });
+    });
+
+    container.querySelectorAll("[data-delete]").forEach(button => {
+        button.addEventListener("click", async () => {
+            const item = artworks.find(
+                artwork => String(artwork.id) === button.dataset.delete
+            );
+
+            if (!item) return;
+
+            if (!confirm(
+                Удалить картину «${item.title}»? Это действие нельзя отменить.
+            )) return;
+
+            const { error } = await db
+                .from("artworks")
+                .delete()
+                .eq("id", item.id);
+
+            if (error) {
+                showMessage(error.message, "error");
+                return;
+            }
+
+            /*
+            Удаляем фотографию из хранилища.
+            Если удаление фотографии не удастся, запись картины
+            уже удалена из базы данных.
+            */
+
+            if (item.image_url) {
+                const marker = /storage/v1/object/public/${BUCKET}/;
+                const position = item.image_url.indexOf(marker);
+
+                if (position !== -1) {
+                    const path = decodeURIComponent(
+                        item.image_url.substring(
+                            position + marker.length
+                        )
+                    );
+
+                    const { error: storageError } = await db.storage
+                        .from(BUCKET)
+                        .remove([path]);
+
+                    if (storageError) {
+                        console.warn(
+                            "Не удалось удалить файл:",
+                            storageError.message
+                        );
+                    }
+                }
+            }
+
+            await loadArtworks();
+
+            showMessage("Картина удалена.", "success");
+        });
+    });
+}
+
+async function editArtwork(id) {
+    const item = artworks.find(
+        artwork => String(artwork.id) === String(id)
+    );
+
+    if (!item) return;
+
+    const title = prompt("Название картины:", item.title);
+    if (title === null) return;
+
+    if (!title.trim()) {
+        showMessage("Название не может быть пустым.", "error");
+        return;
+    }
+
+    const description = prompt(
+        "Описание картины:",
+        item.description || ""
+    );
+    if (description === null) return;
+
+    const currentPrice =
+        item.price === null || item.price === undefined
+            ? ""
+            : item.price;
+
+    const priceText = prompt(
+        "Цена в евро. Оставь пустым, если цена по запросу:",
+        currentPrice
+    );
+    if (priceText === null) return;
+
+    let price = null;
+
+    if (priceText.trim() !== "") {
+        price = Number(priceText.replace(",", "."));
+
+        if (!Number.isFinite(price) || price < 0) {
+            showMessage("Укажи корректную цену.", "error");
+            return;
+        }
+    }
+
+    const widthText = prompt(
+        "Ширина в сантиметрах:",
+        item.width_cm ?? ""
+    );
+    if (widthText === null) return;
+
+    const heightText = prompt(
+        "Высота в сантиметрах:",
+        item.height_cm ?? ""
+    );
+    if (heightText === null) return;
+
+    const width = widthText.trim() === ""
+        ? null
+        : Number(widthText.replace(",", "."));
+
+    const height = heightText.trim() === ""
+        ? null
+        : Number(heightText.replace(",", "."));
+
+    if (
+        (width !== null && (!Number.isFinite(width) || width < 0)) ||
+        (height !== null && (!Number.isFinite(height) || height < 0))
+    ) {
+        showMessage("Укажи корректные размеры.", "error");
+        return;
+    }
+
+    const categoryOptions = [
+        { id: "", name: "Без категории" },
+        ...categories.map(category => ({
+            id: String(category.id),
+            name: category.name
+        }))
+    ];
+
+    const categoryText = categoryOptions.map((category, index) =>
+        ${index}: ${category.name}
+    ).join("\n");
+
+    const categoryChoice = prompt(
+        "Введи номер категории:\n" + categoryText,
+        String(
+            Math.max(
+                0,
+                categoryOptions.findIndex(
+                    category =>
+                        String(category.id) === String(item.category_id)
+                )
+            )
+        )
+    );
+
+    if (categoryChoice === null) return;
+
+    const categoryIndex = Number(categoryChoice);
+
+    if (
+        !Number.isInteger(categoryIndex) ||
+        categoryIndex < 0 ||
+        categoryIndex >= categoryOptions.length
+    ) {
+        showMessage("Выбери корректную категорию.", "error");
+        return;
+    }
+
+    const selectedCategory = categoryOptions[categoryIndex];
+
+    const { error } = await db
+        .from("artworks")
+        .update({
+            title: title.trim(),
+            description: description.trim(),
+            price,
+            width_cm: width,
+            height_cm: height,
+            category_id: selectedCategory.id || null
+        })
+        .eq("id", item.id);
+
+    if (error) {
+        showMessage(error.message, "error");
+        return;
+    }
+
+    await loadArtworks();
+
+    showMessage("Изменения сохранены.", "success");
+}
+
+async function reloadData() {
+    await loadCategories();
+    await loadArtworks();
+}
+
+/*
+ВХОД
+*/
+
+document.getElementById("loginForm").addEventListener(
+    "submit",
+    async event => {
+        event.preventDefault();
+        clearMessage();
+
+        const email = document.getElementById("email").value.trim();
+        const password = document.getElementById("password").value;
+
+        const { error } = await db.auth.signInWithPassword({
+            email,
+            password
+        });
+
+        if (error) {
+            showMessage(
+                "Не удалось войти. Проверь почту и пароль. " +
+                error.message,
+                "error"
+            );
+            return;
+        }
+
+        const authorized = await checkAdmin();
+
+        if (!authorized) return;
+
+        try {
+            await reloadData();
+            showMessage("Добро пожаловать в панель администратора.", "success");
+        } catch (error) {
+            showMessage(
+                "Не удалось загрузить данные: " + error.message,
+                "error"
+            );
+        }
+    }
+);
+
+/*
+ВЫХОД
+*/
+
+document.getElementById("logoutButton").addEventListener(
+    "click",
+    async () => {
+        await db.auth.signOut();
+        setLoggedIn(false);
+        showMessage("Ты вышел из панели администратора.");
+    }
+);
+
+/*
+СОЗДАНИЕ КАТЕГОРИИ
+*/
+
+document.getElementById("categoryForm").addEventListener(
+    "submit",
+    async event => {
+        event.preventDefault();
+
+        const name = document
+            .getElementById("categoryName")
+            .value.trim();
+
+        if (!name) return;
+
+        const { error } = await db
+            .from("categories")
+            .insert({ name });
+
+        if (error) {
+            showMessage(error.message, "error");
+            return;
+        }
+
+        document.getElementById("categoryName").value = "";
+
+        await reloadData();
+
+        showMessage("Категория создана.", "success");
+    }
+);
+
+/*
+ЗАГРУЗКА НЕСКОЛЬКИХ КАРТИН
+*/
+
+document.getElementById("uploadForm").addEventListener(
+    "submit",
+    async event => {
+        event.preventDefault();
+        clearMessage();
+
+        const input = document.getElementById("images");
+        const files = Array.from(input.files || []);
+
+        if (!files.length) {
+            showMessage("Выбери хотя бы одну фотографию.", "error");
+            return;
+        }
+
+        const maxBytes = 10 * 1024 * 1024;
+
+        for (const file of files) {
+            if (file.size > maxBytes) {
+                showMessage(
+                    `Файл «${file.name}» больше 10 МБ. ` +
+                    "Уменьши размер файла и попробуй снова.",
+                    "error"
+                );
+                return;
+            }
+
+            try {
+                getFileExtension(file);
+            } catch (error) {
+                showMessage(error.message, "error");
+                return;
+            }
+        }
+
+        const categoryValue =
+            document.getElementById("uploadCategory").value;
+
+        const categoryId = categoryValue
+            ? Number(categoryValue)
+            : null;
+
+        const priceInput =
+            document.getElementById("uploadPrice").value.trim();
+
+        let price = null;
+
+        if (priceInput !== "") {
+            price = Number(priceInput);
+
+            if (!Number.isFinite(price) || price < 0) {
+                showMessage("Укажи корректную цену.", "error");
+                return;
+            }
+        }
+
+        const publish =
+            document.getElementById("publishOnUpload").checked;
+
+        const progress = document.getElementById("uploadProgress");
+        const submitButton = event.submitter;
+
+        submitButton.disabled = true;
+
+        let succeeded = 0;
+        const failures = [];
+
+        try {
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+
+                progress.textContent =
+                    Загружаю ${i + 1} из ${files.length}: ${file.name};
+
+                const extension = getFileExtension(file);
+
+                /*
+                Имя файла генерируется автоматически.
+                */
+
+                const path =
+                    ${crypto.randomUUID()}.${extension};
+
+                const { error: uploadError } = await db.storage
+                    .from(BUCKET)
+                    .upload(path, file, {
+                        cacheControl: "3600",
+                        upsert: false,
+                        contentType: file.type
+                    });
+
+                if (uploadError) {
+                    failures.push(
+                        ${file.name}: ${uploadError.message}
+                    );
+                    continue;
+                }
+
+                const {
+                    data: publicUrlData
+                } = db.storage.from(BUCKET).getPublicUrl(path);
+
+                const title = getTitleFromFilename(file.name);
+
+                const { error: insertError } = await db
+                    .from("artworks")
+                    .insert({
+                        title: title || "Новая картина",
+                        description: "",
+                        price,
+                        category_id: categoryId,
+                        image_url: publicUrlData.publicUrl,
+                        published: publish,
+                        sort_order: i
+                    });
+
+                if (insertError) {
+                    /*
+                    Если запись не создалась, удаляем загруженный файл,
+                    чтобы не оставлять лишние изображения.
+                    */
+
+                    await db.storage.from(BUCKET).remove([path]);
+
+                    failures.push(
+                        ${file.name}: ${insertError.message}
+                    );
+
+                    continue;
+                }
+
+                succeeded++;
+            }
+
+            await reloadData();
+
+            input.value = "";
+
+            if (failures.length) {
+                showMessage(
+                    `Загружено картин: ${succeeded}. ` +
+                    `Ошибок: ${failures.length}. ` +
+                    failures.join(" | "),
+                    "error"
+                );
+            } else {
+                showMessage(
+                    Успешно загружено картин: ${succeeded}.,
+                    "success"
+                );
+            }
+
+        } catch (error) {
+            showMessage(
+                "Ошибка загрузки: " + error.message,
+                "error"
+            );
+        } finally {
+            submitButton.disabled = false;
+            progress.textContent = "";
+        }
+    }
+);
+
+/*
+ФИЛЬТР И ОБНОВЛЕНИЕ
+*/
+
+document.getElementById("filterCategory").addEventListener(
+    "change",
+    renderArtworks
+);
+
+document.getElementById("refreshButton").addEventListener(
+    "click",
+    async () => {
+        try {
+            await reloadData();
+            showMessage("Список обновлён.", "success");
+        } catch (error) {
+            showMessage(error.message, "error");
+        }
+    }
+);
+
+/*
+ЗАПУСК
+*/
+
+(async function init() {
+    if (!configReady) {
+        setLoggedIn(false);
+
+        showMessage(
+            "Сначала укажи Project URL и Publishable key " +
+            "в настройках кода ниже.",
+            "error"
+        );
+
+        return;
+    }
+
+    const { createClient } = supabase;
+
+    db = createClient(
+        SUPABASE_URL,
+        SUPABASE_PUBLISHABLE_KEY,
+        {
+            auth: {
+                persistSession: true,
+                autoRefreshToken: true,
+                detectSessionInUrl: true
+            }
+        }
+    );
+
+    const authorized = await checkAdmin();
+
+    if (authorized) {
+        try {
+            await reloadData();
+        } catch (error) {
+            showMessage(
+                "Ошибка загрузки данных: " + error.message,
+                "error"
+            );
+        }
+    }
+})();
+</script>
+
+</body>
+</html>
