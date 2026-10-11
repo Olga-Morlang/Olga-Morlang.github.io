@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#101b35">
+<meta name="theme-color" content="#101c38">
 <meta name="description" content="Originale Gemälde von Olga Morlang – Kunst, Farben und Inspiration.">
 <title>Olga Morlang | Originale Kunstwerke</title>
 
@@ -12,44 +12,59 @@
   --navy:#101b35;
   --navy2:#18294a;
   --gold:#e6c27a;
-  --glass:rgba(9,18,39,.86);
-  --line:rgba(255,255,255,.2);
+  --cream:#f7f0e4;
+  --glass:rgba(9,18,39,.82);
+  --line:rgba(255,255,255,.18);
   --shadow:0 18px 55px rgba(0,0,0,.3);
 }
 
 * { box-sizing:border-box; }
-html { scroll-behavior:smooth; }
+
+html {
+  scroll-behavior:smooth;
+  scroll-padding-top:100px;
+}
+
 body {
   margin:0;
-  min-height:100vh;
-  color:white;
+  color:#fff;
   font-family:Georgia,"Times New Roman",serif;
-  background:#101b35 url("./111.jpeg") center/cover fixed no-repeat;
+  background:#101b35 url("./111.jpeg") center center/cover fixed no-repeat;
+  min-height:100vh;
 }
+
 body::before {
   content:"";
   position:fixed;
   inset:0;
   z-index:-1;
-  background:linear-gradient(120deg,rgba(6,14,32,.82),rgba(13,27,54,.68),rgba(19,28,49,.55));
+  background:linear-gradient(
+    120deg,
+    rgba(6,14,32,.82),
+    rgba(13,27,54,.7),
+    rgba(19,28,49,.56)
+  );
 }
-button,input,textarea,select { font:inherit; }
-button { cursor:pointer; }
-a { color:inherit; }
-.hidden { display:none!important; }
 
-.shell { max-width:1440px; margin:auto; padding:18px; }
+button,input,textarea,select { font:inherit; }
+button,a { -webkit-tap-highlight-color:transparent; }
+a { color:inherit; }
+
+.shell {
+  width:min(1440px,100%);
+  margin:auto;
+  padding:18px;
+}
 
 .topbar {
   display:flex;
   align-items:center;
   justify-content:space-between;
-  flex-wrap:wrap;
-  gap:15px;
-  padding:15px 20px;
+  gap:18px;
+  padding:13px 18px;
   border:1px solid var(--line);
   border-radius:18px;
-  background:rgba(6,13,30,.8);
+  background:rgba(6,13,30,.7);
   backdrop-filter:blur(14px);
   box-shadow:var(--shadow);
   position:relative;
@@ -59,45 +74,68 @@ a { color:inherit; }
 .brand {
   display:flex;
   align-items:center;
-  gap:12px;
+  gap:13px;
   text-decoration:none;
+  min-width:0;
 }
+
 .brand-mark {
   width:45px;
   height:45px;
-  display:grid;
-  place-items:center;
   border:1px solid var(--gold);
   border-radius:50%;
+  display:grid;
+  place-items:center;
   color:var(--gold);
-  font-size:24px;
+  font-size:23px;
+  flex-shrink:0;
 }
-.brand-name { font-size:27px; }
+
+.brand-name {
+  font-size:clamp(18px,2.4vw,28px);
+  letter-spacing:.04em;
+}
+
 .brand-sub {
-  font:11px Arial,sans-serif;
-  letter-spacing:3px;
-  color:#e2d7c4;
+  font:11px/1.4 Arial,sans-serif;
+  letter-spacing:.19em;
   text-transform:uppercase;
+  color:#e2d7c4;
 }
 
 .nav {
   display:flex;
   align-items:center;
-  flex-wrap:wrap;
+  justify-content:flex-end;
   gap:8px;
+  flex-wrap:wrap;
 }
-.nav button,.nav select,.btn {
-  padding:10px 14px;
+
+.nav button,
+.btn {
+  border:1px solid var(--line);
+  border-radius:999px;
+  background:rgba(255,255,255,.07);
+  color:white;
+  text-decoration:none;
+  padding:10px 15px;
+  cursor:pointer;
+  transition:.2s;
+}
+
+.nav button:hover,
+.btn:hover {
+  background:rgba(230,194,122,.18);
+  border-color:var(--gold);
+}
+
+.lang {
+  background:#111d37;
   color:white;
   border:1px solid var(--line);
-  border-radius:25px;
-  background:rgba(255,255,255,.07);
+  border-radius:999px;
+  padding:10px;
 }
-.nav button:hover,.btn:hover {
-  border-color:var(--gold);
-  background:rgba(230,194,122,.18);
-}
-.nav select { max-width:100px; }
 
 .layout {
   display:grid;
@@ -109,53 +147,83 @@ a { color:inherit; }
 
 .sidebar {
   display:grid;
-  gap:15px;
+  gap:16px;
   position:sticky;
-  top:15px;
+  top:16px;
 }
+
 .panel {
-  padding:20px;
   border:1px solid var(--line);
-  border-radius:19px;
+  border-radius:20px;
   background:var(--glass);
   backdrop-filter:blur(14px);
   box-shadow:var(--shadow);
+  padding:19px;
 }
+
+.clock-card { text-align:center; }
+
 .small-label {
-  color:var(--gold);
   font:11px Arial,sans-serif;
   text-transform:uppercase;
-  letter-spacing:2px;
+  letter-spacing:.2em;
+  color:var(--gold);
 }
-.clock-card { text-align:center; }
+
 .clock {
-  margin:12px 0 5px;
-  font:34px Arial,sans-serif;
+  font:clamp(27px,3vw,38px) Arial,sans-serif;
+  letter-spacing:.04em;
+  margin:10px 0 5px;
   font-variant-numeric:tabular-nums;
 }
+
 .date {
   font:13px/1.6 Arial,sans-serif;
   color:#e0e4ef;
 }
-.side-title {
-  margin:0 0 12px;
+
+.location {
+  margin-top:12px;
+  padding-top:12px;
+  border-top:1px solid var(--line);
   color:var(--gold);
-  font-size:21px;
+  font:13px/1.7 Arial,sans-serif;
 }
-.side-links { display:grid; gap:8px; }
+
+.map-link {
+  display:inline-block;
+  margin-top:8px;
+  color:#fff;
+  font:12px Arial,sans-serif;
+}
+
+.side-title {
+  font-size:20px;
+  color:var(--gold);
+  margin:0 0 12px;
+}
+
+.side-links {
+  display:grid;
+  gap:7px;
+}
+
 .side-links button {
   width:100%;
-  padding:11px;
-  color:white;
   text-align:left;
-  background:rgba(255,255,255,.05);
+  color:white;
+  background:rgba(255,255,255,.055);
   border:1px solid transparent;
   border-radius:10px;
+  padding:10px;
+  cursor:pointer;
 }
+
 .side-links button:hover { border-color:var(--gold); }
+
 .side-note {
+  font:13px/1.6 Arial,sans-serif;
   color:#d7dceb;
-  font:13px/1.7 Arial,sans-serif;
 }
 
 .main { min-width:0; }
@@ -163,59 +231,71 @@ a { color:inherit; }
 .hero {
   min-height:310px;
   display:grid;
-  grid-template-columns:1.2fr .8fr;
-  gap:25px;
+  grid-template-columns:minmax(0,1.2fr) minmax(180px,.8fr);
+  gap:22px;
   align-items:center;
   padding:clamp(22px,4vw,48px);
   border:1px solid var(--line);
   border-radius:24px;
-  background:linear-gradient(110deg,rgba(7,15,33,.91),rgba(13,27,54,.58));
+  background:linear-gradient(
+    110deg,
+    rgba(7,15,33,.9),
+    rgba(13,27,54,.54)
+  );
   box-shadow:var(--shadow);
+  overflow:hidden;
 }
+
 .eyebrow {
   color:var(--gold);
   font:12px Arial,sans-serif;
-  letter-spacing:3px;
+  letter-spacing:.22em;
   text-transform:uppercase;
 }
+
 .hero h1 {
-  margin:15px 0;
-  font-size:clamp(36px,5vw,65px);
-  line-height:1.05;
+  font-size:clamp(35px,5.2vw,66px);
+  line-height:1.03;
   font-weight:normal;
+  margin:14px 0;
 }
+
 .hero p {
-  max-width:620px;
-  color:#e3e6ed;
   font-size:17px;
-  line-height:1.8;
+  line-height:1.7;
+  color:#e3e6ed;
+  max-width:640px;
 }
+
 .hero-actions {
   display:flex;
   flex-wrap:wrap;
   gap:10px;
-  margin-top:20px;
+  margin-top:22px;
 }
-.btn { text-decoration:none; }
+
 .btn.primary {
-  color:#172039;
   background:var(--gold);
+  color:#1a2030;
   border-color:var(--gold);
+  font-weight:bold;
 }
+
 .portrait-frame {
   width:min(100%,280px);
   margin:auto;
   padding:9px;
-  border:1px solid var(--gold);
+  border:1px solid rgba(230,194,122,.7);
   border-radius:48% 48% 14px 14px;
-  background:rgba(255,255,255,.05);
+  background:rgba(255,255,255,.06);
 }
+
 .portrait-frame img {
-  display:block;
   width:100%;
   height:300px;
   object-fit:cover;
   border-radius:48% 48% 9px 9px;
+  display:block;
 }
 
 .section {
@@ -223,113 +303,148 @@ a { color:inherit; }
   padding:clamp(20px,3vw,32px);
   border:1px solid var(--line);
   border-radius:22px;
-  background:rgba(7,15,33,.88);
+  background:rgba(7,15,33,.83);
   box-shadow:var(--shadow);
 }
-.section h2 {
-  margin:0 0 10px;
-  font-size:clamp(27px,3vw,38px);
-  font-weight:normal;
-}
-.section-intro {
-  margin:0 0 22px;
-  color:#d8deeb;
-  font:14px/1.7 Arial,sans-serif;
+
+.section-head {
+  display:flex;
+  justify-content:space-between;
+  align-items:end;
+  gap:14px;
+  flex-wrap:wrap;
+  margin-bottom:20px;
 }
 
-.category-grid,.paintings-grid {
+.section h2 {
+  font-weight:normal;
+  font-size:clamp(27px,3vw,38px);
+  margin:0 0 8px;
+}
+
+.section-intro {
+  font:14px/1.7 Arial,sans-serif;
+  color:#d8deeb;
+  margin:0;
+}
+
+.category-grid {
   display:grid;
   grid-template-columns:repeat(3,minmax(0,1fr));
   gap:15px;
 }
+
 .category-card {
   min-height:155px;
-  display:flex;
-  flex-direction:column;
-  justify-content:flex-end;
   position:relative;
   overflow:hidden;
-  padding:20px;
-  text-align:left;
-  color:white;
-  border:1px solid rgba(230,194,122,.45);
+  border:1px solid rgba(230,194,122,.42);
   border-radius:16px;
-  background:linear-gradient(145deg,rgba(40,56,85,.96),rgba(12,22,44,.98));
-  transition:.2s;
+  padding:20px;
+  display:flex;
+  flex-direction:column;
+  justify-content:end;
+  text-align:left;
+  color:#fff;
+  background:linear-gradient(145deg,rgba(40,56,85,.93),rgba(12,22,44,.98));
+  cursor:pointer;
+  transition:transform .2s,border-color .2s;
 }
+
 .category-card::before {
   content:"✦";
   position:absolute;
   right:18px;
-  top:10px;
-  color:rgba(230,194,122,.3);
+  top:12px;
   font-size:45px;
+  color:rgba(230,194,122,.28);
 }
+
 .category-card:hover {
   transform:translateY(-3px);
   border-color:var(--gold);
 }
+
 .category-card strong {
   font-size:23px;
   font-weight:normal;
 }
+
 .category-card span {
-  margin-top:8px;
-  color:#d8deeb;
   font:12px Arial,sans-serif;
+  color:#d8deeb;
+  margin-top:8px;
 }
 
 .back-row {
   display:flex;
   align-items:center;
   justify-content:space-between;
-  flex-wrap:wrap;
   gap:10px;
   margin-bottom:18px;
 }
+
 .back-button {
-  padding:9px 14px;
-  color:var(--gold);
-  background:transparent;
   border:1px solid var(--gold);
-  border-radius:25px;
+  color:var(--gold);
+  border-radius:999px;
+  background:transparent;
+  padding:9px 14px;
+  cursor:pointer;
 }
+
+.paintings-grid {
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:15px;
+}
+
 .painting {
   overflow:hidden;
   border:1px solid var(--line);
   border-radius:15px;
-  background:rgba(255,255,255,.05);
+  background:rgba(255,255,255,.055);
   cursor:pointer;
   transition:.2s;
 }
+
 .painting:hover {
   transform:translateY(-3px);
   border-color:var(--gold);
 }
+
 .painting img {
   display:block;
   width:100%;
   height:235px;
   object-fit:contain;
-  padding:5px;
   background:rgba(0,0,0,.22);
+  padding:5px;
 }
+
 .painting-info { padding:13px; }
+
 .painting-info h3 {
-  margin:0 0 7px;
   font-size:18px;
   font-weight:normal;
+  margin:0 0 7px;
 }
+
 .painting-info p {
-  margin:0 0 10px;
-  color:#d4d9e5;
   font:12px/1.6 Arial,sans-serif;
+  color:#d4d9e5;
+  margin:0 0 10px;
 }
-.price { color:var(--gold); }
+
+.price {
+  color:var(--gold);
+  font-size:17px;
+}
+
 .empty-state {
-  padding:20px;
+  padding:24px;
   border:1px dashed var(--line);
-  border-radius:12px;
+  border-radius:14px;
   color:#d7dceb;
   font:14px/1.6 Arial,sans-serif;
 }
@@ -340,120 +455,213 @@ a { color:inherit; }
   gap:25px;
   align-items:start;
 }
+
 .about-layout img {
   width:100%;
-  max-height:310px;
+  max-height:300px;
   object-fit:cover;
   border:1px solid var(--gold);
   border-radius:15px;
 }
+
 .copy {
-  color:#e2e6ef;
   font:15px/1.85 Arial,sans-serif;
+  color:#e2e6ef;
   white-space:pre-line;
 }
 
 .form-grid {
   display:grid;
   grid-template-columns:1fr 1fr;
-  gap:14px;
+  gap:13px;
 }
+
 .field {
   display:grid;
   gap:7px;
-  color:#e2e6ef;
   font:13px Arial,sans-serif;
+  color:#e2e6ef;
 }
+
 .field.full { grid-column:1/-1; }
-.field input,.field textarea {
+
+.field input,
+.field textarea,
+.field select {
   width:100%;
-  padding:12px;
-  color:white;
+  padding:12px 13px;
   border:1px solid var(--line);
   border-radius:10px;
   background:rgba(255,255,255,.08);
+  color:white;
+  outline:none;
 }
-.field input:focus,.field textarea:focus { outline:1px solid var(--gold); }
-.field textarea { min-height:120px; resize:vertical; }
+
+.field select option { color:#111; }
+
+.field textarea {
+  min-height:120px;
+  resize:vertical;
+}
+
+.field input:focus,
+.field textarea:focus { border-color:var(--gold); }
+
 .field input[type=file] { padding:10px; }
+
 .preview {
   display:flex;
-  flex-wrap:wrap;
   gap:10px;
+  flex-wrap:wrap;
   margin-top:8px;
 }
+
 .preview img {
   width:90px;
   height:90px;
   object-fit:cover;
-  border:1px solid var(--line);
   border-radius:9px;
-}
-.hint,.notice {
-  color:#cbd2e1;
-  font:12px/1.7 Arial,sans-serif;
+  border:1px solid var(--line);
 }
 
-.comment-form { display:grid; gap:10px; margin:20px 0; }
-.comment-form input,.comment-form textarea {
-  width:100%;
-  padding:12px;
-  color:white;
-  border:1px solid var(--line);
-  border-radius:10px;
-  background:rgba(255,255,255,.08);
+.hint {
+  font:12px/1.6 Arial,sans-serif;
+  color:#cbd2e1;
 }
-.comment-form textarea { min-height:85px; }
-.comments { display:grid; gap:12px; }
+
+.comments { display:grid; gap:13px; }
+
 .comment {
   padding:13px;
   border:1px solid var(--line);
   border-radius:12px;
-  background:rgba(255,255,255,.04);
+  background:rgba(255,255,255,.045);
 }
+
 .comment strong { color:var(--gold); }
+
 .comment time {
-  margin-left:8px;
-  color:#aeb8cc;
   font:11px Arial,sans-serif;
+  color:#aeb8cc;
+  margin-left:8px;
 }
+
 .comment p {
-  margin:8px 0 0;
-  white-space:pre-wrap;
   font:14px/1.6 Arial,sans-serif;
+  white-space:pre-wrap;
+  margin:8px 0 0;
+}
+
+.comment-form {
+  display:grid;
+  gap:10px;
+  margin-bottom:17px;
+}
+
+.comment-form input,
+.comment-form textarea {
+  width:100%;
+  padding:11px 12px;
+  background:rgba(255,255,255,.08);
+  border:1px solid var(--line);
+  border-radius:10px;
+  color:white;
+}
+
+.comment-form textarea { min-height:85px; }
+
+.notice {
+  font:12px/1.6 Arial,sans-serif;
+  color:#c9d1e1;
+  margin:12px 0 0;
 }
 
 .footer {
-  padding:25px 8px;
+  padding:24px 8px;
   text-align:center;
   color:#d0d6e4;
-  font:12px Arial,sans-serif;
+  font:12px/1.8 Arial,sans-serif;
 }
+
+.footer button {
+  color:inherit;
+  text-decoration:underline;
+}
+
+.legal-links {
+  display:flex;
+  flex-wrap:wrap;
+  gap:9px;
+  margin-top:18px;
+}
+
+.legal-links a {
+  display:inline-block;
+  padding:8px 12px;
+  border:1px solid var(--line);
+  border-radius:999px;
+  text-decoration:none;
+  font:12px Arial,sans-serif;
+  color:#f7f0e4;
+}
+
+.legal-links a:hover {
+  border-color:var(--gold);
+  color:var(--gold);
+}
+
+.legal-card {
+  margin-top:12px;
+  padding:15px;
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:rgba(255,255,255,.035);
+}
+
+.legal-card h3 {
+  margin:0 0 8px;
+  color:var(--gold);
+  font-weight:normal;
+}
+
+.legal-card p,
+.legal-card li {
+  font:13px/1.7 Arial,sans-serif;
+  color:#e0e5ef;
+}
+
+.legal-card ul { padding-left:20px; }
+
+.hidden { display:none!important; }
 
 .lightbox {
   position:fixed;
   inset:0;
   z-index:30;
+  background:rgba(0,0,0,.91);
   display:none;
   align-items:center;
   justify-content:center;
   padding:20px;
-  background:rgba(0,0,0,.92);
 }
+
 .lightbox.open { display:flex; }
+
 .lightbox img {
   max-width:94vw;
   max-height:88vh;
   object-fit:contain;
 }
+
 .lightbox-close {
   position:absolute;
-  top:15px;
-  right:22px;
-  color:white;
-  background:transparent;
+  top:18px;
+  right:24px;
   border:0;
-  font:38px Arial,sans-serif;
+  background:transparent;
+  color:#fff;
+  font:36px Arial,sans-serif;
+  cursor:pointer;
 }
 
 .chat-toggle {
@@ -468,8 +676,10 @@ a { color:inherit; }
   background:var(--gold);
   color:#172039;
   font-size:25px;
+  cursor:pointer;
   box-shadow:var(--shadow);
 }
+
 .chat-box {
   position:fixed;
   right:22px;
@@ -479,33 +689,40 @@ a { color:inherit; }
   height:440px;
   display:none;
   flex-direction:column;
-  overflow:hidden;
   border:1px solid var(--gold);
   border-radius:17px;
+  overflow:hidden;
   background:#101b35;
   box-shadow:var(--shadow);
 }
+
 .chat-box.open { display:flex; }
+
 .chat-head {
-  display:flex;
-  justify-content:space-between;
   padding:14px;
   background:#1d2d4d;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
 }
+
 .chat-head button {
-  color:white;
   background:none;
+  color:white;
   border:0;
   font-size:22px;
+  cursor:pointer;
 }
+
 .chat-messages {
   flex:1;
+  padding:13px;
+  overflow:auto;
   display:flex;
   flex-direction:column;
   gap:10px;
-  padding:13px;
-  overflow:auto;
 }
+
 .bubble {
   max-width:90%;
   padding:10px 12px;
@@ -514,69 +731,81 @@ a { color:inherit; }
   font:13px/1.5 Arial,sans-serif;
   white-space:pre-wrap;
 }
+
 .bubble.user {
   align-self:flex-end;
+  background:#e6c27a;
   color:#1b2233;
-  background:var(--gold);
 }
-.chat-input {
-  display:flex;
-  gap:7px;
-  padding:10px;
-  border-top:1px solid var(--line);
-}
+
+.chat-input { display:flex; padding:10px; gap:7px; }
+
 .chat-input input {
   flex:1;
   min-width:0;
   padding:10px;
-  color:white;
   border:1px solid var(--line);
-  border-radius:9px;
+  border-radius:8px;
   background:rgba(255,255,255,.08);
+  color:white;
 }
+
 .chat-input button {
-  padding:0 13px;
+  padding:10px;
   border:0;
-  border-radius:9px;
+  border-radius:8px;
   background:var(--gold);
+  color:#172039;
+  cursor:pointer;
 }
+
 .toast {
   position:fixed;
   left:50%;
   bottom:24px;
-  z-index:40;
-  display:none;
-  max-width:90vw;
-  padding:12px 18px;
   transform:translateX(-50%);
-  color:#172039;
+  z-index:40;
   background:#f7f0e4;
+  color:#172039;
+  padding:12px 18px;
   border-radius:10px;
   box-shadow:var(--shadow);
   font:14px Arial,sans-serif;
+  display:none;
+  max-width:90vw;
 }
+
 .toast.show { display:block; }
 
 @media(max-width:950px) {
   .layout { grid-template-columns:1fr; }
   .sidebar { position:static; grid-template-columns:1fr 1fr; }
-  .category-grid,.paintings-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .hero { grid-template-columns:1fr .55fr; }
+  .portrait-frame img { height:235px; }
+  .category-grid,.paintings-grid {
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
 }
+
 @media(max-width:650px) {
   .shell { padding:9px; }
   .topbar { align-items:flex-start; flex-direction:column; }
+  .nav { justify-content:flex-start; }
   .layout { gap:12px; margin-top:12px; }
-  .sidebar { gap:10px; }
+  .sidebar { grid-template-columns:1fr 1fr; gap:10px; }
   .panel { padding:13px; }
   .clock { font-size:25px; }
-  .hero { grid-template-columns:1fr; padding:22px; }
+  .hero { grid-template-columns:1fr; padding:23px; }
   .portrait-frame { width:170px; grid-row:1; }
   .portrait-frame img { height:180px; }
   .hero h1 { font-size:39px; }
   .hero p { font-size:15px; }
-  .category-grid,.paintings-grid { grid-template-columns:1fr 1fr; gap:9px; }
+  .category-grid,.paintings-grid {
+    grid-template-columns:1fr 1fr;
+    gap:9px;
+  }
   .category-card { min-height:135px; padding:13px; }
-  .category-card strong { font-size:18px; }
+  .category-card strong { font-size:19px; }
   .painting img { height:175px; }
   .painting-info { padding:10px; }
   .painting-info h3 { font-size:16px; }
@@ -595,7 +824,7 @@ a { color:inherit; }
 <div class="shell">
 
 <header class="topbar">
-  <a class="brand" href="#start">
+  <a class="brand" href="#start" aria-label="Olga Morlang Startseite">
     <span class="brand-mark">✦</span>
     <span>
       <span class="brand-name">Olga Morlang</span><br>
@@ -603,12 +832,12 @@ a { color:inherit; }
     </span>
   </a>
 
-  <nav class="nav">
-    <button data-go="start" data-i18n="navHome">Startseite</button>
-    <button data-go="gallery" data-i18n="navGallery">Galerie</button>
-    <button data-go="about" data-i18n="navAbout">Über die Künstlerin</button>
-    <button data-go="contact" data-i18n="navContact">Kontakt</button>
-    <select id="language" aria-label="Sprache">
+  <nav class="nav" aria-label="Hauptnavigation">
+    <button type="button" data-go="start" data-i18n="navHome">Startseite</button>
+    <button type="button" data-go="gallery" data-i18n="navGallery">Galerie</button>
+    <button type="button" data-go="about" data-i18n="navAbout">Über die Künstlerin</button>
+    <button type="button" data-go="contact" data-i18n="navContact">Kontakt</button>
+    <select id="language" class="lang" aria-label="Sprache">
       <option value="de">DE</option>
       <option value="en">EN</option>
       <option value="ru">RU</option>
@@ -619,362 +848,540 @@ a { color:inherit; }
 
 <div class="layout">
 
-  <aside class="sidebar">
-    <div class="panel clock-card">
-      <div class="small-label" data-i18n="localTime">Aktuelle Zeit in Belgien</div>
-      <div class="clock" id="clock">--:--:--</div>
-      <div class="date" id="date">--</div>
+<aside class="sidebar">
+
+  <div class="panel clock-card">
+    <div class="small-label" data-i18n="localTime">Aktuelle Ortszeit in Deutschland</div>
+    <div id="clock" class="clock">--:--:--</div>
+    <div id="date" class="date">--</div>
+
+    <div class="location">
+      📍 Grassau, Bayern<br>
+      Deutschland
+      <br>
+      <a class="map-link"
+         href="https://www.google.com/maps/search/?api=1&query=Grassau+Bayern+Deutschland"
+         target="_blank" rel="noopener">
+        Auf der Karte ansehen ↗
+      </a>
     </div>
+  </div>
 
-    <div class="panel">
-      <h3 class="side-title" data-i18n="quickLinks">Schnellzugriff</h3>
-      <div class="side-links">
-        <button data-go="gallery" data-i18n="navGallery">Galerie</button>
-        <button data-go="about" data-i18n="navAbout">Über die Künstlerin</button>
-        <button data-go="contact" data-i18n="navContact">Kontakt</button>
-        <button data-go="comments" data-i18n="commentsTitle">Kommentare</button>
-      </div>
+  <div class="panel">
+    <h3 class="side-title" data-i18n="explore">Entdecken</h3>
+    <div class="side-links">
+      <button data-go="gallery" data-i18n="sideGallery">Gemäldegalerie</button>
+      <button data-go="about" data-i18n="sideArtist">Die Künstlerin</button>
+      <button data-go="contact" data-i18n="sideContact">Kontakt aufnehmen</button>
+      <button data-go="comments" data-i18n="sideComments">Kommentare</button>
+      <button data-go="legal" data-i18n="legalTitle">Rechtliche Informationen</button>
     </div>
+    <p class="side-note" data-i18n="sideNote">
+      Entdecken Sie handgemalte Originale und treten Sie mit der Künstlerin in Kontakt.
+    </p>
+  </div>
 
-    <div class="panel">
-      <h3 class="side-title" data-i18n="welcomeTitle">Willkommen</h3>
-      <p class="side-note" data-i18n="welcomeText">
-        Entdecken Sie originale Kunstwerke und lassen Sie sich von Farben und Formen inspirieren.
-      </p>
+</aside>
+
+<main class="main" id="start">
+
+<section class="hero">
+  <div>
+    <div class="eyebrow" data-i18n="eyebrow">Kunst mit Gefühl und Charakter</div>
+    <h1 data-i18n="heroTitle">Farben, die Geschichten erzählen.</h1>
+    <p data-i18n="heroText">
+      Willkommen in der Kunstwelt von Olga Morlang. Entdecken Sie originale,
+      handgemalte Werke – jedes Bild ein einzigartiger Ausdruck von Stimmung,
+      Natur und Fantasie.
+    </p>
+    <div class="hero-actions">
+      <button class="btn primary" data-go="gallery" data-i18n="heroButton">Gemälde entdecken</button>
+      <button class="btn" data-go="about" data-i18n="aboutButton">Über Olga Morlang</button>
     </div>
-  </aside>
+  </div>
 
-  <main class="main">
+  <div class="portrait-frame">
+    <img src="./333.jpeg" alt="Olga Morlang"
+         onerror="this.style.display='none'">
+  </div>
+</section>
 
-    <section class="hero" id="start">
-      <div>
-        <div class="eyebrow" data-i18n="heroEyebrow">Kunst mit Persönlichkeit</div>
-        <h1 data-i18n="heroTitle">Willkommen in der Kunstwelt von Olga Morlang</h1>
-        <p data-i18n="heroText">
-          Entdecken Sie originale Gemälde, besondere Farben und individuelle Kunstwerke.
-          Jedes Bild erzählt seine eigene Geschichte.
-        </p>
-        <div class="hero-actions">
-          <button class="btn primary" data-go="gallery" data-i18n="explore">Gemälde entdecken</button>
-          <button class="btn" data-go="about" data-i18n="aboutButton">Über die Künstlerin</button>
-        </div>
-      </div>
-
-      <div class="portrait-frame">
-        <img src="./333.jpeg" alt="Olga Morlang" onerror="this.style.display='none'">
-      </div>
-    </section>
-
-    <section class="section" id="gallery">
-      <h2 data-i18n="galleryTitle">Galerie</h2>
+<section class="section" id="gallery">
+  <div class="section-head">
+    <div>
+      <div class="eyebrow" data-i18n="collectionLabel">Die Sammlung</div>
+      <h2 data-i18n="galleryTitle">Gemäldegalerie</h2>
       <p class="section-intro" data-i18n="galleryIntro">
-        Wählen Sie zuerst eine Kategorie, um die darin enthaltenen Gemälde zu entdecken.
+        Wählen Sie zuerst eine Kategorie, um die dazugehörigen Werke zu entdecken.
       </p>
+    </div>
+  </div>
 
-      <div id="categoryView" class="category-grid"></div>
+  <div id="categoryView" class="category-grid"></div>
 
-      <div id="paintingView" class="hidden">
-        <div class="back-row">
-          <h2 id="categoryHeading"></h2>
-          <button class="back-button" id="backCategories" data-i18n="backCategories">
-            ← Alle Kategorien
-          </button>
-        </div>
-        <div id="paintingsGrid" class="paintings-grid"></div>
-      </div>
-    </section>
+  <div id="paintingView" class="hidden">
+    <div class="back-row">
+      <h3 id="categoryHeading"></h3>
+      <button id="backCategories" class="back-button" data-i18n="backCategories">
+        ← Alle Kategorien
+      </button>
+    </div>
+    <div id="paintingsGrid" class="paintings-grid"></div>
+  </div>
+</section>
 
-    <section class="section hidden" id="about">
-      <h2 data-i18n="aboutTitle">Über die Künstlerin</h2>
-      <p class="section-intro" data-i18n="aboutIntro">
-        Lernen Sie die Künstlerin und ihre Arbeit kennen.
-      </p>
-      <div class="about-layout">
-        <img src="./333.jpeg" alt="Olga Morlang" onerror="this.style.display='none'">
-        <div class="copy" data-i18n="aboutText">Olga Morlang ist eine Künstlerin, die ihre Ideen und Gefühle durch Farben und Formen ausdrückt. Ihre Gemälde sind individuelle Originalwerke. Wenn Sie mehr über ein bestimmtes Bild erfahren möchten, nehmen Sie gerne Kontakt auf.</div>
-      </div>
-    </section>
+<section class="section hidden" id="about">
+  <div class="eyebrow" data-i18n="aboutLabel">Hinter den Bildern</div>
+  <h2 data-i18n="aboutTitle">Über die Künstlerin</h2>
 
-    <section class="section" id="contact">
-      <h2 data-i18n="contactTitle">Kontakt</h2>
-      <p class="section-intro" data-i18n="contactIntro">
-        Fragen zu einem Gemälde? Schreiben Sie uns gerne eine Nachricht.
-      </p>
+  <div class="about-layout">
+    <img src="./333.jpeg" alt="Olga Morlang"
+         onerror="this.style.display='none'">
+    <div>
+      <p class="copy" data-i18n="artistBio">Olga Morlang ist eine Künstlerin, die ihre Eindrücke und Gefühle durch Farben und Formen ausdrückt. Jedes Werk entsteht von Hand und besitzt seinen eigenen Charakter.</p>
+      <button class="btn primary" data-go="contact" data-i18n="askArtist">
+        Frage an die Künstlerin senden
+      </button>
+    </div>
+  </div>
+</section>
 
-      <form id="contactForm">
-        <div class="form-grid">
-          <label class="field">
-            <span data-i18n="nameLabel">Ihr Name</span>
-            <input name="name" required>
-          </label>
+<section class="section" id="contact">
+  <div class="eyebrow" data-i18n="contactLabel">Wir freuen uns auf Ihre Nachricht</div>
+  <h2 data-i18n="contactTitle">Kontakt</h2>
+  <p class="section-intro" data-i18n="contactIntro">
+    Fragen zu einem Gemälde, Interesse an einem Original oder eine individuelle Anfrage?
+    Schreiben Sie uns.
+  </p>
 
-          <label class="field">
-            <span data-i18n="emailLabel">Ihre E-Mail</span>
-            <input type="email" name="email" required>
-          </label>
+  <form id="contactForm">
+    <div class="form-grid">
 
-          <label class="field full">
-            <span data-i18n="subjectLabel">Betreff</span>
-            <input name="subject" required>
-          </label>
+      <label class="field">
+        <span data-i18n="yourName">Ihr Name</span>
+        <input name="name" required autocomplete="name" placeholder="Name">
+      </label>
 
-          <label class="field full">
-            <span data-i18n="messageLabel">Ihre Nachricht</span>
-            <textarea name="message" required></textarea>
-          </label>
+      <label class="field">
+        <span data-i18n="yourEmail">Ihre E-Mail</span>
+        <input name="email" type="email" required autocomplete="email"
+               placeholder="name@example.com">
+      </label>
 
-          <label class="field full">
-            <span data-i18n="attachLabel">Fotos anhängen (optional)</span>
-            <input type="file" id="contactFiles" name="attachments" accept="image/*" multiple>
-            <div class="preview" id="filePreview"></div>
-          </label>
-        </div>
+      <label class="field full">
+        <span data-i18n="subject">Betreff</span>
+        <input name="subject" required placeholder="Anfrage zu einem Gemälde">
+      </label>
 
-        <button class="btn primary" type="submit" style="margin-top:15px" data-i18n="sendButton">
+      <label class="field full">
+        <span data-i18n="message">Ihre Nachricht</span>
+        <textarea name="message" required placeholder="Schreiben Sie Ihre Nachricht …"></textarea>
+      </label>
+
+      <label class="field full">
+        <span data-i18n="attachPhoto">Foto anhängen (optional)</span>
+        <input id="contactFiles" name="attachments" type="file" accept="image/*" multiple>
+        <span class="hint" data-i18n="attachHint">
+          Sie können Bilder auswählen. Für die tatsächliche Übermittlung muss ein Formular-Dienst eingerichtet sein.
+        </span>
+        <div id="filePreview" class="preview"></div>
+      </label>
+
+      <div class="field full">
+        <button class="btn primary" type="submit" data-i18n="sendMessage">
           Nachricht vorbereiten
         </button>
-      </form>
+      </div>
 
-      <p class="notice" data-i18n="contactNotice">
-        Hinweis: Ohne angeschlossenen Versanddienst wird Ihr E-Mail-Programm geöffnet. Anhänge müssen dann manuell hinzugefügt werden.
-      </p>
-    </section>
+    </div>
+  </form>
 
-    <section class="section" id="comments">
-      <h2 data-i18n="commentsTitle">Kommentare und Meinungen</h2>
-      <p class="section-intro" data-i18n="commentsIntro">
-        Teilen Sie Ihre Eindrücke von den Kunstwerken.
-      </p>
+  <p class="notice" data-i18n="contactNotice">
+    GitHub Pages kann Formulare nicht selbst per E-Mail versenden.
+    Ohne eingerichteten Formular-Dienst wird eine E-Mail in Ihrem Mailprogramm vorbereitet.
+  </p>
+</section>
 
-      <form class="comment-form" id="commentForm">
-        <input id="commentName" maxlength="60" required data-i18n-placeholder="commentNamePlaceholder" placeholder="Ihr Name">
-        <textarea id="commentText" maxlength="1000" required data-i18n-placeholder="commentPlaceholder" placeholder="Ihr Kommentar"></textarea>
-        <button class="btn primary" type="submit" data-i18n="commentButton">Kommentar veröffentlichen</button>
-      </form>
+<section class="section" id="comments">
+  <div class="eyebrow" data-i18n="communityLabel">Ihre Gedanken</div>
+  <h2 data-i18n="commentsTitle">Kommentare & Eindrücke</h2>
+  <p class="section-intro" data-i18n="commentsIntro">
+    Teilen Sie Ihre Gedanken zu den Bildern.
+  </p>
 
-      <div id="commentsList" class="comments"></div>
-      <p class="notice" data-i18n="commentsNotice">
-        Kommentare werden in diesem Browser gespeichert. Für gemeinsame öffentliche Kommentare ist ein zusätzlicher Dienst erforderlich.
-      </p>
-    </section>
+  <form id="commentForm" class="comment-form">
+    <input id="commentName" maxlength="60" required placeholder="Ihr Name" aria-label="Ihr Name">
+    <textarea id="commentText" maxlength="1000" required placeholder="Ihr Kommentar …" aria-label="Ihr Kommentar"></textarea>
+    <button class="btn primary" type="submit" data-i18n="postComment">Kommentar hinzufügen</button>
+  </form>
 
-  </main>
-</div>
+  <div id="commentsList" class="comments"></div>
+
+  <p class="notice" data-i18n="commentsNotice">
+    Kommentare werden derzeit nur in diesem Browser gespeichert und sind nicht öffentlich sichtbar.
+  </p>
+</section>
+
+<section class="section" id="legal">
+  <div class="eyebrow">Informationen für Käufer</div>
+  <h2 data-i18n="legalTitle">Rechtliche Informationen</h2>
+  <p class="section-intro">
+    Informationen zu Verkäufer, Datenschutz, Kaufbedingungen und Verbraucherrechten.
+  </p>
+
+  <div class="legal-card" id="impressum">
+    <h3>Impressum</h3>
+    <p>
+      <strong>Entwurf – noch nicht vollständig.</strong>
+      Vor der Veröffentlichung müssen die vollständigen rechtlichen Angaben der
+      Verkäuferin ergänzt werden. Dazu gehören je nach Rechtsstatus insbesondere
+      Name, ladungsfähige Anschrift, Kontaktinformationen und gegebenenfalls weitere
+      gesetzlich vorgeschriebene Angaben.
+    </p>
+  </div>
+
+  <div class="legal-card" id="datenschutz">
+    <h3>Datenschutzerklärung</h3>
+    <p>
+      <strong>Entwurf – noch nicht vollständig.</strong>
+      Diese Erklärung muss die tatsächlich verwendeten Dienste beschreiben, etwa
+      Hosting, Kontaktformular, mögliche Cloud-Speicherung, Zahlungsdienstleister,
+      Cookies und Statistik. Es dürfen keine Dienste oder Datenverarbeitungen
+      behauptet werden, die nicht tatsächlich stattfinden.
+    </p>
+  </div>
+
+  <div class="legal-card" id="agb">
+    <h3>AGB und Kaufbedingungen</h3>
+    <p>
+      <strong>Entwurf – noch nicht vollständig.</strong>
+      Vor verbindlichen Bestellungen müssen unter anderem Verkäuferstatus,
+      Bestellablauf, Vertragsabschluss, Preise, Versandkosten, Zahlungsmethoden,
+      Lieferzeiten und gesetzliche Mängelrechte klar festgelegt werden.
+    </p>
+  </div>
+
+  <div class="legal-card" id="widerruf">
+    <h3>Widerrufsbelehrung und Verbraucherrechte</h3>
+    <p>
+      <strong>Entwurf – noch nicht vollständig.</strong>
+      Bei Fernabsatzverträgen mit Verbrauchern können gesetzliche Widerrufsrechte
+      gelten. Die konkrete Belehrung, Fristen, ein Muster-Widerrufsformular und
+      mögliche gesetzliche Ausnahmen müssen zum tatsächlichen Geschäftsmodell passen.
+      Nicht jede handgemalte Originalarbeit fällt automatisch unter eine Ausnahme.
+    </p>
+  </div>
+
+  <div class="legal-card" id="versand">
+    <h3>Versand und Zahlung</h3>
+    <p>
+      Bestellungen und Versandkosten müssen vor einem verbindlichen Kauf klar bestätigt
+      werden. Die Versandkosten hängen unter anderem vom Zielland sowie von Gewicht
+      und Abmessungen der verpackten Arbeit ab. Online-Zahlung ist noch nicht aktiviert.
+    </p>
+  </div>
+
+  <div class="legal-card">
+    <h3>Urheberrecht an den Kunstwerken</h3>
+    <p>
+      Die Urheberrechte an den Kunstwerken bleiben grundsätzlich bei der Urheberin,
+      soweit gesetzlich nichts anderes vereinbart ist. Der Kauf eines physischen
+      Gemäldes überträgt nicht automatisch das Urheberrecht oder sämtliche
+      Nutzungsrechte am Bild. Die endgültige Formulierung sollte an die tatsächlichen
+      Verkaufsbedingungen angepasst werden.
+    </p>
+  </div>
+
+  <p class="notice">
+    Hinweis: Diese Texte sind Platzhalter und keine Rechtsberatung. Vor dem tatsächlichen
+    Verkauf sollten die Angaben anhand des Verkäuferstatus und der geltenden deutschen
+    und gegebenenfalls europäischen Vorschriften geprüft und vervollständigt werden.
+  </p>
+</section>
 
 <footer class="footer">
-  © <span id="year"></span> Olga Morlang · <span data-i18n="footerText">Originale Kunstwerke</span>
+  © <span id="year"></span> Olga Morlang ·
+  <span data-i18n="footerText">Originale Kunstwerke und handgemalte Bilder</span>
+  · <a href="#legal">Rechtliche Informationen</a>
+  ·
+  <button type="button" id="adminPlaceholder"
+          style="border:0;background:none;color:inherit;text-decoration:underline;cursor:pointer;font:inherit">
+    Administrator
+  </button>
 </footer>
+
+</main>
+</div>
 </div>
 
-<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Gemälde vergrößert">
+<div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-label="Gemälde in voller Größe">
   <button class="lightbox-close" id="lightboxClose" aria-label="Schließen">×</button>
-  <img id="lightboxImage" src="" alt="">
+  <img id="lightboxImage" src="" alt="Gemälde in voller Größe">
 </div>
 
-<button class="chat-toggle" id="chatToggle" aria-label="Chat öffnen">✉</button>
+<button id="chatToggle" class="chat-toggle" aria-label="Chat öffnen" title="Chat">✉</button>
 
-<div class="chat-box" id="chatBox">
+<div id="chatBox" class="chat-box" role="dialog" aria-label="Kunst-Assistent">
   <div class="chat-head">
     <strong data-i18n="chatTitle">Kunst-Assistent</strong>
     <button id="chatClose" aria-label="Schließen">×</button>
   </div>
-  <div class="chat-messages" id="chatMessages">
-    <div class="bubble" data-i18n="chatWelcome">Hallo! Ich helfe Ihnen gerne bei Fragen zu Gemälden und Kontakt.</div>
+  <div id="chatMessages" class="chat-messages">
+    <div class="bubble" data-i18n="chatWelcome">
+      Hallo! Ich helfe Ihnen gerne bei Fragen zu den Gemälden, Preisen und Kontaktmöglichkeiten.
+    </div>
   </div>
-  <form class="chat-input" id="chatForm">
-    <input id="chatInput" required data-i18n-placeholder="chatPlaceholder" placeholder="Ihre Frage ...">
-    <button type="submit" aria-label="Senden">➤</button>
+  <form id="chatForm" class="chat-input">
+    <input id="chatInput" autocomplete="off" placeholder="Ihre Frage …" aria-label="Ihre Frage">
+    <button type="submit" data-i18n="chatSend">Senden</button>
   </form>
 </div>
 
-<div class="toast" id="toast"></div>
+<div id="toast" class="toast" role="status"></div>
 
 <script>
+const artworks = [
+  {file:"1.jpeg",title:"Kunstwerk 1",category:"Natur",price:"Preis auf Anfrage",desc:"Originales Gemälde"},
+  {file:"2.jpeg",title:"Kunstwerk 2",category:"Natur",price:"Preis auf Anfrage",desc:"Originales Gemälde"},
+  {file:"3.jpeg",title:"Kunstwerk 3",category:"Blumen & Farben",price:"Preis auf Anfrage",desc:"Originales Gemälde"},
+  {file:"4.jpeg",title:"Kunstwerk 4",category:"Blumen & Farben",price:"Preis auf Anfrage",desc:"Originales Gemälde"},
+  {file:"5.jpeg",title:"Kunstwerk 5",category:"Abstrakte Kunst",price:"Preis auf Anfrage",desc:"Originales Gemälde"},
+  {file:"7.jpeg",title:"Kunstwerk 6",category:"Abstrakte Kunst",price:"Preis auf Anfrage",desc:"Originales Gemälde"},
+  {file:"22.jpeg",title:"Kunstwerk 7",category:"Weitere Werke",price:"Preis auf Anfrage",desc:"Originales Gemälde"},
+  {file:"56.jpeg",title:"Kunstwerk 8",category:"Weitere Werke",price:"Preis auf Anfrage",desc:"Originales Gemälde"}
+];
+
+const categoryMeta = [
+  {key:"Natur",i18n:"catNature",icon:"🌿"},
+  {key:"Blumen & Farben",i18n:"catFlowers",icon:"🌸"},
+  {key:"Abstrakte Kunst",i18n:"catAbstract",icon:"🎨"},
+  {key:"Weitere Werke",i18n:"catOther",icon:"🖌️"}
+];
+
 const translations = {
-  de:{
-    brandSub:"Originale Kunstwerke",
-    navHome:"Startseite",navGallery:"Galerie",navAbout:"Über die Künstlerin",navContact:"Kontakt",
-    localTime:"Aktuelle Zeit in Belgien",quickLinks:"Schnellzugriff",
-    welcomeTitle:"Willkommen",welcomeText:"Entdecken Sie originale Kunstwerke und lassen Sie sich von Farben und Formen inspirieren.",
-    heroEyebrow:"Kunst mit Persönlichkeit",heroTitle:"Willkommen in der Kunstwelt von Olga Morlang",
-    heroText:"Entdecken Sie originale Gemälde, besondere Farben und individuelle Kunstwerke. Jedes Bild erzählt seine eigene Geschichte.",
-    explore:"Gemälde entdecken",aboutButton:"Über die Künstlerin",
-    galleryTitle:"Galerie",galleryIntro:"Wählen Sie zuerst eine Kategorie, um die darin enthaltenen Gemälde zu entdecken.",
-    categoryHint:"Kategorie öffnen",backCategories:"← Alle Kategorien",priceAsk:"Preis auf Anfrage",
-    empty:"In dieser Kategorie sind derzeit keine Gemälde hinterlegt.",
-    aboutTitle:"Über die Künstlerin",aboutIntro:"Lernen Sie die Künstlerin und ihre Arbeit kennen.",
-    aboutText:"Olga Morlang ist eine Künstlerin, die ihre Ideen und Gefühle durch Farben und Formen ausdrückt. Ihre Gemälde sind individuelle Originalwerke. Wenn Sie mehr über ein bestimmtes Bild erfahren möchten, nehmen Sie gerne Kontakt auf.",
-    contactTitle:"Kontakt",contactIntro:"Fragen zu einem Gemälde? Schreiben Sie uns gerne eine Nachricht.",
-    nameLabel:"Ihr Name",emailLabel:"Ihre E-Mail",subjectLabel:"Betreff",messageLabel:"Ihre Nachricht",
-    attachLabel:"Fotos anhängen (optional)",sendButton:"Nachricht vorbereiten",
-    contactNotice:"Hinweis: Ohne angeschlossenen Versanddienst wird Ihr E-Mail-Programm geöffnet. Anhänge müssen dann manuell hinzugefügt werden.",
-    commentsTitle:"Kommentare und Meinungen",commentsIntro:"Teilen Sie Ihre Eindrücke von den Kunstwerken.",
-    commentNamePlaceholder:"Ihr Name",commentPlaceholder:"Ihr Kommentar",commentButton:"Kommentar veröffentlichen",
-    commentsNotice:"Kommentare werden in diesem Browser gespeichert. Für gemeinsame öffentliche Kommentare ist ein zusätzlicher Dienst erforderlich.",
-    footerText:"Originale Kunstwerke",chatTitle:"Kunst-Assistent",chatWelcome:"Hallo! Ich helfe Ihnen gerne bei Fragen zu Gemälden und Kontakt.",
-    chatPlaceholder:"Ihre Frage ...",chatFallback:"Ich kann bei Fragen zu Gemälden, Preisen und Kontakt helfen.",
-    toastComment:"Ihr Kommentar wurde in diesem Browser gespeichert.",
-    categories:["Landschaften","Natur und Blumen","Abstrakte Kunst","Verschiedene Werke"]
-  },
-  en:{
-    brandSub:"Original artworks",navHome:"Home",navGallery:"Gallery",navAbout:"About the artist",navContact:"Contact",
-    localTime:"Current time in Belgium",quickLinks:"Quick links",welcomeTitle:"Welcome",
-    welcomeText:"Discover original artworks and enjoy their colours and forms.",
-    heroEyebrow:"Art with personality",heroTitle:"Welcome to the art of Olga Morlang",
-    heroText:"Discover original paintings, expressive colours and unique artworks. Every painting tells its own story.",
-    explore:"Explore paintings",aboutButton:"About the artist",galleryTitle:"Gallery",
-    galleryIntro:"Choose a category first to discover its paintings.",categoryHint:"Open category",
-    backCategories:"← All categories",priceAsk:"Price on request",empty:"No paintings are currently listed in this category.",
-    aboutTitle:"About the artist",aboutIntro:"Learn about the artist and her work.",
-    aboutText:"Olga Morlang is an artist who expresses ideas and feelings through colours and forms. Her paintings are unique original works. Please get in touch if you would like to know more about a painting.",
-    contactTitle:"Contact",contactIntro:"Questions about a painting? Feel free to send us a message.",
-    nameLabel:"Your name",emailLabel:"Your email",subjectLabel:"Subject",messageLabel:"Your message",
-    attachLabel:"Attach photos (optional)",sendButton:"Prepare message",
-    contactNotice:"Without a connected sending service, your email application will open. Attachments must then be added manually.",
-    commentsTitle:"Comments and opinions",commentsIntro:"Share your impressions of the artworks.",
-    commentNamePlaceholder:"Your name",commentPlaceholder:"Your comment",commentButton:"Post comment",
-    commentsNotice:"Comments are stored in this browser. A separate service is required for public shared comments.",
-    footerText:"Original artworks",chatTitle:"Art assistant",
-    chatWelcome:"Hello! I can help with questions about paintings and contact.",
-    chatPlaceholder:"Your question ...",chatFallback:"I can help with paintings, prices and contact information.",
-    toastComment:"Your comment was saved in this browser.",
-    categories:["Landscapes","Nature and flowers","Abstract art","Various works"]
-  },
-  ru:{
-    brandSub:"Оригинальные картины",navHome:"Главная",navGallery:"Галерея",navAbout:"О художнице",navContact:"Контакты",
-    localTime:"Текущее время в Бельгии",quickLinks:"Быстрый переход",welcomeTitle:"Добро пожаловать",
-    welcomeText:"Откройте для себя оригинальные картины, цвета и формы.",
-    heroEyebrow:"Искусство с характером",heroTitle:"Добро пожаловать в мир искусства Ольги Морланг",
-    heroText:"Откройте для себя оригинальные картины, выразительные цвета и уникальные произведения. Каждая картина рассказывает свою историю.",
-    explore:"Посмотреть картины",aboutButton:"Об художнице",galleryTitle:"Галерея",
-    galleryIntro:"Сначала выберите категорию, чтобы посмотреть картины.",categoryHint:"Открыть категорию",
-    backCategories:"← Все категории",priceAsk:"Цена по запросу",empty:"В этой категории пока нет картин.",
-    aboutTitle:"Об художнице",aboutIntro:"Познакомьтесь с художницей и её работами.",
-    aboutText:"Ольга Морланг — художница, которая выражает свои идеи и чувства через цвета и формы. Её картины — оригинальные произведения. Если вы хотите узнать больше о конкретной картине, свяжитесь с художницей.",
-    contactTitle:"Контакты",contactIntro:"Есть вопросы о картине? Напишите нам.",
-    nameLabel:"Ваше имя",emailLabel:"Ваш e-mail",subjectLabel:"Тема",messageLabel:"Ваше сообщение",
-    attachLabel:"Прикрепить фотографии (необязательно)",sendButton:"Подготовить сообщение",
-    contactNotice:"Без подключения сервиса отправки откроется почтовая программа. Фотографии потребуется приложить вручную.",
-    commentsTitle:"Комментарии и отзывы",commentsIntro:"Поделитесь впечатлениями от картин.",
-    commentNamePlaceholder:"Ваше имя",commentPlaceholder:"Ваш комментарий",commentButton:"Опубликовать комментарий",
-    commentsNotice:"Комментарии сохраняются в этом браузере. Для общедоступных комментариев нужен отдельный сервис.",
-    footerText:"Оригинальные картины",chatTitle:"Помощник по искусству",
-    chatWelcome:"Здравствуйте! Я помогу с вопросами о картинах и контактах.",
-    chatPlaceholder:"Ваш вопрос ...",chatFallback:"Я могу помочь с вопросами о картинах, ценах и контактах.",
-    toastComment:"Комментарий сохранён в этом браузере.",
-    categories:["Пейзажи","Природа и цветы","Абстрактное искусство","Разные работы"]
-  },
-  nl:{
-    brandSub:"Originele kunstwerken",navHome:"Home",navGallery:"Galerij",navAbout:"Over de kunstenares",navContact:"Contact",
-    localTime:"Huidige tijd in België",quickLinks:"Snelle links",welcomeTitle:"Welkom",
-    welcomeText:"Ontdek originele kunstwerken en geniet van kleuren en vormen.",
-    heroEyebrow:"Kunst met persoonlijkheid",heroTitle:"Welkom in de kunstwereld van Olga Morlang",
-    heroText:"Ontdek originele schilderijen, bijzondere kleuren en unieke kunstwerken. Elk schilderij vertelt zijn eigen verhaal.",
-    explore:"Ontdek schilderijen",aboutButton:"Over de kunstenares",galleryTitle:"Galerij",
-    galleryIntro:"Kies eerst een categorie om de schilderijen te bekijken.",categoryHint:"Categorie openen",
-    backCategories:"← Alle categorieën",priceAsk:"Prijs op aanvraag",empty:"Er zijn momenteel geen schilderijen in deze categorie.",
-    aboutTitle:"Over de kunstenares",aboutIntro:"Maak kennis met de kunstenares en haar werk.",
-    aboutText:"Olga Morlang is een kunstenares die ideeën en gevoelens uitdrukt met kleuren en vormen. Haar schilderijen zijn originele werken. Neem contact op als u meer wilt weten over een schilderij.",
-    contactTitle:"Contact",contactIntro:"Vragen over een schilderij? Stuur gerust een bericht.",
-    nameLabel:"Uw naam",emailLabel:"Uw e-mail",subjectLabel:"Onderwerp",messageLabel:"Uw bericht",
-    attachLabel:"Foto's toevoegen (optioneel)",sendButton:"Bericht voorbereiden",
-    contactNotice:"Zonder gekoppelde verzenddienst wordt uw e-mailprogramma geopend. Voeg bijlagen dan handmatig toe.",
-    commentsTitle:"Reacties en meningen",commentsIntro:"Deel uw indrukken van de kunstwerken.",
-    commentNamePlaceholder:"Uw naam",commentPlaceholder:"Uw reactie",commentButton:"Reactie plaatsen",
-    commentsNotice:"Reacties worden in deze browser opgeslagen. Voor openbare reacties is een aparte dienst nodig.",
-    footerText:"Originele kunstwerken",chatTitle:"Kunstassistent",
-    chatWelcome:"Hallo! Ik help graag met vragen over schilderijen en contact.",
-    chatPlaceholder:"Uw vraag ...",chatFallback:"Ik kan helpen met vragen over schilderijen, prijzen en contact.",
-    toastComment:"Uw reactie is opgeslagen in deze browser.",
-    categories:["Landschappen","Natuur en bloemen","Abstracte kunst","Diverse werken"]
-  }
+de:{
+brandSub:"Originale Kunstwerke",navHome:"Startseite",navGallery:"Galerie",
+navAbout:"Über die Künstlerin",navContact:"Kontakt",
+localTime:"Aktuelle Ortszeit in Deutschland",explore:"Entdecken",
+sideGallery:"Gemäldegalerie",sideArtist:"Die Künstlerin",
+sideContact:"Kontakt aufnehmen",sideComments:"Kommentare",
+sideNote:"Entdecken Sie handgemalte Originale und treten Sie mit der Künstlerin in Kontakt.",
+eyebrow:"Kunst mit Gefühl und Charakter",heroTitle:"Farben, die Geschichten erzählen.",
+heroText:"Willkommen in der Kunstwelt von Olga Morlang. Entdecken Sie originale, handgemalte Werke – jedes Bild ein einzigartiger Ausdruck von Stimmung, Natur und Fantasie.",
+heroButton:"Gemälde entdecken",aboutButton:"Über Olga Morlang",
+collectionLabel:"Die Sammlung",galleryTitle:"Gemäldegalerie",
+galleryIntro:"Wählen Sie zuerst eine Kategorie, um die dazugehörigen Werke zu entdecken.",
+backCategories:"← Alle Kategorien",aboutLabel:"Hinter den Bildern",
+aboutTitle:"Über die Künstlerin",
+artistBio:"Olga Morlang ist eine Künstlerin, die ihre Eindrücke und Gefühle durch Farben und Formen ausdrückt. Jedes Werk entsteht von Hand und besitzt seinen eigenen Charakter. Die Bilder laden dazu ein, innezuhalten, Details zu entdecken und eine persönliche Verbindung zur Kunst aufzubauen.\n\nWeitere Informationen zur Künstlerin und zu einzelnen Werken können Sie gerne über das Kontaktformular anfragen.",
+askArtist:"Frage an die Künstlerin senden",
+contactLabel:"Wir freuen uns auf Ihre Nachricht",contactTitle:"Kontakt",
+contactIntro:"Fragen zu einem Gemälde, Interesse an einem Original oder eine individuelle Anfrage? Schreiben Sie uns.",
+yourName:"Ihr Name",yourEmail:"Ihre E-Mail",subject:"Betreff",
+message:"Ihre Nachricht",attachPhoto:"Foto anhängen (optional)",
+attachHint:"Für die tatsächliche Übermittlung muss ein Formular-Dienst eingerichtet sein.",
+sendMessage:"Nachricht vorbereiten",
+contactNotice:"GitHub Pages kann Formulare nicht selbst per E-Mail versenden. Ohne Formular-Dienst wird eine E-Mail in Ihrem Mailprogramm vorbereitet.",
+communityLabel:"Ihre Gedanken",commentsTitle:"Kommentare & Eindrücke",
+commentsIntro:"Teilen Sie Ihre Gedanken zu den Bildern.",
+postComment:"Kommentar hinzufügen",
+commentsNotice:"Kommentare werden nur in diesem Browser gespeichert und sind nicht öffentlich sichtbar.",
+footerText:"Originale Kunstwerke und handgemalte Bilder",
+chatTitle:"Kunst-Assistent",
+chatWelcome:"Hallo! Ich helfe Ihnen gerne bei Fragen zu den Gemälden, Preisen und Kontaktmöglichkeiten.",
+chatSend:"Senden",chatPlaceholder:"Ihre Frage …",
+catNature:"Natur",catFlowers:"Blumen & Farben",catAbstract:"Abstrakte Kunst",
+catOther:"Weitere Werke",categoryHint:"Gemälde ansehen",
+empty:"In dieser Kategorie sind noch keine Bilder hinterlegt.",
+priceAsk:"Preis auf Anfrage",toastComment:"Ihr Kommentar wurde in diesem Browser gespeichert.",
+chatFallback:"Danke für Ihre Nachricht! Für genaue Informationen zu einem Kunstwerk nutzen Sie bitte das Kontaktformular.",
+legalTitle:"Rechtliche Informationen"
+},
+en:{
+brandSub:"Original artworks",navHome:"Home",navGallery:"Gallery",
+navAbout:"About the artist",navContact:"Contact",
+localTime:"Current local time in Germany",explore:"Explore",
+sideGallery:"Painting gallery",sideArtist:"The artist",
+sideContact:"Contact",sideComments:"Comments",
+sideNote:"Discover hand-painted originals and get in touch with the artist.",
+eyebrow:"Art with feeling and character",heroTitle:"Colours that tell stories.",
+heroText:"Welcome to the art world of Olga Morlang. Discover original, hand-painted works—each painting a unique expression of mood, nature and imagination.",
+heroButton:"Explore paintings",aboutButton:"About Olga Morlang",
+collectionLabel:"The collection",galleryTitle:"Painting gallery",
+galleryIntro:"Choose a category first to discover the paintings within it.",
+backCategories:"← All categories",aboutLabel:"Behind the paintings",
+aboutTitle:"About the artist",
+artistBio:"Olga Morlang is an artist who expresses impressions and feelings through colour and form. Every work is handmade and has its own character.",
+askArtist:"Send a question to the artist",contactLabel:"We look forward to hearing from you",
+contactTitle:"Contact",contactIntro:"Questions about a painting or interested in an original? Send us a message.",
+yourName:"Your name",yourEmail:"Your email",subject:"Subject",
+message:"Your message",attachPhoto:"Attach photo (optional)",
+attachHint:"A form service must be configured to send attachments.",
+sendMessage:"Prepare message",contactNotice:"GitHub Pages cannot send emails by itself. Without a form service, an email draft opens in your mail app.",
+communityLabel:"Your thoughts",commentsTitle:"Comments & impressions",
+commentsIntro:"Share your thoughts about the paintings.",postComment:"Add comment",
+commentsNotice:"Comments are stored only in this browser and are not publicly visible.",
+footerText:"Original artworks",chatTitle:"Art assistant",
+chatWelcome:"Hello! I can help with questions about paintings, prices and contact options.",
+chatSend:"Send",chatPlaceholder:"Ask a question …",
+catNature:"Nature",catFlowers:"Flowers & colours",catAbstract:"Abstract art",
+catOther:"Other works",categoryHint:"View paintings",
+empty:"There are no paintings in this category yet.",
+priceAsk:"Price on request",toastComment:"Your comment has been saved in this browser.",
+chatFallback:"For specific information about a painting, please use the contact form.",
+legalTitle:"Legal information"
+},
+ru:{
+brandSub:"Оригинальные картины",navHome:"Главная",navGallery:"Галерея",
+navAbout:"Об художнице",navContact:"Контакты",
+localTime:"Текущее время в Германии",explore:"Разделы",
+sideGallery:"Галерея картин",sideArtist:"Об художнице",
+sideContact:"Связаться",sideComments:"Комментарии",
+sideNote:"Откройте для себя оригинальные картины ручной работы.",
+eyebrow:"Искусство с чувством и характером",
+heroTitle:"Цвета, которые рассказывают истории.",
+heroText:"Добро пожаловать в мир искусства Ольги Морланг. Откройте для себя оригинальные картины ручной работы.",
+heroButton:"Посмотреть картины",aboutButton:"Об Ольге Морланг",
+collectionLabel:"Коллекция",galleryTitle:"Галерея картин",
+galleryIntro:"Сначала выберите категорию, чтобы увидеть картины.",
+backCategories:"← Все категории",aboutLabel:"Истории за картинами",
+aboutTitle:"Об художнице",
+artistBio:"Ольга Морланг — художница, которая передаёт впечатления и чувства через цвета и формы. Каждая работа создаётся вручную и обладает собственным характером.",
+askArtist:"Задать вопрос художнице",contactLabel:"Будем рады вашему сообщению",
+contactTitle:"Контакты",contactIntro:"Есть вопросы о картине или хотите приобрести оригинал? Напишите нам.",
+yourName:"Ваше имя",yourEmail:"Ваш e-mail",subject:"Тема",
+message:"Ваше сообщение",attachPhoto:"Прикрепить фото",
+attachHint:"Для отправки вложений необходимо подключить сервис форм.",
+sendMessage:"Подготовить сообщение",
+contactNotice:"GitHub Pages не отправляет письма самостоятельно. Без сервиса форм откроется черновик письма.",
+communityLabel:"Ваше мнение",commentsTitle:"Комментарии и впечатления",
+commentsIntro:"Поделитесь впечатлениями о картинах.",
+postComment:"Добавить комментарий",
+commentsNotice:"Комментарии хранятся только в этом браузере и не видны другим посетителям.",
+footerText:"Оригинальные картины ручной работы",
+chatTitle:"Помощник по искусству",
+chatWelcome:"Здравствуйте! Я помогу с вопросами о картинах, ценах и способах связи.",
+chatSend:"Отправить",chatPlaceholder:"Ваш вопрос …",
+catNature:"Природа",catFlowers:"Цветы и цвета",catAbstract:"Абстракция",
+catOther:"Другие работы",categoryHint:"Смотреть картины",
+empty:"В этой категории пока нет картин.",
+priceAsk:"Цена по запросу",
+toastComment:"Комментарий сохранён в этом браузере.",
+chatFallback:"Чтобы получить точную информацию о картине, воспользуйтесь контактной формой.",
+legalTitle:"Юридическая информация"
+},
+nl:{
+brandSub:"Originele kunstwerken",navHome:"Home",navGallery:"Galerij",
+navAbout:"Over de kunstenares",navContact:"Contact",
+localTime:"Lokale tijd in Duitsland",explore:"Ontdekken",
+sideGallery:"Schilderijengalerij",sideArtist:"De kunstenares",
+sideContact:"Contact opnemen",sideComments:"Reacties",
+sideNote:"Ontdek handgeschilderde originelen en neem contact op met de kunstenares.",
+eyebrow:"Kunst met gevoel en karakter",heroTitle:"Kleuren die verhalen vertellen.",
+heroText:"Welkom in de kunstwereld van Olga Morlang. Ontdek originele handgeschilderde kunstwerken.",
+heroButton:"Schilderijen bekijken",aboutButton:"Over Olga Morlang",
+collectionLabel:"De collectie",galleryTitle:"Schilderijengalerij",
+galleryIntro:"Kies eerst een categorie om de schilderijen te bekijken.",
+backCategories:"← Alle categorieën",aboutLabel:"Achter de schilderijen",
+aboutTitle:"Over de kunstenares",
+artistBio:"Olga Morlang is een kunstenares die indrukken en gevoelens uitdrukt met kleur en vorm. Elk werk wordt met de hand gemaakt.",
+askArtist:"Stel een vraag",contactLabel:"We horen graag van u",
+contactTitle:"Contact",contactIntro:"Vragen over een schilderij of interesse in een origineel? Stuur ons een bericht.",
+yourName:"Uw naam",yourEmail:"Uw e-mail",subject:"Onderwerp",
+message:"Uw bericht",attachPhoto:"Foto toevoegen",
+attachHint:"Voor het verzenden van bijlagen moet een formulierdienst worden ingesteld.",
+sendMessage:"Bericht voorbereiden",
+contactNotice:"GitHub Pages kan zelf geen e-mails versturen. Zonder formulierdienst wordt een e-mailconcept geopend.",
+communityLabel:"Uw mening",commentsTitle:"Reacties en indrukken",
+commentsIntro:"Deel uw gedachten over de schilderijen.",
+postComment:"Reactie toevoegen",
+commentsNotice:"Reacties worden alleen in deze browser bewaard en zijn niet openbaar zichtbaar.",
+footerText:"Originele handgeschilderde kunstwerken",
+chatTitle:"Kunstassistent",
+chatWelcome:"Hallo! Ik help graag met vragen over schilderijen, prijzen en contact.",
+chatSend:"Verzenden",chatPlaceholder:"Uw vraag …",
+catNature:"Natuur",catFlowers:"Bloemen en kleuren",
+catAbstract:"Abstracte kunst",catOther:"Andere werken",
+categoryHint:"Bekijk schilderijen",empty:"Er zijn nog geen schilderijen in deze categorie.",
+priceAsk:"Prijs op aanvraag",toastComment:"Uw reactie is in deze browser bewaard.",
+chatFallback:"Gebruik het contactformulier voor meer informatie over een schilderij.",
+legalTitle:"Juridische informatie"
+}
 };
 
-let currentLang="de";
-
-const categoryMeta=[
-  {key:"landscape",icon:"🌄"},
-  {key:"nature",icon:"🌿"},
-  {key:"abstract",icon:"🎨"},
-  {key:"other",icon:"🖼️"}
-];
-
-const artworks=[
-  {file:"1.jpeg",title:"Gemälde 1",category:"landscape"},
-  {file:"2.jpeg",title:"Gemälde 2",category:"nature"},
-  {file:"3.jpeg",title:"Gemälde 3",category:"abstract"},
-  {file:"4.jpeg",title:"Gemälde 4",category:"landscape"},
-  {file:"5.jpeg",title:"Gemälde 5",category:"nature"},
-  {file:"7.jpeg",title:"Gemälde 7",category:"other"},
-  {file:"22.jpeg",title:"Gemälde 22",category:"abstract"},
-  {file:"56.jpeg",title:"Gemälde 56",category:"other"}
-];
+let currentLang = "de";
 
 function t(key) {
-  return translations[currentLang][key] || translations.de[key] || key;
+  return translations[currentLang]?.[key] || translations.de[key] || key;
 }
 
-function applyLanguage(lang) {
-  currentLang=lang;
-  document.documentElement.lang=lang;
+function changeLang(lang) {
+  if (!translations[lang]) return;
+  currentLang = lang;
+  document.documentElement.lang = lang;
 
-  document.querySelectorAll("[data-i18n]").forEach(el=>{
-    const key=el.dataset.i18n;
-    if(translations[lang][key]) el.textContent=translations[lang][key];
+  document.querySelectorAll("[data-i18n]").forEach(el => {
+    const key = el.dataset.i18n;
+    if (translations[lang][key]) {
+      el.textContent = translations[lang][key];
+    }
   });
 
-  document.querySelectorAll("[data-i18n-placeholder]").forEach(el=>{
-    const key=el.dataset.i18nPlaceholder;
-    if(translations[lang][key]) el.placeholder=translations[lang][key];
+  document.querySelectorAll("[data-i18n-html]").forEach(el => {
+    const key = el.dataset.i18nHtml;
+    if (translations[lang][key]) {
+      el.innerHTML = translations[lang][key];
+    }
   });
 
   renderCategories();
 
-  const view=document.getElementById("paintingView");
-  if(!view.classList.contains("hidden")) {
-    const heading=document.getElementById("categoryHeading");
-    heading.textContent=categoryName(heading.dataset.category);
+  const paintingView = document.getElementById("paintingView");
+  if (!paintingView.classList.contains("hidden")) {
+    const heading = document.getElementById("categoryHeading");
     renderPaintings(heading.dataset.category);
+    heading.textContent = t(heading.dataset.labelKey);
   }
 
-  renderComments();
+  updateClock();
 }
 
-document.getElementById("language").addEventListener("change",e=>{
-  applyLanguage(e.target.value);
+document.getElementById("language").addEventListener("change", e => {
+  changeLang(e.target.value);
 });
 
+/* Часы показывают реальное время в Германии. */
 function updateClock() {
-  const now=new Date();
+  const now = new Date();
 
-  document.getElementById("clock").textContent=
-    new Intl.DateTimeFormat("de-BE",{
-      timeZone:"Europe/Brussels",
+  document.getElementById("clock").textContent =
+    new Intl.DateTimeFormat("de-DE", {
+      timeZone:"Europe/Berlin",
       hour:"2-digit",
       minute:"2-digit",
       second:"2-digit",
       hour12:false
     }).format(now);
 
-  const locale={
-    de:"de-BE",
+  const locale = {
+    de:"de-DE",
     en:"en-GB",
     ru:"ru-RU",
     nl:"nl-BE"
-  }[currentLang];
+  }[currentLang] || "de-DE";
 
-  document.getElementById("date").textContent=
-    new Intl.DateTimeFormat(locale,{
-      timeZone:"Europe/Brussels",
+  document.getElementById("date").textContent =
+    new Intl.DateTimeFormat(locale, {
+      timeZone:"Europe/Berlin",
       weekday:"long",
       day:"numeric",
       month:"long",
       year:"numeric"
     }).format(now);
 
-  document.getElementById("year").textContent=
-    new Intl.DateTimeFormat("en",{
-      timeZone:"Europe/Brussels",
+  document.getElementById("year").textContent =
+    new Intl.DateTimeFormat("de-DE", {
+      timeZone:"Europe/Berlin",
       year:"numeric"
     }).format(now);
 }
@@ -982,46 +1389,39 @@ function updateClock() {
 updateClock();
 setInterval(updateClock,1000);
 
-function categoryName(key) {
-  const index=categoryMeta.findIndex(c=>c.key===key);
-  return translations[currentLang].categories[index] || translations.de.categories[index];
-}
-
+/* Галерея */
 function renderCategories() {
-  const holder=document.getElementById("categoryView");
-  holder.innerHTML="";
+  const holder = document.getElementById("categoryView");
+  holder.innerHTML = "";
 
-  categoryMeta.forEach(cat=>{
-    const count=artworks.filter(a=>a.category===cat.key).length;
-    const button=document.createElement("button");
-    button.className="category-card";
+  categoryMeta.forEach(cat => {
+    const count = artworks.filter(a => a.category === cat.key).length;
+    const button = document.createElement("button");
 
-    const title=document.createElement("strong");
-    title.textContent=cat.icon+" "+categoryName(cat.key);
+    button.className = "category-card";
 
-    const subtitle=document.createElement("span");
-    const word=currentLang==="ru"?"картин":
-      currentLang==="en"?"paintings":
-      currentLang==="nl"?"schilderijen":"Gemälde";
+    const title = document.createElement("strong");
+    title.textContent = cat.icon + " " + t(cat.i18n);
 
-    subtitle.textContent=count+" "+word+" · "+t("categoryHint");
+    const subtitle = document.createElement("span");
+    subtitle.textContent = count + " · " + t("categoryHint");
 
     button.append(title,subtitle);
-    button.addEventListener("click",()=>showCategory(cat.key));
+    button.addEventListener("click",() => showCategory(cat.key,cat.i18n));
     holder.appendChild(button);
   });
 }
 
-function showCategory(key) {
+function showCategory(key,labelKey) {
   document.getElementById("categoryView").classList.add("hidden");
   document.getElementById("paintingView").classList.remove("hidden");
 
-  const heading=document.getElementById("categoryHeading");
-  heading.dataset.category=key;
-  heading.textContent=categoryName(key);
+  const heading = document.getElementById("categoryHeading");
+  heading.dataset.category = key;
+  heading.dataset.labelKey = labelKey;
+  heading.textContent = t(labelKey);
 
   renderPaintings(key);
-
   document.getElementById("gallery").scrollIntoView({
     behavior:"smooth",
     block:"start"
@@ -1029,75 +1429,78 @@ function showCategory(key) {
 }
 
 function renderPaintings(key) {
-  const holder=document.getElementById("paintingsGrid");
-  holder.innerHTML="";
+  const holder = document.getElementById("paintingsGrid");
+  holder.innerHTML = "";
 
-  const list=artworks.filter(a=>a.category===key);
+  const list = artworks.filter(a => a.category === key);
 
-  if(!list.length) {
-    holder.innerHTML='<div class="empty-state">'+t("empty")+'</div>';
+  if (!list.length) {
+    const empty = document.createElement("div");
+    empty.className = "empty-state";
+    empty.textContent = t("empty");
+    holder.appendChild(empty);
     return;
   }
 
-  list.forEach(art=>{
-    const card=document.createElement("article");
-    card.className="painting";
+  list.forEach(a => {
+    const card = document.createElement("article");
+    card.className = "painting";
 
-    const img=document.createElement("img");
-    img.src="./"+art.file;
-    img.alt=art.title;
-    img.loading="lazy";
+    const img = document.createElement("img");
+    img.src = "./" + a.file;
+    img.alt = a.title;
+    img.loading = "lazy";
 
-    img.addEventListener("error",()=>{
-      img.alt="Bilddatei nicht gefunden: "+art.file;
+    img.addEventListener("error",() => {
+      img.alt = "Bilddatei nicht gefunden: " + a.file;
     });
 
-    const info=document.createElement("div");
-    info.className="painting-info";
+    const info = document.createElement("div");
+    info.className = "painting-info";
 
-    const title=document.createElement("h3");
-    title.textContent=art.title;
+    const title = document.createElement("h3");
+    title.textContent = a.title;
 
-    const description=document.createElement("p");
-    description.textContent=currentLang==="ru"?
-      "Оригинальная картина":
-      currentLang==="en"?"Original painting":
-      currentLang==="nl"?"Origineel schilderij":"Originalgemälde";
+    const desc = document.createElement("p");
+    desc.textContent = a.desc;
 
-    const price=document.createElement("div");
-    price.className="price";
-    price.textContent=t("priceAsk");
+    const price = document.createElement("div");
+    price.className = "price";
+    price.textContent = a.price || t("priceAsk");
 
-    info.append(title,description,price);
+    info.append(title,desc,price);
     card.append(img,info);
 
-    card.addEventListener("click",()=>openLightbox(art.file,art.title));
+    card.addEventListener("click",() => openLightbox(a.file,a.title));
     holder.appendChild(card);
   });
 }
 
-document.getElementById("backCategories").addEventListener("click",()=>{
+document.getElementById("backCategories").addEventListener("click",() => {
   document.getElementById("paintingView").classList.add("hidden");
   document.getElementById("categoryView").classList.remove("hidden");
-  document.getElementById("gallery").scrollIntoView({behavior:"smooth"});
 });
 
-function goTo(id) {
-  const target=document.getElementById(id);
-  if(!target) return;
+renderCategories();
 
-  if(id==="about") target.classList.remove("hidden");
+/* Навигация */
+function goTo(id) {
+  const target = document.getElementById(id);
+  if (!target) return;
+
+  if (id === "about") target.classList.remove("hidden");
 
   target.scrollIntoView({behavior:"smooth",block:"start"});
 }
 
-document.querySelectorAll("[data-go]").forEach(button=>{
-  button.addEventListener("click",()=>goTo(button.dataset.go));
+document.querySelectorAll("[data-go]").forEach(el => {
+  el.addEventListener("click",() => goTo(el.dataset.go));
 });
 
+/* Просмотр картины в полном размере */
 function openLightbox(file,title) {
-  document.getElementById("lightboxImage").src="./"+file;
-  document.getElementById("lightboxImage").alt=title;
+  document.getElementById("lightboxImage").src = "./" + file;
+  document.getElementById("lightboxImage").alt = title;
   document.getElementById("lightbox").classList.add("open");
 }
 
@@ -1107,254 +1510,239 @@ function closeLightbox() {
 
 document.getElementById("lightboxClose").addEventListener("click",closeLightbox);
 
-document.getElementById("lightbox").addEventListener("click",e=>{
-  if(e.target.id==="lightbox") closeLightbox();
+document.getElementById("lightbox").addEventListener("click",e => {
+  if (e.target.id === "lightbox") closeLightbox();
 });
 
-document.addEventListener("keydown",e=>{
-  if(e.key==="Escape") {
+document.addEventListener("keydown",e => {
+  if (e.key === "Escape") {
     closeLightbox();
     document.getElementById("chatBox").classList.remove("open");
   }
 });
 
-const contactFiles=document.getElementById("contactFiles");
+/* Предварительный просмотр вложений в контактной форме */
+const contactFiles = document.getElementById("contactFiles");
 
-contactFiles.addEventListener("change",()=>{
-  const preview=document.getElementById("filePreview");
-  preview.innerHTML="";
+contactFiles.addEventListener("change",() => {
+  const preview = document.getElementById("filePreview");
+  preview.innerHTML = "";
 
-  [...contactFiles.files].forEach(file=>{
-    if(!file.type.startsWith("image/")) return;
+  [...contactFiles.files].forEach(file => {
+    if (!file.type.startsWith("image/")) return;
 
-    const img=document.createElement("img");
-    img.alt=file.name;
-    img.src=URL.createObjectURL(file);
+    const img = document.createElement("img");
+    img.alt = file.name;
+    img.src = URL.createObjectURL(file);
     preview.appendChild(img);
   });
 });
 
 /*
-  To send forms and attachments automatically, connect a form service,
-  for example Formspree, and insert its endpoint below.
+  Чтобы форма отправляла сообщения через сервис, нужно настроить endpoint.
+  GitHub Pages сам не умеет отправлять электронные письма.
 */
-const FORM_ENDPOINT="";
+const FORM_ENDPOINT = "";
 
-document.getElementById("contactForm").addEventListener("submit",async e=>{
+document.getElementById("contactForm").addEventListener("submit",async e => {
   e.preventDefault();
 
-  const form=e.currentTarget;
-  if(!form.reportValidity()) return;
+  const form = e.currentTarget;
+  if (!form.reportValidity()) return;
 
-  const data=new FormData(form);
+  const data = new FormData(form);
 
-  if(FORM_ENDPOINT) {
+  if (FORM_ENDPOINT) {
     try {
-      const response=await fetch(FORM_ENDPOINT,{
+      const response = await fetch(FORM_ENDPOINT,{
         method:"POST",
         body:data,
         headers:{Accept:"application/json"}
       });
 
-      if(!response.ok) throw new Error("Form error");
+      if (!response.ok) throw new Error("Form error");
 
-      showToast(currentLang==="ru"?"Сообщение отправлено.":
-        currentLang==="en"?"Message sent.":
-        currentLang==="nl"?"Bericht verzonden.":"Nachricht wurde gesendet.");
-
+      showToast("Nachricht wurde gesendet.");
       form.reset();
-      document.getElementById("filePreview").innerHTML="";
-    } catch(error) {
+      document.getElementById("filePreview").innerHTML = "";
+    } catch (error) {
       showToast("Das Formular konnte nicht gesendet werden.");
     }
     return;
   }
 
-  const name=form.elements.name.value;
-  const email=form.elements.email.value;
-  const subject=form.elements.subject.value;
-  const message=form.elements.message.value;
+  const name = form.elements.name.value;
+  const email = form.elements.email.value;
+  const subject = form.elements.subject.value;
+  const message = form.elements.message.value;
 
-  const body=
-    "Name: "+name+
-    "\nE-Mail: "+email+
-    "\n\n"+message+
-    "\n\nAusgewählte Dateien: "+
-    ([...contactFiles.files].map(f=>f.name).join(", ")||"keine");
+  const body =
+    `Name: ${name}\nE-Mail: ${email}\n\n${message}\n\n` +
+    `Ausgewählte Dateien: ${
+      [...contactFiles.files].map(f => f.name).join(", ") || "keine"
+    }`;
 
-  showToast(currentLang==="ru"?
-    "Откроется почтовое приложение. Фотографии приложите вручную.":
-    currentLang==="en"?
-    "Your email app will open. Attach the photos manually.":
-    currentLang==="nl"?
-    "Uw e-mailapp wordt geopend. Voeg foto's handmatig toe.":
-    "Ihr E-Mail-Programm wird geöffnet. Bitte fügen Sie Anhänge manuell hinzu.");
+  showToast(
+    currentLang === "ru"
+      ? "Откроется почтовое приложение. Вложения добавьте вручную."
+      : "Ihr E-Mail-Programm wird geöffnet. Bitte fügen Sie Anhänge manuell hinzu."
+  );
 
-  window.location.href=
-    "mailto:?subject="+encodeURIComponent(subject)+
-    "&body="+encodeURIComponent(body);
+  window.location.href =
+    `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 });
 
+/* Уведомления */
 function showToast(message) {
-  const toast=document.getElementById("toast");
-  toast.textContent=message;
-  toast.classList.add("show");
-  setTimeout(()=>toast.classList.remove("show"),4000);
+  const el = document.getElementById("toast");
+  el.textContent = message;
+  el.classList.add("show");
+  setTimeout(() => el.classList.remove("show"),4000);
 }
 
-const COMMENT_KEY="olgaMorlangCommentsV1";
+/* Комментарии сохраняются только в браузере этого посетителя. */
+const COMMENT_KEY = "olgaMorlangCommentsV1";
 
 function loadComments() {
   try {
-    return JSON.parse(localStorage.getItem(COMMENT_KEY)||"[]");
-  } catch(error) {
+    return JSON.parse(localStorage.getItem(COMMENT_KEY) || "[]");
+  } catch (e) {
     return [];
   }
 }
 
 function renderComments() {
-  const holder=document.getElementById("commentsList");
-  holder.innerHTML="";
+  const holder = document.getElementById("commentsList");
+  holder.innerHTML = "";
 
-  const comments=loadComments().sort((a,b)=>b.time-a.time);
+  const comments = loadComments().sort((a,b) => b.time - a.time);
 
-  if(!comments.length) {
-    const empty=document.createElement("p");
-    empty.className="hint";
-    empty.textContent=currentLang==="ru"?
-      "Пока нет комментариев. Будьте первым!":
-      currentLang==="en"?
-      "No comments yet. Be the first!":
-      currentLang==="nl"?
-      "Nog geen reacties. Wees de eerste!":
-      "Noch keine Kommentare. Schreiben Sie den ersten!";
-    holder.appendChild(empty);
+  if (!comments.length) {
+    const p = document.createElement("p");
+    p.className = "hint";
+    p.textContent =
+      currentLang === "ru"
+        ? "Пока нет комментариев. Будьте первым!"
+        : "Noch keine Kommentare. Schreiben Sie den ersten!";
+    holder.appendChild(p);
     return;
   }
 
-  comments.forEach(comment=>{
-    const article=document.createElement("article");
-    article.className="comment";
+  comments.forEach(c => {
+    const div = document.createElement("article");
+    div.className = "comment";
 
-    const header=document.createElement("div");
-    const name=document.createElement("strong");
-    name.textContent=comment.name;
+    const head = document.createElement("div");
+    const name = document.createElement("strong");
+    name.textContent = c.name;
 
-    const time=document.createElement("time");
-    time.textContent=new Intl.DateTimeFormat(
-      currentLang==="ru"?"ru-RU":
-      currentLang==="en"?"en-GB":
-      currentLang==="nl"?"nl-BE":"de-BE",
+    const time = document.createElement("time");
+    time.textContent = new Intl.DateTimeFormat(
+      currentLang === "ru" ? "ru-RU" : "de-DE",
       {dateStyle:"medium",timeStyle:"short"}
-    ).format(new Date(comment.time));
+    ).format(new Date(c.time));
 
-    header.append(name,time);
+    head.append(name,time);
 
-    const body=document.createElement("p");
-    body.textContent=comment.text;
+    const body = document.createElement("p");
+    body.textContent = c.text;
 
-    article.append(header,body);
-    holder.appendChild(article);
+    div.append(head,body);
+    holder.appendChild(div);
   });
 }
 
-document.getElementById("commentForm").addEventListener("submit",e=>{
+document.getElementById("commentForm").addEventListener("submit",e => {
   e.preventDefault();
 
-  const name=document.getElementById("commentName").value.trim();
-  const textValue=document.getElementById("commentText").value.trim();
+  const name = document.getElementById("commentName").value.trim();
+  const textValue = document.getElementById("commentText").value.trim();
 
-  if(!name||!textValue) return;
+  if (!name || !textValue) return;
 
-  const comments=loadComments();
-  comments.push({
-    name,
-    text:textValue,
-    time:Date.now()
-  });
+  const comments = loadComments();
+  comments.push({name,text:textValue,time:Date.now()});
 
   try {
     localStorage.setItem(COMMENT_KEY,JSON.stringify(comments));
     e.target.reset();
     renderComments();
     showToast(t("toastComment"));
-  } catch(error) {
-    showToast("Browser storage is not available.");
+  } catch (error) {
+    showToast("Speicherplatz im Browser ist nicht verfügbar.");
   }
 });
 
-renderCategories();
 renderComments();
 
-const chatBox=document.getElementById("chatBox");
+/* Панель администратора подключается после настройки Supabase. */
+document.getElementById("adminPlaceholder").addEventListener("click",() => {
+  showToast(
+    currentLang === "ru"
+      ? "Панель администратора пока не подключена. Сначала нужно настроить безопасную авторизацию и облачное хранилище."
+      : "Die Admin-Verwaltung wird nach Einrichtung der sicheren Anmeldung und des Cloud-Speichers aktiviert."
+  );
+});
 
-document.getElementById("chatToggle").addEventListener("click",()=>{
+/* Простой демонстрационный чат, не подключённый к ИИ. */
+const chatBox = document.getElementById("chatBox");
+
+document.getElementById("chatToggle").addEventListener("click",() => {
   chatBox.classList.toggle("open");
 });
 
-document.getElementById("chatClose").addEventListener("click",()=>{
+document.getElementById("chatClose").addEventListener("click",() => {
   chatBox.classList.remove("open");
 });
 
 function addBubble(text,user=false) {
-  const bubble=document.createElement("div");
-  bubble.className="bubble"+(user?" user":"");
-  bubble.textContent=text;
+  const bubble = document.createElement("div");
+  bubble.className = "bubble" + (user ? " user" : "");
+  bubble.textContent = text;
 
-  const messages=document.getElementById("chatMessages");
-  messages.appendChild(bubble);
-  messages.scrollTop=messages.scrollHeight;
+  document.getElementById("chatMessages").appendChild(bubble);
+
+  const messages = document.getElementById("chatMessages");
+  messages.scrollTop = messages.scrollHeight;
 }
 
 function botReply(raw) {
-  const q=raw.toLowerCase();
+  const q = raw.toLowerCase();
 
-  if(/preis|price|стоим|цена|prijs/.test(q)) {
-    return currentLang==="ru"?
-      "Стоимость конкретной картины можно уточнить через раздел «Контакты».":
-      currentLang==="en"?
-      "Please ask about the price of a specific painting through the contact form.":
-      currentLang==="nl"?
-      "Vraag naar de prijs van een schilderij via het contactformulier.":
-      "Den Preis eines bestimmten Gemäldes können Sie über das Kontaktformular anfragen.";
+  if (/preis|price|стоим|цена|prijs/.test(q)) {
+    return currentLang === "ru"
+      ? "Стоимость конкретной картины можно уточнить через раздел «Контакты»."
+      : "Den Preis eines bestimmten Gemäldes können Sie über das Kontaktformular anfragen.";
   }
 
-  if(/kontakt|contact|email|e-mail|связ|контакт/.test(q)) {
-    return currentLang==="ru"?
-      "Перейдите в раздел «Контакты» и подготовьте сообщение.":
-      currentLang==="en"?
-      "Open the Contact section to prepare a message.":
-      currentLang==="nl"?
-      "Open de contactsectie om een bericht voor te bereiden.":
-      "Öffnen Sie den Bereich „Kontakt“, um eine Nachricht vorzubereiten.";
+  if (/kontakt|contact|email|e-mail|связ|контакт/.test(q)) {
+    return currentLang === "ru"
+      ? "Перейдите в раздел «Контакты» и отправьте сообщение."
+      : "Öffnen Sie den Bereich „Kontakt“ und senden Sie eine Nachricht.";
   }
 
-  if(/bild|gemälde|painting|kunst|карти|рисунк|schilderij/.test(q)) {
-    return currentLang==="ru"?
-      "Выберите категорию в галерее, затем нажмите на картину, чтобы открыть её крупнее.":
-      currentLang==="en"?
-      "Choose a gallery category, then click a painting to view it larger.":
-      currentLang==="nl"?
-      "Kies een categorie en klik op een schilderij om het groter te bekijken.":
-      "Wählen Sie eine Kategorie und klicken Sie auf ein Gemälde, um es groß zu sehen.";
+  if (/bild|gemälde|painting|kunst|карти|schilderij/.test(q)) {
+    return currentLang === "ru"
+      ? "Выберите категорию в галерее, затем нажмите на картину, чтобы открыть её крупнее."
+      : "Wählen Sie eine Kategorie in der Galerie und klicken Sie auf ein Gemälde, um es groß zu sehen.";
   }
 
   return t("chatFallback");
 }
 
-document.getElementById("chatForm").addEventListener("submit",e=>{
+document.getElementById("chatForm").addEventListener("submit",e => {
   e.preventDefault();
 
-  const input=document.getElementById("chatInput");
-  const value=input.value.trim();
+  const input = document.getElementById("chatInput");
+  const value = input.value.trim();
 
-  if(!value) return;
+  if (!value) return;
 
   addBubble(value,true);
-  input.value="";
+  input.value = "";
 
-  setTimeout(()=>addBubble(botReply(value)),250);
+  setTimeout(() => addBubble(botReply(value)),250);
 });
 </script>
 </body>
-</html>
+  </html>
