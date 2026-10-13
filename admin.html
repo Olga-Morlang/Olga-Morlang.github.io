@@ -19,17 +19,17 @@
       font-family: Arial, sans-serif;
       color: #f5f0e6;
       background:
-        linear-gradient(rgba(5, 15, 36, 0.92), rgba(5, 15, 36, 0.96)),
+        linear-gradient(rgba(5, 15, 36, .94), rgba(5, 15, 36, .97)),
         url("./111.jpeg") center / cover fixed;
     }
 
     .container {
       width: 100%;
-      max-width: 850px;
-      margin: 30px auto;
+      max-width: 1200px;
+      margin: 25px auto;
     }
 
-    h1, h2 {
+    h1, h2, h3 {
       color: #e5c17b;
     }
 
@@ -38,12 +38,12 @@
     }
 
     .card {
-      background: rgba(12, 27, 52, 0.96);
+      background: rgba(12, 27, 52, .97);
       border: 1px solid #9f814a;
       border-radius: 14px;
       padding: 22px;
       margin-bottom: 20px;
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, .2);
     }
 
     input, textarea, select, button {
@@ -51,7 +51,7 @@
       padding: 12px;
       margin: 7px 0;
       border-radius: 7px;
-      font-size: 16px;
+      font-size: 15px;
     }
 
     input, textarea, select {
@@ -77,18 +77,18 @@
     }
 
     button:disabled {
-      opacity: 0.55;
+      opacity: .55;
       cursor: wait;
     }
 
     .secondary {
       background: #344967;
-      color: white;
+      color: #fff;
     }
 
     .danger {
       background: #8b3434;
-      color: white;
+      color: #fff;
     }
 
     .hidden {
@@ -136,10 +136,6 @@
       margin-bottom: 12px;
     }
 
-    .artwork h3 {
-      color: #e5c17b;
-    }
-
     .actions {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -156,7 +152,185 @@
       color: #e5c17b;
     }
 
-    @media (max-width: 500px) {
+    .tabs {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+
+    .tab-button {
+      margin: 0;
+      min-height: 48px;
+    }
+
+    .tab-button.active {
+      background: #e5c17b;
+      outline: 2px solid #fff0c5;
+    }
+
+    .table-wrap {
+      width: 100%;
+      overflow-x: auto;
+      border: 1px solid #526580;
+      border-radius: 8px;
+    }
+
+    table {
+      width: 100%;
+      min-width: 720px;
+      border-collapse: collapse;
+      background: #10213a;
+    }
+
+    th, td {
+      padding: 12px;
+      text-align: left;
+      vertical-align: top;
+      border-bottom: 1px solid #394c67;
+      overflow-wrap: anywhere;
+    }
+
+    th {
+      color: #e5c17b;
+      background: #1c304d;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    .order-number {
+      font-weight: bold;
+      color: #e5c17b;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 5px 8px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: bold;
+      background: #344967;
+      color: #fff;
+    }
+
+    .badge-new {
+      background: #795b1f;
+      color: #fff1c6;
+    }
+
+    .badge-confirmed {
+      background: #174b65;
+      color: #c9efff;
+    }
+
+    .badge-completed {
+      background: #174b35;
+      color: #c4ffdd;
+    }
+
+    .badge-cancelled {
+      background: #612b30;
+      color: #ffdadd;
+    }
+
+    .order-detail {
+      border: 1px solid #9f814a;
+      border-radius: 10px;
+      padding: 18px;
+      margin-top: 18px;
+      background: #0c1b34;
+    }
+
+    .order-detail h3 {
+      margin-top: 0;
+    }
+
+    .detail-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .detail-box {
+      padding: 12px;
+      border: 1px solid #394c67;
+      border-radius: 8px;
+      overflow-wrap: anywhere;
+    }
+
+    .detail-box strong {
+      display: block;
+      color: #e5c17b;
+      margin-bottom: 6px;
+    }
+
+    .order-items {
+      list-style: none;
+      padding: 0;
+      margin: 10px 0;
+    }
+
+    .order-items li {
+      padding: 12px 0;
+      border-bottom: 1px solid #394c67;
+      overflow-wrap: anywhere;
+    }
+
+    .order-items li:last-child {
+      border-bottom: none;
+    }
+
+    .order-item-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .order-item-image {
+      width: 75px;
+      height: 75px;
+      object-fit: contain;
+      background: #172b49;
+      border-radius: 6px;
+      flex-shrink: 0;
+    }
+
+    .order-item-text {
+      min-width: 0;
+      flex: 1;
+    }
+
+    .money-line {
+      display: flex;
+      justify-content: space-between;
+      gap: 15px;
+      padding: 9px 0;
+      border-bottom: 1px solid #394c67;
+    }
+
+    .money-line.total {
+      font-size: 19px;
+      font-weight: bold;
+      color: #e5c17b;
+      border-bottom: none;
+    }
+
+    .detail-actions {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    .empty {
+      text-align: center;
+      padding: 25px 10px;
+      color: #c7d0df;
+    }
+
+    @media (max-width: 600px) {
       body {
         padding: 10px;
       }
@@ -165,948 +339,1417 @@
         padding: 15px;
       }
 
-      .actions {
+      .tabs {
         grid-template-columns: 1fr;
+      }
+
+      .actions,
+      .detail-grid,
+      .detail-actions {
+        grid-template-columns: 1fr;
+      }
+
+      .order-detail {
+        padding: 12px;
+      }
+
+      .order-item-image {
+        width: 60px;
+        height: 60px;
       }
     }
   </style>
 </head>
 
 <body>
-  <main class="container">
-    <h1>Olga Morlang</h1>
-    <p style="text-align:center">Панель управления галереей</p>
+<main class="container">
 
-    <section class="card" id="loginCard">
-      <h2>Вход администратора</h2>
+  <h1>Olga Morlang</h1>
+  <p style="text-align:center">Панель управления галереей</p>
 
-      <form id="loginForm">
-        <label for="email">Email</label>
+  <!-- ВХОД -->
+  <section class="card" id="loginCard">
+    <h2>Вход администратора</h2>
+
+    <form id="loginForm">
+      <label for="email">Email</label>
+      <input
+        id="email"
+        type="email"
+        autocomplete="username"
+        placeholder="Твой email"
+        required
+      >
+
+      <label for="password">Пароль</label>
+      <input
+        id="password"
+        type="password"
+        autocomplete="current-password"
+        placeholder="Пароль"
+        required
+      >
+
+      <button id="loginButton" type="submit">Войти</button>
+    </form>
+
+    <div id="loginStatus" class="status hidden" role="status"></div>
+  </section>
+
+  <!-- ПАНЕЛЬ -->
+  <section id="adminPanel" class="hidden">
+
+    <div class="card">
+      <h2>Управление</h2>
+      <p id="welcomeText">Ты вошёл в панель управления.</p>
+
+      <button id="refreshButton" class="secondary" type="button">
+        Обновить данные
+      </button>
+
+      <button id="logoutButton" class="danger" type="button">
+        Выйти
+      </button>
+
+      <div id="mainStatus" class="status hidden" role="status"></div>
+    </div>
+
+    <!-- НАВИГАЦИЯ -->
+    <nav class="tabs" aria-label="Разделы панели">
+      <button class="tab-button active" data-tab="ordersSection" type="button">
+        1. Заказы
+      </button>
+
+      <button class="tab-button" data-tab="categoriesSection" type="button">
+        2. Категории
+      </button>
+
+      <button class="tab-button" data-tab="uploadSection" type="button">
+        3. Загрузить картины
+      </button>
+
+      <button class="tab-button" data-tab="artworksSection" type="button">
+        4. Список картин
+      </button>
+    </nav>
+
+    <!-- ЗАКАЗЫ -->
+    <section class="card" id="ordersSection">
+      <h2>Заказы покупателей</h2>
+
+      <p class="small">
+        Нажми «Подробнее», чтобы посмотреть состав заказа,
+        адрес покупателя, изменить стоимость доставки и статус.
+      </p>
+
+      <button id="refreshOrdersButton" class="secondary" type="button">
+        Обновить заказы
+      </button>
+
+      <div id="ordersStatus" class="status hidden" role="status"></div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Номер</th>
+              <th>Дата</th>
+              <th>Покупатель</th>
+              <th>Сумма картин</th>
+              <th>Статус</th>
+              <th>Подробности</th>
+            </tr>
+          </thead>
+
+          <tbody id="ordersTableBody">
+            <tr>
+              <td colspan="6">Загружаем заказы...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div id="orderDetails" class="order-detail hidden"></div>
+    </section>
+
+    <!-- КАТЕГОРИИ -->
+    <section class="card hidden" id="categoriesSection">
+      <h2>Категории</h2>
+
+      <form id="categoryForm">
         <input
-          id="email"
-          type="email"
-          autocomplete="username"
-          placeholder="Твой email"
+          id="categoryName"
+          type="text"
+          placeholder="Название категории"
+          maxlength="100"
           required
         >
 
-        <label for="password">Пароль</label>
+        <button type="submit">Добавить категорию</button>
+      </form>
+
+      <div id="categoryList"></div>
+
+      <p class="small">
+        Удалить категорию можно только тогда, когда к ней
+        не привязаны картины.
+      </p>
+    </section>
+
+    <!-- ЗАГРУЗКА КАРТИН -->
+    <section class="card hidden" id="uploadSection">
+      <h2>Загрузить картины</h2>
+
+      <form id="uploadForm">
+        <label for="images">Выбери изображения</label>
         <input
-          id="password"
-          type="password"
-          autocomplete="current-password"
-          placeholder="Пароль"
+          id="images"
+          type="file"
+          accept="image/jpeg,image/png,image/webp,image/gif"
+          multiple
           required
         >
 
-        <button id="loginButton" type="submit">
-          Войти
+        <label for="uploadCategory">Категория</label>
+        <select id="uploadCategory">
+          <option value="">Без категории</option>
+        </select>
+
+        <label for="uploadPrice">Цена в евро (необязательно)</label>
+        <input
+          id="uploadPrice"
+          type="number"
+          min="0"
+          step="0.01"
+          placeholder="Например, 250"
+        >
+
+        <label for="uploadDescription">Описание (необязательно)</label>
+        <textarea
+          id="uploadDescription"
+          rows="3"
+          placeholder="Описание картины"
+        ></textarea>
+
+        <button id="uploadButton" type="submit">
+          Загрузить картины
         </button>
       </form>
 
-      <div id="loginStatus" class="status hidden" role="status"></div>
+      <p class="small">
+        Поддерживаются JPEG, PNG, WebP и GIF.
+        Максимальный размер файла — 15 МБ.
+        Новые картины создаются скрытыми до публикации.
+      </p>
+
+      <div id="uploadStatus" class="status hidden" role="status"></div>
     </section>
 
-    <section id="adminPanel" class="hidden">
-      <div class="card">
-        <h2>Управление</h2>
-        <p id="welcomeText">Ты вошёл в панель управления.</p>
-        <button id="refreshButton" class="secondary" type="button">
-          Обновить список картин
-        </button>
-        <button id="logoutButton" class="danger" type="button">
-          Выйти
-        </button>
-        <div id="mainStatus" class="status hidden" role="status"></div>
-      </div>
-
-      <div class="card">
-        <h2>1. Категории</h2>
-
-        <form id="categoryForm">
-          <input
-            id="categoryName"
-            type="text"
-            placeholder="Название категории"
-            maxlength="100"
-            required
-          >
-          <button type="submit">Добавить категорию</button>
-        </form>
-
-        <div id="categoryList"></div>
-        <p class="small">
-          Удалить категорию можно только тогда, когда к ней
-          не привязаны картины.
-        </p>
-      </div>
-
-      <div class="card">
-        <h2>2. Загрузить картины</h2>
-
-        <form id="uploadForm">
-          <label for="images">Выбери изображения</label>
-          <input
-            id="images"
-            type="file"
-            accept="image/jpeg,image/png,image/webp,image/gif"
-            multiple
-            required
-          >
-
-          <label for="uploadCategory">Категория</label>
-          <select id="uploadCategory">
-            <option value="">Без категории</option>
-          </select>
-
-          <label for="uploadPrice">Цена в евро (необязательно)</label>
-          <input
-            id="uploadPrice"
-            type="number"
-            min="0"
-            step="0.01"
-            placeholder="Например, 250"
-          >
-
-          <label for="uploadDescription">Описание (необязательно)</label>
-          <textarea
-            id="uploadDescription"
-            rows="3"
-            placeholder="Описание картины"
-          ></textarea>
-
-          <button id="uploadButton" type="submit">
-            Загрузить картины
-          </button>
-        </form>
-
-        <p class="small">
-          Поддерживаются JPEG, PNG, WebP и GIF.
-          Максимальный размер одного файла — 15 МБ.
-          Новые картины создаются скрытыми до публикации.
-        </p>
-
-        <div id="uploadStatus" class="status hidden" role="status"></div>
-      </div>
-
-      <div class="card">
-        <h2>3. Список картин</h2>
-        <div id="artworkList">Загрузка списка...</div>
-      </div>
+    <!-- СПИСОК КАРТИН -->
+    <section class="card hidden" id="artworksSection">
+      <h2>Список картин</h2>
+      <div id="artworkList">Загрузка списка...</div>
     </section>
 
-    <p style="text-align:center">
-      <a href="./index.html">Вернуться на сайт</a>
-    </p>
-  </main>
+  </section>
 
-  <script>
-    (() => {
-      "use strict";
+  <p style="text-align:center">
+    <a href="./index.html">Вернуться на сайт</a>
+  </p>
+</main>
 
-      /*
-       * ВСТАВЬ СВОИ ДАННЫЕ SUPABASE В ДВЕ СТРОКИ НИЖЕ.
-       * Используй Project URL и Publishable Key.
-       * НЕ используй Secret key.
-       */
+<script>
+(() => {
+  "use strict";
 
-      const SUPABASE_URL = "https://lcjtsyxeklltyoxovvzr.supabase.co";
-      const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_Z5y2_ni_klXhEFU7I-OljA_JZcsyCVJ";
+  const SUPABASE_URL =
+    "https://lcjtsyxeklltyoxovvzr.supabase.co";
 
-      const $ = (id) => document.getElementById(id);
+  const SUPABASE_PUBLISHABLE_KEY =
+    "sb_publishable_Z5y2_ni_klXhEFU7I-OljA_JZcsyCVJ";
 
-      let db = null;
-      let categories = [];
-      let busy = false;
+  const $ = id => document.getElementById(id);
 
-      function showStatus(id, message, type = "info") {
-        const el = $(id);
-        el.textContent = message;
-        el.className = "status " + type;
-        el.classList.remove("hidden");
+  let db = null;
+  let categories = [];
+  let orders = [];
+  let busy = false;
+  let selectedOrderId = null;
+
+  const statusLabels = {
+    new: "Новый",
+    confirmed: "Подтверждён",
+    completed: "Выполнен",
+    cancelled: "Отменён"
+  };
+
+  function showStatus(id, message, type = "info") {
+    const el = $(id);
+    el.textContent = message;
+    el.className = "status " + type;
+    el.classList.remove("hidden");
+  }
+
+  function hideStatus(id) {
+    $(id).classList.add("hidden");
+  }
+
+  function errorMessage(error) {
+    if (!error) return "Неизвестная ошибка.";
+    return error.message || error.error_description || String(error);
+  }
+
+  function money(value) {
+    if (value === null || value === undefined || value === "") {
+      return "Не указано";
+    }
+
+    const n = Number(value);
+
+    if (!Number.isFinite(n)) return "Не указано";
+
+    return n.toLocaleString("de-DE", {
+      style: "currency",
+      currency: "EUR"
+    });
+  }
+
+  function dateText(value) {
+    if (!value) return "—";
+
+    const date = new Date(value);
+
+    if (Number.isNaN(date.getTime())) return String(value);
+
+    return date.toLocaleString("ru-RU", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit"
+    });
+  }
+
+  function shortOrderId(id) {
+    return String(id || "").slice(0, 8).toUpperCase();
+  }
+
+  function makeElement(tag, text, className) {
+    const el = document.createElement(tag);
+
+    if (text !== undefined && text !== null) {
+      el.textContent = String(text);
+    }
+
+    if (className) el.className = className;
+
+    return el;
+  }
+
+  function addDetailBox(parent, label, value) {
+    const box = makeElement("div", null, "detail-box");
+    box.appendChild(makeElement("strong", label));
+    box.appendChild(makeElement("div", value || "—"));
+    parent.appendChild(box);
+    return box;
+  }
+
+  function checkConfig() {
+    if (
+      !SUPABASE_URL.startsWith("https://") ||
+      !SUPABASE_PUBLISHABLE_KEY
+    ) {
+      showStatus(
+        "loginStatus",
+        "Проверь настройки Supabase в начале файла.",
+        "error"
+      );
+      return false;
+    }
+
+    return true;
+  }
+
+  async function isAdministrator() {
+    const { data, error } = await db.rpc("is_admin");
+
+    if (error) {
+      throw new Error(
+        "Не удалось проверить права администратора: " +
+        error.message
+      );
+    }
+
+    if (data !== true) {
+      throw new Error(
+        "У этого пользователя нет прав администратора."
+      );
+    }
+
+    return true;
+  }
+
+  async function login(email, password) {
+    if (busy) return;
+
+    hideStatus("loginStatus");
+    busy = true;
+    $("loginButton").disabled = true;
+
+    showStatus("loginStatus", "Проверяем данные входа...", "info");
+
+    try {
+      const { data, error } = await db.auth.signInWithPassword({
+        email,
+        password
+      });
+
+      if (error) throw error;
+      if (!data.user) throw new Error("Пользователь не найден.");
+
+      await isAdministrator();
+
+      $("loginCard").classList.add("hidden");
+      $("adminPanel").classList.remove("hidden");
+
+      await loadAll();
+    } catch (error) {
+      await db.auth.signOut().catch(() => {});
+
+      showStatus(
+        "loginStatus",
+        "Войти не удалось:\n" + errorMessage(error),
+        "error"
+      );
+    } finally {
+      busy = false;
+      $("loginButton").disabled = false;
+    }
+  }
+
+  async function logout() {
+    try {
+      const { error } = await db.auth.signOut();
+      if (error) throw error;
+
+      $("adminPanel").classList.add("hidden");
+      $("loginCard").classList.remove("hidden");
+      $("password").value = "";
+
+      showStatus(
+        "loginStatus",
+        "Ты вышел из панели управления.",
+        "success"
+      );
+    } catch (error) {
+      showStatus("mainStatus", errorMessage(error), "error");
+    }
+  }
+
+  function showTab(tabId) {
+    const ids = [
+      "ordersSection",
+      "categoriesSection",
+      "uploadSection",
+      "artworksSection"
+    ];
+
+    ids.forEach(id => $(id).classList.toggle("hidden", id !== tabId));
+
+    document.querySelectorAll(".tab-button").forEach(button => {
+      button.classList.toggle("active", button.dataset.tab === tabId);
+    });
+  }
+
+  document.querySelectorAll(".tab-button").forEach(button => {
+    button.addEventListener("click", () => showTab(button.dataset.tab));
+  });
+
+  // --------------------------------------------------
+  // ЗАКАЗЫ
+  // --------------------------------------------------
+
+  async function loadOrders() {
+    const tbody = $("ordersTableBody");
+
+    tbody.replaceChildren();
+    tbody.appendChild(
+      makeElement("tr", null)
+    );
+
+    const loadingCell = makeElement("td", "Загружаем заказы...");
+    loadingCell.colSpan = 6;
+    tbody.firstChild.appendChild(loadingCell);
+
+    hideStatus("ordersStatus");
+
+    try {
+      const { data, error } = await db
+        .from("orders")
+        .select("*")
+        .order("created_at", { ascending: false });
+
+      if (error) throw error;
+
+      orders = data || [];
+      renderOrders();
+
+      if (!orders.length) {
+        showStatus(
+          "ordersStatus",
+          "Заказов пока нет. Когда покупатель отправит заказ, он появится здесь.",
+          "info"
+        );
       }
+    } catch (error) {
+      tbody.replaceChildren();
 
-      function hideStatus(id) {
-        $(id).classList.add("hidden");
+      const row = makeElement("tr");
+      const cell = makeElement(
+        "td",
+        "Не удалось загрузить заказы: " + errorMessage(error)
+      );
+
+      cell.colSpan = 6;
+      row.appendChild(cell);
+      tbody.appendChild(row);
+
+      showStatus(
+        "ordersStatus",
+        "Проверь права доступа к таблице orders и политику SELECT для администратора.",
+        "error"
+      );
+    }
+  }
+
+  function renderOrders() {
+    const tbody = $("ordersTableBody");
+    tbody.replaceChildren();
+
+    if (!orders.length) {
+      const row = makeElement("tr");
+      const cell = makeElement("td", "Заказов пока нет.", "empty");
+      cell.colSpan = 6;
+      row.appendChild(cell);
+      tbody.appendChild(row);
+      return;
+    }
+
+    orders.forEach(order => {
+      const row = makeElement("tr");
+
+      row.appendChild(
+        makeElement("td", shortOrderId(order.id), "order-number")
+      );
+
+      row.appendChild(
+        makeElement("td", dateText(order.created_at))
+      );
+
+      const buyerCell = makeElement("td");
+      buyerCell.appendChild(makeElement("div", order.buyer_name || "—"));
+      buyerCell.appendChild(
+        makeElement("div", order.buyer_email || "—", "small")
+      );
+      row.appendChild(buyerCell);
+
+      row.appendChild(
+        makeElement("td", money(order.artwork_subtotal))
+      );
+
+      const statusCell = makeElement("td");
+      const badgeClass = {
+        new: "badge badge-new",
+        confirmed: "badge badge-confirmed",
+        completed: "badge badge-completed",
+        cancelled: "badge badge-cancelled"
+      }[order.status] || "badge";
+
+      statusCell.appendChild(
+        makeElement(
+          "span",
+          statusLabels[order.status] || order.status || "—",
+          badgeClass
+        )
+      );
+
+      row.appendChild(statusCell);
+
+      const actionCell = makeElement("td");
+      const detailsButton = makeElement("button", "Подробнее");
+
+      detailsButton.type = "button";
+      detailsButton.addEventListener("click", () => {
+        selectedOrderId = order.id;
+        renderOrderDetails(order);
+      });
+
+      actionCell.appendChild(detailsButton);
+      row.appendChild(actionCell);
+
+      tbody.appendChild(row);
+    });
+
+    if (selectedOrderId) {
+      const selected = orders.find(o => o.id === selectedOrderId);
+
+      if (selected) {
+        renderOrderDetails(selected);
+      } else {
+        $("orderDetails").classList.add("hidden");
+        selectedOrderId = null;
       }
+    }
+  }
 
-      function setBusy(value) {
-        busy = value;
+  function renderOrderDetails(order) {
+    const panel = $("orderDetails");
+    panel.replaceChildren();
+    panel.classList.remove("hidden");
 
-        [
-          "loginButton",
-          "logoutButton",
-          "refreshButton",
-          "uploadButton"
-        ].forEach((id) => {
-          $(id).disabled = value;
-        });
+    const heading = makeElement(
+      "h3",
+      "Заказ #" + shortOrderId(order.id)
+    );
+
+    panel.appendChild(heading);
+
+    const fullId = makeElement("p", "Полный номер: " + order.id, "small");
+    panel.appendChild(fullId);
+
+    panel.appendChild(
+      makeElement("p", "Дата заказа: " + dateText(order.created_at))
+    );
+
+    const buyerGrid = makeElement("div", null, "detail-grid");
+
+    addDetailBox(buyerGrid, "Имя покупателя", order.buyer_name);
+    addDetailBox(buyerGrid, "Email", order.buyer_email);
+    addDetailBox(buyerGrid, "Страна", order.buyer_country);
+    addDetailBox(buyerGrid, "Город", order.buyer_city);
+    addDetailBox(buyerGrid, "Почтовый индекс", order.buyer_postal_code);
+    addDetailBox(buyerGrid, "Адрес", order.buyer_address);
+
+    panel.appendChild(buyerGrid);
+
+    const commentBox = makeElement("div", null, "detail-box");
+    commentBox.style.marginTop = "12px";
+    commentBox.appendChild(makeElement("strong", "Комментарий покупателя"));
+    commentBox.appendChild(
+      makeElement("div", order.buyer_comment || "Комментария нет.")
+    );
+
+    panel.appendChild(commentBox);
+
+    panel.appendChild(makeElement("h3", "Заказанные картины"));
+
+    const itemsList = makeElement("ul", null, "order-items");
+
+    let items = order.items;
+
+    if (typeof items === "string") {
+      try {
+        items = JSON.parse(items);
+      } catch {
+        items = [];
       }
+    }
 
-      function errorMessage(error) {
-        if (!error) return "Неизвестная ошибка.";
+    if (!Array.isArray(items) || !items.length) {
+      itemsList.appendChild(
+        makeElement("li", "Список картин не найден.")
+      );
+    } else {
+      items.forEach(item => {
+        const li = makeElement("li");
+        const itemRow = makeElement("div", null, "order-item-row");
 
-        return error.message ||
-          error.error_description ||
-          String(error);
-      }
+        if (item.image_url) {
+          try {
+            const imageUrl = new URL(item.image_url);
 
-      function checkConfig() {
-        if (
-          !SUPABASE_URL.startsWith("https://") ||
-          SUPABASE_URL.includes("ВСТАВЬ_") ||
-          SUPABASE_PUBLISHABLE_KEY.includes("ВСТАВЬ_") ||
-          !SUPABASE_PUBLISHABLE_KEY
-        ) {
-          showStatus(
-            "loginStatus",
-            "Не заполнены настройки Supabase. Открой admin.html на GitHub и вставь Project URL и Publishable Key в начале кода.",
-            "error"
-          );
-          return false;
+            if (imageUrl.protocol === "https:") {
+              const img = makeElement("img", null, "order-item-image");
+              img.src = imageUrl.href;
+              img.alt = item.title || "Картина";
+              img.loading = "lazy";
+              itemRow.appendChild(img);
+            }
+          } catch {
+            // Не показываем некорректный URL изображения.
+          }
         }
 
-        return true;
+        const text = makeElement("div", null, "order-item-text");
+        text.appendChild(
+          makeElement("strong", item.title || "Без названия")
+        );
+
+        text.appendChild(
+          makeElement(
+            "div",
+            "Количество: " + Number(item.quantity || 1)
+          )
+        );
+
+        text.appendChild(
+          makeElement("div", "Цена: " + money(item.price))
+        );
+
+        itemRow.appendChild(text);
+        li.appendChild(itemRow);
+        itemsList.appendChild(li);
+      });
+    }
+
+    panel.appendChild(itemsList);
+
+    const subtotal = Number(order.artwork_subtotal || 0);
+
+    panel.appendChild(makeElement("h3", "Стоимость"));
+
+    const moneyBox = makeElement("div", null, "detail-box");
+
+    const subtotalLine = makeElement("div", null, "money-line");
+    subtotalLine.appendChild(makeElement("span", "Картины"));
+    subtotalLine.appendChild(makeElement("strong", money(subtotal)));
+    moneyBox.appendChild(subtotalLine);
+
+    const shippingLabel = makeElement("label", "Доставка (€)");
+    shippingLabel.htmlFor = "shippingCost";
+    moneyBox.appendChild(shippingLabel);
+
+    const shippingInput = makeElement("input");
+    shippingInput.id = "shippingCost";
+    shippingInput.type = "number";
+    shippingInput.min = "0";
+    shippingInput.step = "0.01";
+    shippingInput.placeholder = "Например, 25";
+    shippingInput.value =
+      order.shipping_cost === null ||
+      order.shipping_cost === undefined
+        ? ""
+        : String(order.shipping_cost);
+
+    moneyBox.appendChild(shippingInput);
+
+    const totalLine = makeElement("div", null, "money-line total");
+    totalLine.appendChild(makeElement("span", "Итого"));
+
+    const totalValue = makeElement(
+      "strong",
+      order.total == null ? "Ожидает расчёта" : money(order.total)
+    );
+
+    totalLine.appendChild(totalValue);
+    moneyBox.appendChild(totalLine);
+
+    const totalNote = makeElement(
+      "p",
+      "Общая сумма рассчитывается автоматически после ввода стоимости доставки.",
+      "small"
+    );
+
+    moneyBox.appendChild(totalNote);
+
+    function updateTotalPreview() {
+      const value = shippingInput.value.trim();
+
+      if (value === "") {
+        totalValue.textContent = "Ожидает расчёта";
+        return;
       }
 
-      async function isAdministrator() {
-        const { data, error } = await db.rpc("is_admin");
+      const shipping = Number(value);
 
-        if (error) {
+      if (!Number.isFinite(shipping) || shipping < 0) {
+        totalValue.textContent = "Проверь стоимость доставки";
+        return;
+      }
+
+      totalValue.textContent = money(
+        Math.round((subtotal + shipping) * 100) / 100
+      );
+    }
+
+    shippingInput.addEventListener("input", updateTotalPreview);
+
+    panel.appendChild(moneyBox);
+
+    panel.appendChild(makeElement("h3", "Статус заказа"));
+
+    const statusSelect = makeElement("select");
+    statusSelect.id = "orderStatus";
+
+    Object.entries(statusLabels).forEach(([value, label]) => {
+      const option = makeElement("option", label);
+      option.value = value;
+      statusSelect.appendChild(option);
+    });
+
+    statusSelect.value = statusLabels[order.status]
+      ? order.status
+      : "new";
+
+    panel.appendChild(statusSelect);
+
+    const saveButton = makeElement("button", "Сохранить изменения");
+    saveButton.type = "button";
+
+    saveButton.addEventListener("click", async () => {
+      if (saveButton.disabled) return;
+
+      const shippingText = shippingInput.value.trim();
+
+      if (shippingText === "") {
+        showStatus(
+          "ordersStatus",
+          "Укажи стоимость доставки перед сохранением. Если доставка бесплатная, введи 0.",
+          "error"
+        );
+        shippingInput.focus();
+        return;
+      }
+
+      const shipping = Number(shippingText);
+
+      if (!Number.isFinite(shipping) || shipping < 0) {
+        showStatus(
+          "ordersStatus",
+          "Стоимость доставки должна быть числом от 0 и выше.",
+          "error"
+        );
+        return;
+      }
+
+      const total = Math.round((subtotal + shipping) * 100) / 100;
+      const status = statusSelect.value;
+
+      saveButton.disabled = true;
+      saveButton.textContent = "Сохраняем...";
+
+      try {
+        const { data, error } = await db
+          .from("orders")
+          .update({
+            shipping_cost: shipping,
+            total,
+            status
+          })
+          .eq("id", order.id)
+          .select("id");
+
+        if (error) throw error;
+
+        if (!data || !data.length) {
           throw new Error(
-            "Не удалось проверить права администратора: " +
-            error.message
+            "Заказ не был изменён. Проверь права администратора."
           );
         }
-
-        if (data !== true) {
-          throw new Error(
-            "Этот пользователь не добавлен в таблицу admins. Проверь UID пользователя в Supabase."
-          );
-        }
-
-        return true;
-      }
-
-      async function login(email, password) {
-        if (busy) return;
-
-        hideStatus("loginStatus");
-        setBusy(true);
 
         showStatus(
-          "loginStatus",
-          "Проверяем данные входа...",
+          "ordersStatus",
+          "Заказ #" + shortOrderId(order.id) + " успешно обновлён.",
+          "success"
+        );
+
+        await loadOrders();
+
+      } catch (error) {
+        showStatus(
+          "ordersStatus",
+          "Не удалось сохранить заказ: " + errorMessage(error),
+          "error"
+        );
+      } finally {
+        saveButton.disabled = false;
+        saveButton.textContent = "Сохранить изменения";
+      }
+    });
+
+    panel.appendChild(saveButton);
+
+    const closeButton = makeElement("button", "Закрыть подробности");
+    closeButton.type = "button";
+    closeButton.className = "secondary";
+
+    closeButton.addEventListener("click", () => {
+      selectedOrderId = null;
+      panel.classList.add("hidden");
+      panel.replaceChildren();
+    });
+
+    panel.appendChild(closeButton);
+  }
+
+  // --------------------------------------------------
+  // КАТЕГОРИИ
+  // --------------------------------------------------
+
+  async function loadCategories() {
+    const { data, error } = await db
+      .from("categories")
+      .select("id, name")
+      .order("name");
+
+    if (error) throw error;
+
+    categories = data || [];
+
+    const select = $("uploadCategory");
+    const previous = select.value;
+
+    select.replaceChildren();
+
+    const empty = makeElement("option", "Без категории");
+    empty.value = "";
+    select.appendChild(empty);
+
+    categories.forEach(category => {
+      const option = makeElement("option", category.name);
+      option.value = category.id;
+      select.appendChild(option);
+    });
+
+    if (categories.some(c => c.id === previous)) {
+      select.value = previous;
+    }
+
+    const list = $("categoryList");
+    list.replaceChildren();
+
+    if (!categories.length) {
+      list.appendChild(makeElement("p", "Категорий пока нет."));
+      return;
+    }
+
+    categories.forEach(category => {
+      const row = makeElement("div", null, "artwork");
+      row.appendChild(makeElement("strong", category.name));
+
+      const button = makeElement("button", "Удалить категорию");
+      button.type = "button";
+      button.className = "danger";
+
+      button.addEventListener("click", async () => {
+        if (!confirm('Удалить категорию "' + category.name + '"?')) {
+          return;
+        }
+
+        try {
+          const { error } = await db
+            .from("categories")
+            .delete()
+            .eq("id", category.id);
+
+          if (error) throw error;
+
+          showStatus("mainStatus", "Категория удалена.", "success");
+
+          await loadCategories();
+          await loadArtworks();
+        } catch (error) {
+          showStatus(
+            "mainStatus",
+            "Не удалось удалить категорию: " + errorMessage(error),
+            "error"
+          );
+        }
+      });
+
+      row.appendChild(button);
+      list.appendChild(row);
+    });
+  }
+
+  async function addCategory(event) {
+    event.preventDefault();
+
+    const name = $("categoryName").value.trim();
+    if (!name) return;
+
+    try {
+      const { error } = await db
+        .from("categories")
+        .insert({ name });
+
+      if (error) throw error;
+
+      $("categoryName").value = "";
+
+      showStatus("mainStatus", "Категория добавлена.", "success");
+
+      await loadCategories();
+    } catch (error) {
+      showStatus(
+        "mainStatus",
+        "Не удалось добавить категорию: " + errorMessage(error),
+        "error"
+      );
+    }
+  }
+
+  // --------------------------------------------------
+  // ЗАГРУЗКА КАРТИН
+  // --------------------------------------------------
+
+  async function uploadImages(event) {
+    event.preventDefault();
+
+    if (busy) return;
+
+    const files = Array.from($("images").files || []);
+
+    if (!files.length) {
+      showStatus("uploadStatus", "Сначала выбери изображения.", "error");
+      return;
+    }
+
+    for (const file of files) {
+      if (file.size > 15 * 1024 * 1024) {
+        showStatus(
+          "uploadStatus",
+          "Файл " + file.name + " превышает 15 МБ.",
+          "error"
+        );
+        return;
+      }
+
+      if (!file.type.startsWith("image/")) {
+        showStatus(
+          "uploadStatus",
+          "Файл " + file.name + " не является изображением.",
+          "error"
+        );
+        return;
+      }
+    }
+
+    busy = true;
+    $("uploadButton").disabled = true;
+
+    let completed = 0;
+
+    try {
+      for (const file of files) {
+        showStatus(
+          "uploadStatus",
+          "Загрузка " + (completed + 1) + " из " +
+          files.length + ": " + file.name,
           "info"
         );
 
-        try {
-          const { data, error } = await db.auth.signInWithPassword({
-            email,
-            password
+        const safeName = file.name
+          .normalize("NFKD")
+          .replace(/[^a-zA-Z0-9.-]/g, "");
+
+        const path =
+          Date.now() + "_" +
+          Math.random().toString(36).slice(2, 9) +
+          "_" + safeName;
+
+        const { error: uploadError } = await db.storage
+          .from("artworks")
+          .upload(path, file, {
+            upsert: false,
+            contentType: file.type
           });
 
-          if (error) {
-            throw error;
+        if (uploadError) throw uploadError;
+
+        const { data: publicData } = db.storage
+          .from("artworks")
+          .getPublicUrl(path);
+
+        const priceText = $("uploadPrice").value.trim();
+        const price = priceText === "" ? null : Number(priceText);
+
+        if (price !== null && (!Number.isFinite(price) || price < 0)) {
+          throw new Error("Укажи корректную цену.");
+        }
+
+        const record = {
+          title: file.name.replace(/\.[^.]+$/, ""),
+          description: $("uploadDescription").value.trim() || null,
+          price,
+          category_id: $("uploadCategory").value || null,
+          image_url: publicData.publicUrl,
+          published: false
+        };
+
+        const { error: insertError } = await db
+          .from("artworks")
+          .insert(record);
+
+        if (insertError) {
+          await db.storage.from("artworks").remove([path]);
+          throw insertError;
+        }
+
+        completed++;
+      }
+
+      $("uploadForm").reset();
+
+      showStatus(
+        "uploadStatus",
+        "Загружено картин: " + completed +
+        ". Они пока скрыты от посетителей. Нажми «Опубликовать» в списке картин.",
+        "success"
+      );
+
+      await loadCategories();
+      await loadArtworks();
+
+    } catch (error) {
+      showStatus(
+        "uploadStatus",
+        "Ошибка загрузки: " + errorMessage(error) +
+        "\nУспешно загружено до ошибки: " + completed,
+        "error"
+      );
+    } finally {
+      busy = false;
+      $("uploadButton").disabled = false;
+    }
+  }
+
+  // --------------------------------------------------
+  // СПИСОК КАРТИН
+  // --------------------------------------------------
+
+  async function loadArtworks() {
+    const list = $("artworkList");
+    list.textContent = "Загружаем картины...";
+
+    const { data, error } = await db
+      .from("artworks")
+      .select(
+        "id,title,description,price,width_cm,height_cm,category_id,image_url,published,created_at"
+      )
+      .order("created_at", { ascending: false });
+
+    if (error) throw error;
+
+    list.replaceChildren();
+
+    if (!data || !data.length) {
+      list.textContent = "Картин пока нет.";
+      return;
+    }
+
+    data.forEach(art => {
+      const box = makeElement("article", null, "artwork");
+
+      if (art.image_url) {
+        try {
+          const url = new URL(art.image_url);
+
+          if (url.protocol === "https:") {
+            const img = makeElement("img");
+            img.src = url.href;
+            img.alt = art.title || "Картина";
+            img.loading = "lazy";
+            box.appendChild(img);
+          }
+        } catch {
+          // Пропускаем некорректный URL.
+        }
+      }
+
+      box.appendChild(
+        makeElement("h3", art.title || "Без названия")
+      );
+
+      box.appendChild(
+        makeElement("p", art.description || "Без описания")
+      );
+
+      const category = categories.find(c => c.id === art.category_id);
+
+      const priceText = art.price == null
+        ? "Цена не указана"
+        : money(art.price);
+
+      const dimensions =
+        art.width_cm || art.height_cm
+          ? " · Размер: " + (art.width_cm ?? "?") +
+            " × " + (art.height_cm ?? "?") + " см"
+          : "";
+
+      box.appendChild(
+        makeElement(
+          "p",
+          priceText +
+          " · Категория: " +
+          (category ? category.name : "Без категории") +
+          dimensions +
+          " · " +
+          (art.published ? "Опубликована" : "Скрыта"),
+          "small"
+        )
+      );
+
+      const actions = makeElement("div", null, "actions");
+
+      const publishButton = makeElement(
+        "button",
+        art.published ? "Скрыть картину" : "Опубликовать"
+      );
+
+      publishButton.type = "button";
+
+      publishButton.addEventListener("click", async () => {
+        try {
+          const { error } = await db
+            .from("artworks")
+            .update({ published: !art.published })
+            .eq("id", art.id);
+
+          if (error) throw error;
+
+          showStatus(
+            "mainStatus",
+            art.published ? "Картина скрыта." : "Картина опубликована.",
+            "success"
+          );
+
+          await loadArtworks();
+        } catch (error) {
+          showStatus(
+            "mainStatus",
+            "Ошибка публикации: " + errorMessage(error),
+            "error"
+          );
+        }
+      });
+
+      const editButton = makeElement("button", "Редактировать");
+      editButton.type = "button";
+      editButton.className = "secondary";
+
+      editButton.addEventListener("click", async () => {
+        try {
+          const title = prompt("Название картины:", art.title || "");
+          if (title === null) return;
+
+          const description = prompt(
+            "Описание картины:",
+            art.description || ""
+          );
+          if (description === null) return;
+
+          const priceText = prompt(
+            "Цена в евро (оставь пустым, если цены нет):",
+            art.price == null ? "" : art.price
+          );
+          if (priceText === null) return;
+
+          const widthText = prompt(
+            "Ширина в см (необязательно):",
+            art.width_cm == null ? "" : art.width_cm
+          );
+          if (widthText === null) return;
+
+          const heightText = prompt(
+            "Высота в см (необязательно):",
+            art.height_cm == null ? "" : art.height_cm
+          );
+          if (heightText === null) return;
+
+          const categoryText = prompt(
+            "ID категории или оставь пустым:\n" +
+            categories.map(c => c.name + " — " + c.id).join("\n"),
+            art.category_id || ""
+          );
+
+          if (categoryText === null) return;
+
+          const parseOptionalNumber = (value, label) => {
+            if (value.trim() === "") return null;
+
+            const n = Number(value);
+
+            if (!Number.isFinite(n) || n < 0) {
+              throw new Error(
+                "Неверное значение поля «" + label + "»."
+              );
+            }
+
+            return n;
+          };
+
+          const newPrice = parseOptionalNumber(priceText, "Цена");
+          const newWidth = parseOptionalNumber(widthText, "Ширина");
+          const newHeight = parseOptionalNumber(heightText, "Высота");
+          const newCategory = categoryText.trim() || null;
+
+          if (
+            newCategory &&
+            !categories.some(c => c.id === newCategory)
+          ) {
+            throw new Error("Не найдена категория с таким ID.");
           }
 
-          if (!data.user) {
-            throw new Error("Supabase не вернул данные пользователя.");
-          }
+          const { error } = await db
+            .from("artworks")
+            .update({
+              title: title.trim() || "Без названия",
+              description: description.trim() || null,
+              price: newPrice,
+              width_cm: newWidth,
+              height_cm: newHeight,
+              category_id: newCategory
+            })
+            .eq("id", art.id);
 
+          if (error) throw error;
+
+          showStatus("mainStatus", "Данные картины обновлены.", "success");
+          await loadArtworks();
+
+        } catch (error) {
+          showStatus(
+            "mainStatus",
+            "Ошибка редактирования: " + errorMessage(error),
+            "error"
+          );
+        }
+      });
+
+      const deleteButton = makeElement("button", "Удалить картину");
+      deleteButton.type = "button";
+      deleteButton.className = "danger";
+
+      deleteButton.addEventListener("click", async () => {
+        if (
+          !confirm(
+            'Удалить картину "' + art.title +
+            '"? Это действие нельзя отменить.'
+          )
+        ) return;
+
+        try {
+          const { error } = await db
+            .from("artworks")
+            .delete()
+            .eq("id", art.id);
+
+          if (error) throw error;
+
+          showStatus("mainStatus", "Запись картины удалена.", "success");
+          await loadArtworks();
+
+        } catch (error) {
+          showStatus(
+            "mainStatus",
+            "Ошибка удаления: " + errorMessage(error),
+            "error"
+          );
+        }
+      });
+
+      actions.append(publishButton, editButton, deleteButton);
+      box.appendChild(actions);
+      list.appendChild(box);
+    });
+  }
+
+  // --------------------------------------------------
+  // ЗАГРУЗКА ВСЕХ ДАННЫХ
+  // --------------------------------------------------
+
+  async function loadAll() {
+    try {
+      await loadCategories();
+      await loadArtworks();
+
+      showStatus("mainStatus", "Данные успешно загружены.", "success");
+    } catch (error) {
+      showStatus(
+        "mainStatus",
+        "Не удалось загрузить картины или категории: " +
+        errorMessage(error),
+        "error"
+      );
+    }
+
+    await loadOrders();
+  }
+
+  $("loginForm").addEventListener("submit", async event => {
+    event.preventDefault();
+
+    if (!db) {
+      showStatus("loginStatus", "Supabase ещё не подключён.", "error");
+      return;
+    }
+
+    await login(
+      $("email").value.trim(),
+      $("password").value
+    );
+  });
+
+  $("logoutButton").addEventListener("click", logout);
+  $("refreshButton").addEventListener("click", loadAll);
+  $("refreshOrdersButton").addEventListener("click", loadOrders);
+  $("categoryForm").addEventListener("submit", addCategory);
+  $("uploadForm").addEventListener("submit", uploadImages);
+
+  async function initialize() {
+    try {
+      if (!window.supabase) {
+        throw new Error(
+          "Не загрузилась библиотека Supabase. Проверь интернет-соединение."
+        );
+      }
+
+      if (!checkConfig()) return;
+
+      db = window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_PUBLISHABLE_KEY
+      );
+
+      showStatus(
+        "loginStatus",
+        "Подключение готово. Введи email и пароль.",
+        "success"
+      );
+
+      const { data, error } = await db.auth.getSession();
+
+      if (error) throw error;
+
+      if (data.session && data.session.user) {
+        try {
           await isAdministrator();
 
           $("loginCard").classList.add("hidden");
           $("adminPanel").classList.remove("hidden");
 
-          showStatus(
-            "mainStatus",
-            "Вход выполнен. Загружаем данные...",
-            "success"
-          );
-
           await loadAll();
         } catch (error) {
-          await db.auth.signOut().catch(() => {});
-
           showStatus(
             "loginStatus",
-            "Войти не удалось:\n" + errorMessage(error),
-            "error"
-          );
-        } finally {
-          setBusy(false);
-        }
-      }
-
-      async function logout() {
-        setBusy(true);
-
-        try {
-          const { error } = await db.auth.signOut();
-
-          if (error) throw error;
-
-          $("adminPanel").classList.add("hidden");
-          $("loginCard").classList.remove("hidden");
-          $("password").value = "";
-
-          showStatus(
-            "loginStatus",
-            "Ты вышел из панели управления.",
-            "success"
-          );
-        } catch (error) {
-          showStatus(
-            "mainStatus",
-            errorMessage(error),
-            "error"
-          );
-        } finally {
-          setBusy(false);
-        }
-      }
-
-      async function loadCategories() {
-        const { data, error } = await db
-          .from("categories")
-          .select("id, name")
-          .order("name");
-
-        if (error) throw error;
-
-        categories = data || [];
-
-        const selects = [$("uploadCategory")];
-
-        selects.forEach((select) => {
-          const previous = select.value;
-
-          select.replaceChildren();
-
-          const empty = document.createElement("option");
-          empty.value = "";
-          empty.textContent = "Без категории";
-          select.appendChild(empty);
-
-          categories.forEach((category) => {
-            const option = document.createElement("option");
-            option.value = category.id;
-            option.textContent = category.name;
-            select.appendChild(option);
-          });
-
-          if (
-            previous &&
-            categories.some((c) => c.id === previous)
-          ) {
-            select.value = previous;
-          }
-        });
-
-        const list = $("categoryList");
-        list.replaceChildren();
-
-        if (!categories.length) {
-          list.textContent = "Категорий пока нет.";
-          return;
-        }
-
-        categories.forEach((category) => {
-          const row = document.createElement("div");
-          row.className = "artwork";
-
-          const title = document.createElement("strong");
-          title.textContent = category.name;
-          row.appendChild(title);
-
-          const button = document.createElement("button");
-          button.type = "button";
-          button.className = "danger";
-          button.textContent = "Удалить категорию";
-
-          button.addEventListener("click", async () => {
-            if (
-              !confirm(
-                'Удалить категорию "' + category.name + '"?'
-              )
-            ) return;
-
-            try {
-              const { error } = await db
-                .from("categories")
-                .delete()
-                .eq("id", category.id);
-
-              if (error) throw error;
-
-              showStatus(
-                "mainStatus",
-                "Категория удалена.",
-                "success"
-              );
-
-              await loadCategories();
-              await loadArtworks();
-            } catch (error) {
-              showStatus(
-                "mainStatus",
-                "Не удалось удалить категорию: " +
-                errorMessage(error),
-                "error"
-              );
-            }
-          });
-
-          row.appendChild(button);
-          list.appendChild(row);
-        });
-      }
-
-      async function addCategory(event) {
-        event.preventDefault();
-
-        const name = $("categoryName").value.trim();
-
-        if (!name) return;
-
-        try {
-          const { error } = await db
-            .from("categories")
-            .insert({ name });
-
-          if (error) throw error;
-
-          $("categoryName").value = "";
-
-          showStatus(
-            "mainStatus",
-            "Категория добавлена.",
-            "success"
-          );
-
-          await loadCategories();
-        } catch (error) {
-          showStatus(
-            "mainStatus",
-            "Не удалось добавить категорию: " +
-            errorMessage(error),
+            "Проверка доступа не пройдена: " + errorMessage(error),
             "error"
           );
         }
       }
-
-      async function uploadImages(event) {
-        event.preventDefault();
-
-        if (busy) return;
-
-        const files = Array.from($("images").files || []);
-
-        if (!files.length) {
-          showStatus(
-            "uploadStatus",
-            "Сначала выбери изображения.",
-            "error"
-          );
-          return;
-        }
-
-        for (const file of files) {
-          if (file.size > 15 * 1024 * 1024) {
-            showStatus(
-              "uploadStatus",
-              "Файл " + file.name +
-              " превышает 15 МБ.",
-              "error"
-            );
-            return;
-          }
-
-          if (!file.type.startsWith("image/")) {
-            showStatus(
-              "uploadStatus",
-              "Файл " + file.name +
-              " не является изображением.",
-              "error"
-            );
-            return;
-          }
-        }
-
-        setBusy(true);
-
-        let completed = 0;
-
-        try {
-          for (const file of files) {
-            showStatus(
-              "uploadStatus",
-              "Загрузка " + (completed + 1) +
-              " из " + files.length + ": " + file.name,
-              "info"
-            );
-
-            const safeName = file.name
-              .normalize("NFKD")
-              .replace(/[^a-zA-Z0-9.-]/g, "");
-
-            const path =
-              Date.now() + "_" +
-              Math.random().toString(36).slice(2, 9) +
-              "_" + safeName;
-
-            const { error: uploadError } = await db.storage
-              .from("artworks")
-              .upload(path, file, {
-                upsert: false,
-                contentType: file.type
-              });
-
-            if (uploadError) throw uploadError;
-
-            const { data: publicData } = db.storage
-              .from("artworks")
-              .getPublicUrl(path);
-
-            const title = file.name.replace(/\.[^.]+$/, "");
-
-            const priceText = $("uploadPrice").value.trim();
-
-            const price = priceText === ""
-              ? null
-              : Number(priceText);
-
-            if (
-              price !== null &&
-              (!Number.isFinite(price) || price < 0)
-            ) {
-              throw new Error("Укажи корректную цену.");
-            }
-
-            const record = {
-              title,
-              description:
-                $("uploadDescription").value.trim() || null,
-              price,
-              category_id:
-                $("uploadCategory").value || null,
-              image_url: publicData.publicUrl,
-              published: false
-            };
-
-            const { error: insertError } = await db
-              .from("artworks")
-              .insert(record);
-
-            if (insertError) {
-              await db.storage
-                .from("artworks")
-                .remove([path])
-                .catch(() => {});
-
-              throw insertError;
-            }
-
-            completed++;
-          }
-
-          $("uploadForm").reset();
-
-          showStatus(
-            "uploadStatus",
-            "Успешно загружено картин: " + completed +
-            ". Они пока скрыты от посетителей. Чтобы показать их, нажми «Опубликовать» в списке ниже.",
-            "success"
-          );
-
-          await loadCategories();
-          await loadArtworks();
-
-        } catch (error) {
-          showStatus(
-            "uploadStatus",
-            "Ошибка загрузки: " + errorMessage(error) +
-            "\nУспешно загружено до ошибки: " + completed,
-            "error"
-          );
-        } finally {
-          setBusy(false);
-        }
-      }
-
-      async function loadArtworks() {
-        const list = $("artworkList");
-        list.textContent = "Загружаем картины...";
-
-        const { data, error } = await db
-          .from("artworks")
-          .select(
-            "id, title, description, price, width_cm, height_cm, category_id, image_url, published, created_at"
-          )
-          .order("created_at", { ascending: false });
-
-        if (error) throw error;
-
-        list.replaceChildren();
-
-        if (!data || !data.length) {
-          list.textContent =
-            "Картин пока нет. Добавь первую картину выше.";
-          return;
-        }
-
-        for (const art of data) {
-          const box = document.createElement("article");
-          box.className = "artwork";
-
-          if (art.image_url) {
-            const img = document.createElement("img");
-            img.src = art.image_url;
-            img.alt = art.title || "Картина";
-            img.loading = "lazy";
-            box.appendChild(img);
-          }
-
-          const title = document.createElement("h3");
-          title.textContent = art.title || "Без названия";
-          box.appendChild(title);
-
-          const description = document.createElement("p");
-          description.textContent = art.description || "Без описания";
-          box.appendChild(description);
-
-          const category = categories.find(
-            (c) => c.id === art.category_id
-          );
-
-          const details = document.createElement("p");
-          details.className = "small";
-
-          const priceText = art.price == null
-            ? "Цена не указана"
-            : Number(art.price).toFixed(2) + " €";
-
-          const dimensions =
-            art.width_cm || art.height_cm
-              ? " · Размер: " +
-                (art.width_cm ?? "?") + " × " +
-                (art.height_cm ?? "?") + " см"
-              : "";
-
-          details.textContent =
-            priceText +
-            " · Категория: " +
-            (category ? category.name : "Без категории") +
-            dimensions +
-            " · " +
-            (art.published ? "Опубликована" : "Скрыта");
-
-          box.appendChild(details);
-
-          const actions = document.createElement("div");
-          actions.className = "actions";
-
-          const publishButton = document.createElement("button");
-          publishButton.type = "button";
-          publishButton.textContent = art.published
-            ? "Скрыть картину"
-            : "Опубликовать";
-
-          publishButton.addEventListener("click", async () => {
-            try {
-              const { error } = await db
-                .from("artworks")
-                .update({ published: !art.published })
-                .eq("id", art.id);
-
-              if (error) throw error;
-
-              showStatus(
-                "mainStatus",
-                art.published
-                  ? "Картина скрыта."
-                  : "Картина опубликована в базе данных.",
-                "success"
-              );
-
-              await loadArtworks();
-            } catch (error) {
-              showStatus(
-                "mainStatus",
-                "Ошибка публикации: " + errorMessage(error),
-                "error"
-              );
-            }
-          });
-
-          const editButton = document.createElement("button");
-          editButton.type = "button";
-          editButton.className = "secondary";
-          editButton.textContent = "Редактировать";
-
-          editButton.addEventListener("click", async () => {
-            try {
-              const title = prompt("Название картины:", art.title || "");
-              if (title === null) return;
-
-              const description = prompt(
-                "Описание картины:",
-                art.description || ""
-              );
-              if (description === null) return;
-
-              const priceText = prompt(
-                "Цена в евро (оставь пустым, если цены нет):",
-                art.price == null ? "" : art.price
-              );
-              if (priceText === null) return;
-
-              const widthText = prompt(
-                "Ширина в см (необязательно):",
-                art.width_cm == null ? "" : art.width_cm
-              );
-              if (widthText === null) return;
-
-              const heightText = prompt(
-                "Высота в см (необязательно):",
-                art.height_cm == null ? "" : art.height_cm
-              );
-              if (heightText === null) return;
-
-              const categoryText = prompt(
-                "ID категории или оставь пустым:\n" +
-                categories.map(
-                  (c) => c.name + " — " + c.id
-                ).join("\n"),
-                art.category_id || ""
-              );
-
-              if (categoryText === null) return;
-
-              const parseOptionalNumber = (value, label) => {
-                if (value.trim() === "") return null;
-
-                const n = Number(value);
-
-                if (!Number.isFinite(n) || n < 0) {
-                  throw new Error(
-                    "Неверное значение поля «" + label + "»."
-                  );
-                }
-
-                return n;
-              };
-
-              const newPrice = parseOptionalNumber(
-                priceText,
-                "Цена"
-              );
-
-              const newWidth = parseOptionalNumber(
-                widthText,
-                "Ширина"
-              );
-
-              const newHeight = parseOptionalNumber(
-                heightText,
-                "Высота"
-              );
-
-              const newCategory = categoryText.trim() || null;
-
-              if (
-                newCategory &&
-                !categories.some((c) => c.id === newCategory)
-              ) {
-                throw new Error(
-                  "Не найдена категория с таким ID."
-                );
-              }
-
-              const { error } = await db
-                .from("artworks")
-                .update({
-                  title: title.trim() || "Без названия",
-                  description: description.trim() || null,
-                  price: newPrice,
-                  width_cm: newWidth,
-                  height_cm: newHeight,
-                  category_id: newCategory
-                })
-                .eq("id", art.id);
-
-              if (error) throw error;
-
-              showStatus(
-                "mainStatus",
-                "Данные картины обновлены.",
-                "success"
-              );
-
-              await loadArtworks();
-
-            } catch (error) {
-              showStatus(
-                "mainStatus",
-                "Ошибка редактирования: " +
-                errorMessage(error),
-                "error"
-              );
-            }
-          });
-
-          const deleteButton = document.createElement("button");
-          deleteButton.type = "button";
-          deleteButton.className = "danger";
-          deleteButton.textContent = "Удалить картину";
-
-          deleteButton.addEventListener("click", async () => {
-            if (
-              !confirm(
-                'Удалить картину "' + art.title +
-                '"? Это действие нельзя отменить.'
-              )
-            ) return;
-
-            try {
-              const { error } = await db
-                .from("artworks")
-                .delete()
-                .eq("id", art.id);
-
-              if (error) throw error;
-
-              showStatus(
-                "mainStatus",
-                "Запись картины удалена.",
-                "success"
-              );
-
-              await loadArtworks();
-
-            } catch (error) {
-              showStatus(
-                "mainStatus",
-                "Ошибка удаления: " + errorMessage(error),
-                "error"
-              );
-            }
-          });
-
-          actions.append(
-            publishButton,
-            editButton,
-            deleteButton
-          );
-
-          box.appendChild(actions);
-          list.appendChild(box);
-        }
-      }
-
-      async function loadAll() {
-        try {
-          await loadCategories();
-          await loadArtworks();
-
-          showStatus(
-            "mainStatus",
-            "Данные успешно загружены.",
-            "success"
-          );
-        } catch (error) {
-          showStatus(
-            "mainStatus",
-            "Не удалось загрузить данные: " +
-            errorMessage(error) +
-            "\nПроверь таблицы и политики доступа в Supabase.",
-            "error"
-          );
-        }
-      }
-
-      $("loginForm").addEventListener("submit", async (event) => {
-        event.preventDefault();
-
-        if (!db) {
-          showStatus(
-            "loginStatus",
-            "Supabase ещё не подключён. Проверь настройки в начале файла.",
-            "error"
-          );
-          return;
-        }
-
-        await login(
-          $("email").value.trim(),
-          $("password").value
-        );
-      });
-
-      $("logoutButton").addEventListener("click", logout);
-
-      $("refreshButton").addEventListener("click", loadAll);
-
-      $("categoryForm").addEventListener("submit", addCategory);
-
-      $("uploadForm").addEventListener("submit", uploadImages);
-
-      async function initialize() {
-        try {
-          if (!window.supabase) {
-            throw new Error(
-              "Не загрузилась библиотека Supabase. Проверь интернет-соединение и попробуй обновить страницу."
-            );
-          }
-
-          if (!checkConfig()) return;
-
-          db = window.supabase.createClient(
-            SUPABASE_URL,
-            SUPABASE_PUBLISHABLE_KEY
-          );
-
-          showStatus(
-            "loginStatus",
-            "Подключение готово. Введи email и пароль.",
-            "success"
-          );
-
-          const { data, error } = await db.auth.getSession();
-
-          if (error) throw error;
-
-          if (data.session && data.session.user) {
-            try {
-              await isAdministrator();
-
-              $("loginCard").classList.add("hidden");
-              $("adminPanel").classList.remove("hidden");
-
-              await loadAll();
-            } catch (error) {
-              showStatus(
-                "loginStatus",
-                "Проверка доступа не пройдена: " +
-                errorMessage(error),
-                "error"
-              );
-            }
-          }
-
-        } catch (error) {
-          showStatus(
-            "loginStatus",
-            "Ошибка запуска панели: " + errorMessage(error),
-            "error"
-          );
-        }
-      }
-
-      initialize();
-
-    })();
-  </script>
+    } catch (error) {
+      showStatus(
+        "loginStatus",
+        "Ошибка запуска панели: " + errorMessage(error),
+        "error"
+      );
+    }
+  }
+
+  initialize();
+
+})();
+</script>
 </body>
 </html>
