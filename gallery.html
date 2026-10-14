@@ -1,0 +1,2256 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Galerie | Olga Morlang</title>
+  <meta name="description" content="Entdecken Sie originale handgemalte Kunstwerke von Olga Morlang.">
+
+  <meta name="theme-color" content="#081522">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --navy: #081522;
+      --navy-light: #102337;
+      --navy-card: rgba(13, 31, 49, 0.94);
+      --gold: #d4b16b;
+      --gold-light: #f0d9a0;
+      --cream: #f5efe3;
+      --muted: #b9c2ca;
+      --border: rgba(212, 177, 107, 0.28);
+      --danger: #e59a8b;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--cream);
+      background:
+        linear-gradient(rgba(5, 15, 25, 0.88), rgba(5, 15, 25, 0.96)),
+        url("111.jpeg") center center / cover fixed;
+      font-family: "Montserrat", sans-serif;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    body.no-scroll {
+      overflow: hidden;
+    }
+
+    button,
+    input,
+    select {
+      font: inherit;
+    }
+
+    button,
+    a {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    img {
+      max-width: 100%;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: 15px;
+      min-height: 86px;
+      padding: 12px clamp(16px, 4vw, 55px);
+      background: rgba(5, 16, 27, 0.96);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(14px);
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      min-width: 0;
+    }
+
+    .menu-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 43px;
+      height: 43px;
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      color: var(--gold);
+      background: transparent;
+      font-size: 23px;
+      transition: background 0.2s;
+      flex-shrink: 0;
+    }
+
+    .menu-button:hover {
+      background: rgba(212, 177, 107, 0.12);
+    }
+
+    .logo-link {
+      display: flex;
+      align-items: center;
+      min-width: 0;
+    }
+
+    .logo {
+      display: block;
+      width: auto;
+      max-width: 185px;
+      max-height: 62px;
+      object-fit: contain;
+    }
+
+    .brand-text {
+      color: var(--gold-light);
+      font-family: "Cormorant Garamond", serif;
+      font-size: 27px;
+      line-height: 1.1;
+      letter-spacing: 1px;
+    }
+
+    .header-title {
+      justify-self: center;
+      color: var(--gold-light);
+      font-family: "Cormorant Garamond", serif;
+      font-size: clamp(24px, 3vw, 35px);
+      letter-spacing: 2px;
+      text-align: center;
+    }
+
+    .header-actions {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .language-select {
+      max-width: 120px;
+      padding: 9px 10px;
+      color: var(--cream);
+      background: var(--navy-light);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      outline: none;
+    }
+
+    .language-select option {
+      color: var(--cream);
+      background: var(--navy);
+    }
+
+    .cart-link {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 43px;
+      height: 43px;
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      color: var(--gold-light);
+      font-size: 20px;
+    }
+
+    .cart-count {
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 19px;
+      height: 19px;
+      padding: 0 5px;
+      border-radius: 50px;
+      background: var(--gold);
+      color: var(--navy);
+      font-size: 10px;
+      font-weight: 700;
+    }
+
+    .drawer-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      background: rgba(0, 0, 0, 0.65);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.25s, visibility 0.25s;
+    }
+
+    .drawer-overlay.open {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .drawer {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 201;
+      width: min(350px, 88vw);
+      height: 100%;
+      padding: 25px 23px 35px;
+      overflow-y: auto;
+      background: #091827;
+      border-right: 1px solid var(--border);
+      transform: translateX(-105%);
+      transition: transform 0.28s ease;
+    }
+
+    .drawer.open {
+      transform: translateX(0);
+    }
+
+    .drawer-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 25px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .drawer-brand {
+      color: var(--gold-light);
+      font-family: "Cormorant Garamond", serif;
+      font-size: 25px;
+    }
+
+    .drawer-close {
+      width: 39px;
+      height: 39px;
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      background: transparent;
+      color: var(--cream);
+      font-size: 22px;
+    }
+
+    .drawer a,
+    .drawer .drawer-category {
+      display: block;
+      width: 100%;
+      padding: 12px 9px;
+      border: 0;
+      border-bottom: 1px solid rgba(212, 177, 107, 0.12);
+      background: transparent;
+      color: var(--cream);
+      text-align: left;
+      transition: color 0.2s, padding-left 0.2s;
+    }
+
+    .drawer a:hover,
+    .drawer .drawer-category:hover {
+      padding-left: 15px;
+      color: var(--gold-light);
+    }
+
+    .drawer-heading {
+      margin: 22px 0 7px;
+      color: var(--gold);
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .drawer-socials {
+      display: flex;
+      gap: 15px;
+      margin-top: 25px;
+    }
+
+    .drawer-socials a {
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      text-align: center;
+    }
+
+    .page-intro {
+      position: relative;
+      max-width: 1050px;
+      margin: 0 auto;
+      padding: 75px 22px 45px;
+      text-align: center;
+    }
+
+    .eyebrow {
+      margin: 0 0 12px;
+      color: var(--gold);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+    }
+
+    h1,
+    h2,
+    h3 {
+      font-family: "Cormorant Garamond", serif;
+      font-weight: 500;
+    }
+
+    .page-intro h1 {
+      margin: 0;
+      color: var(--gold-light);
+      font-size: clamp(43px, 7vw, 70px);
+      line-height: 1.05;
+    }
+
+    .intro-text {
+      max-width: 650px;
+      margin: 20px auto 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.9;
+    }
+
+    .gold-line {
+      width: 75px;
+      height: 1px;
+      margin: 24px auto 0;
+      background: var(--gold);
+    }
+
+    .gallery-container {
+      width: min(1450px, 100%);
+      margin: 0 auto;
+      padding: 0 clamp(15px, 4vw, 50px) 85px;
+    }
+
+    .filters-panel {
+      margin: 0 auto 38px;
+      padding: 22px;
+      background: rgba(8, 21, 34, 0.88);
+      border: 1px solid var(--border);
+      border-radius: 7px;
+    }
+
+    .filters-top {
+      display: grid;
+      grid-template-columns: minmax(0, 1.5fr) minmax(190px, 0.8fr);
+      gap: 15px;
+    }
+
+    .field-label {
+      display: block;
+      margin-bottom: 7px;
+      color: var(--gold-light);
+      font-size: 11px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .search-input,
+    .sort-select {
+      width: 100%;
+      min-height: 45px;
+      padding: 11px 13px;
+      color: var(--cream);
+      background: #0d2032;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      outline: none;
+    }
+
+    .search-input:focus,
+    .sort-select:focus {
+      border-color: var(--gold);
+    }
+
+    .search-input::placeholder {
+      color: #8e9ba8;
+    }
+
+    .category-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+      margin-top: 21px;
+    }
+
+    .filter-button {
+      padding: 9px 15px;
+      border: 1px solid var(--border);
+      border-radius: 30px;
+      color: var(--muted);
+      background: transparent;
+      font-size: 12px;
+      transition: all 0.2s;
+    }
+
+    .filter-button:hover,
+    .filter-button.active {
+      border-color: var(--gold);
+      background: var(--gold);
+      color: #081522;
+    }
+
+    .results-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      margin: 0 0 20px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .results-count {
+      color: var(--gold-light);
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 28px;
+      align-items: stretch;
+    }
+
+    .art-card {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      overflow: hidden;
+      background: var(--navy-card);
+      border: 1px solid rgba(212, 177, 107, 0.2);
+      border-radius: 5px;
+      transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s;
+    }
+
+    .art-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(212, 177, 107, 0.7);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.23);
+    }
+
+    .art-image-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      aspect-ratio: 4 / 4.5;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at center, #24384a, #0b1927 80%);
+    }
+
+    .art-image {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      cursor: zoom-in;
+      transition: transform 0.45s;
+    }
+
+    .art-card:hover .art-image {
+      transform: scale(1.025);
+    }
+
+    .image-zoom {
+      position: absolute;
+      right: 12px;
+      bottom: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border: 1px solid rgba(212, 177, 107, 0.7);
+      border-radius: 50%;
+      color: var(--gold-light);
+      background: rgba(5, 15, 25, 0.8);
+      pointer-events: none;
+      font-size: 17px;
+    }
+
+    .art-details {
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+      padding: 19px 19px 20px;
+    }
+
+    .art-category {
+      margin: 0 0 7px;
+      color: var(--gold);
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .art-title {
+      margin: 0 0 10px;
+      color: var(--gold-light);
+      font-size: 27px;
+      line-height: 1.12;
+      overflow-wrap: anywhere;
+    }
+
+    .art-description {
+      margin: 0 0 15px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.8;
+      overflow-wrap: anywhere;
+    }
+
+    .art-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 13px;
+      margin-top: auto;
+      padding-top: 4px;
+      color: #c9d0d6;
+      font-size: 11px;
+    }
+
+    .art-price {
+      margin: 15px 0 16px;
+      color: var(--gold-light);
+      font-size: 21px;
+      font-weight: 500;
+    }
+
+    .card-buttons {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 9px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 43px;
+      padding: 10px 12px;
+      border: 1px solid var(--gold);
+      border-radius: 3px;
+      font-size: 11px;
+      font-weight: 600;
+      text-align: center;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .button-primary {
+      color: #081522;
+      background: var(--gold);
+    }
+
+    .button-primary:hover {
+      background: var(--gold-light);
+    }
+
+    .button-outline {
+      color: var(--gold-light);
+      background: transparent;
+    }
+
+    .button-outline:hover {
+      color: var(--navy);
+      background: var(--gold-light);
+    }
+
+    .status-area {
+      padding: 48px 20px;
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      background: rgba(8, 21, 34, 0.8);
+      text-align: center;
+    }
+
+    .status-area h2 {
+      margin: 0 0 10px;
+      color: var(--gold-light);
+      font-size: 30px;
+    }
+
+    .status-area p {
+      color: var(--muted);
+    }
+
+    .status-area[hidden] {
+      display: none;
+    }
+
+    .spinner {
+      width: 34px;
+      height: 34px;
+      margin: 0 auto 15px;
+      border: 3px solid rgba(212, 177, 107, 0.2);
+      border-top-color: var(--gold);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .retry-button {
+      margin-top: 12px;
+    }
+
+    .custom-cta {
+      margin-top: 65px;
+      padding: 38px 24px;
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      background:
+        linear-gradient(rgba(7, 20, 33, 0.86), rgba(7, 20, 33, 0.94)),
+        url("111.jpeg") center / cover;
+      text-align: center;
+    }
+
+    .custom-cta h2 {
+      margin: 0;
+      color: var(--gold-light);
+      font-size: clamp(28px, 4vw, 42px);
+    }
+
+    .custom-cta p {
+      max-width: 600px;
+      margin: 13px auto 22px;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    .site-footer {
+      padding: 27px 20px;
+      border-top: 1px solid var(--border);
+      background: rgba(5, 16, 27, 0.96);
+      color: var(--muted);
+      text-align: center;
+      font-size: 11px;
+    }
+
+    .footer-name {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--gold-light);
+      font-family: "Cormorant Garamond", serif;
+      font-size: 24px;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px 20px;
+      margin: 13px 0;
+    }
+
+    .footer-links a:hover {
+      color: var(--gold-light);
+    }
+
+    /* Image modal */
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      z-index: 500;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+      background: rgba(0, 0, 0, 0.94);
+    }
+
+    .modal.open {
+      display: flex;
+    }
+
+    .modal-content {
+      position: relative;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(220px, 300px);
+      gap: 20px;
+      width: min(1200px, 100%);
+      max-height: 92vh;
+      padding: 20px;
+      overflow: auto;
+      background: #081522;
+      border: 1px solid var(--border);
+      border-radius: 5px;
+    }
+
+    .modal-main {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-width: 0;
+    }
+
+    .modal-image-frame {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      min-height: 250px;
+      height: min(68vh, 750px);
+    }
+
+    .modal-main-image {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    }
+
+    .modal-caption {
+      margin: 12px 0 0;
+      color: var(--gold-light);
+      font-family: "Cormorant Garamond", serif;
+      font-size: 25px;
+      text-align: center;
+    }
+
+    .modal-side {
+      padding: 25px 5px 5px;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 9px;
+      right: 10px;
+      z-index: 3;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 42px;
+      height: 42px;
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      background: rgba(5, 16, 27, 0.9);
+      color: var(--cream);
+      font-size: 26px;
+    }
+
+    .modal-side h2 {
+      margin: 20px 0 8px;
+      color: var(--gold-light);
+      font-size: 33px;
+      line-height: 1.1;
+      overflow-wrap: anywhere;
+    }
+
+    .modal-side p {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.8;
+      overflow-wrap: anywhere;
+    }
+
+    .modal-side .modal-price {
+      color: var(--gold-light);
+      font-size: 23px;
+    }
+
+    .thumbnail-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+      margin: 18px 0;
+    }
+
+    .thumbnail-button {
+      width: 62px;
+      height: 62px;
+      padding: 2px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      background: transparent;
+    }
+
+    .thumbnail-button.active {
+      border-color: var(--gold-light);
+    }
+
+    .thumbnail-button img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .modal-side .button {
+      width: 100%;
+      margin-top: 8px;
+    }
+
+    @media (max-width: 1000px) {
+      .gallery-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 20px;
+      }
+
+      .modal-content {
+        grid-template-columns: minmax(0, 1fr) 240px;
+      }
+    }
+
+    @media (max-width: 650px) {
+      .topbar {
+        grid-template-columns: 1fr auto;
+        min-height: 72px;
+        gap: 8px;
+        padding: 10px 13px;
+      }
+
+      .header-left {
+        gap: 9px;
+      }
+
+      .menu-button,
+      .cart-link {
+        width: 38px;
+        height: 38px;
+      }
+
+      .logo {
+        max-width: 125px;
+        max-height: 48px;
+      }
+
+      .brand-text {
+        font-size: 21px;
+      }
+
+      .header-title {
+        display: none;
+      }
+
+      .header-actions {
+        gap: 8px;
+      }
+
+      .language-select {
+        width: 83px;
+        padding: 8px 4px;
+        font-size: 11px;
+      }
+
+      .page-intro {
+        padding: 55px 18px 35px;
+      }
+
+      .gallery-container {
+        padding: 0 13px 55px;
+      }
+
+      .filters-panel {
+        padding: 15px;
+      }
+
+      .filters-top {
+        grid-template-columns: 1fr;
+      }
+
+      .category-filters {
+        gap: 7px;
+      }
+
+      .filter-button {
+        padding: 8px 11px;
+        font-size: 11px;
+      }
+
+      .gallery-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+      }
+
+      .art-details {
+        padding: 12px 10px 13px;
+      }
+
+      .art-title {
+        font-size: 22px;
+      }
+
+      .art-category {
+        font-size: 9px;
+        letter-spacing: 1px;
+      }
+
+      .art-description {
+        font-size: 11px;
+      }
+
+      .art-meta {
+        gap: 5px 8px;
+        font-size: 10px;
+      }
+
+      .art-price {
+        margin: 11px 0;
+        font-size: 18px;
+      }
+
+      .card-buttons {
+        grid-template-columns: 1fr;
+        gap: 7px;
+      }
+
+      .button {
+        min-height: 40px;
+        padding: 9px 7px;
+        font-size: 10px;
+      }
+
+      .results-bar {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 5px;
+      }
+
+      .modal {
+        padding: 9px;
+      }
+
+      .modal-content {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        max-height: 94vh;
+        padding: 12px;
+      }
+
+      .modal-main {
+        flex: 0 0 auto;
+      }
+
+      .modal-image-frame {
+        height: min(48vh, 500px);
+        min-height: 180px;
+      }
+
+      .modal-side {
+        padding: 0 3px 10px;
+      }
+
+      .modal-side h2 {
+        margin-top: 5px;
+        font-size: 28px;
+      }
+
+      .modal-close {
+        position: fixed;
+        top: 13px;
+        right: 13px;
+      }
+
+      .thumbnail-button {
+        width: 52px;
+        height: 52px;
+      }
+
+      .custom-cta {
+        margin-top: 40px;
+        padding: 30px 17px;
+      }
+    }
+
+    @media (max-width: 370px) {
+      .gallery-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .art-image-wrap {
+        aspect-ratio: 4 / 4;
+      }
+
+      .card-buttons {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .logo {
+        max-width: 105px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="topbar">
+    <div class="header-left">
+      <button class="menu-button" id="menuOpen" type="button"
+              aria-label="Open menu" aria-controls="drawer" aria-expanded="false">
+        ☰
+      </button>
+
+      <a class="logo-link" href="index.html" aria-label="Olga Morlang – Startseite">
+        <img class="logo" src="logo.jpeg" alt="Olga Morlang"
+             onerror="this.style.display='none';document.getElementById('brandFallback').style.display='block'">
+        <span class="brand-text" id="brandFallback" style="display:none">Olga Morlang</span>
+      </a>
+    </div>
+
+    <div class="header-title" data-i18n="galleryTitle">Galerie</div>
+
+    <div class="header-actions">
+      <select class="language-select" id="languageSelect" aria-label="Language">
+        <option value="de">Deutsch</option>
+        <option value="en">English</option>
+        <option value="ru">Русский</option>
+        <option value="fr">Français</option>
+        <option value="nl">Nederlands</option>
+      </select>
+
+      <a class="cart-link" href="cart.html" aria-label="Shopping cart">
+        ♧
+        <span class="cart-count" id="cartCount">0</span>
+      </a>
+    </div>
+  </header>
+
+  <div class="drawer-overlay" id="drawerOverlay"></div>
+
+  <nav class="drawer" id="drawer" aria-label="Main navigation" aria-hidden="true">
+    <div class="drawer-top">
+      <div class="drawer-brand">Olga Morlang</div>
+      <button class="drawer-close" id="menuClose" type="button" aria-label="Close menu">×</button>
+    </div>
+
+    <a href="index.html" data-i18n="navHome">Startseite</a>
+    <a href="gallery.html" data-i18n="navGallery">Galerie aller Werke</a>
+
+    <div class="drawer-heading" data-i18n="navCategories">Kategorien</div>
+    <div id="drawerCategories">
+      <a href="gallery.html" data-i18n="allWorks">Alle Werke</a>
+    </div>
+
+    <div class="drawer-heading" data-i18n="navMore">Mehr entdecken</div>
+    <a href="about.html" data-i18n="navAbout">Über die Künstlerin</a>
+    <a href="custom.html" data-i18n="navCustom">Individuelles Gemälde anfragen</a>
+    <a href="cart.html" data-i18n="navCart">Warenkorb / Anfrage</a>
+
+    <div class="drawer-socials">
+      <a href="https://www.instagram.com/morlang643art/"
+         target="_blank" rel="noopener noreferrer">Instagram</a>
+      <a href="https://www.facebook.com/share/19STKtEPq9/"
+         target="_blank" rel="noopener noreferrer">Facebook</a>
+    </div>
+  </nav>
+
+  <main>
+    <section class="page-intro">
+      <p class="eyebrow" data-i18n="eyebrow">Originalkunst von Hand</p>
+      <h1 data-i18n="galleryHeading">Die Kunstgalerie</h1>
+      <p class="intro-text" data-i18n="introText">
+        Entdecken Sie originale Gemälde von Olga Morlang. Jedes Werk ist ein
+        einzigartiges, handgemaltes Original.
+      </p>
+      <div class="gold-line"></div>
+    </section>
+
+    <section class="gallery-container" aria-label="Artwork gallery">
+      <div class="filters-panel">
+        <div class="filters-top">
+          <div>
+            <label class="field-label" for="searchInput" data-i18n="searchLabel">
+              Kunstwerke suchen
+            </label>
+            <input class="search-input" id="searchInput" type="search"
+                   placeholder="Titel oder Beschreibung eingeben…"
+                   data-i18n-placeholder="searchPlaceholder">
+          </div>
+
+          <div>
+            <label class="field-label" for="sortSelect" data-i18n="sortLabel">
+              Sortieren nach
+            </label>
+            <select class="sort-select" id="sortSelect">
+              <option value="newest" data-i18n="sortNewest">Neueste zuerst</option>
+              <option value="oldest" data-i18n="sortOldest">Älteste zuerst</option>
+              <option value="priceAsc" data-i18n="sortPriceAsc">Preis: aufsteigend</option>
+              <option value="priceDesc" data-i18n="sortPriceDesc">Preis: absteigend</option>
+              <option value="title" data-i18n="sortTitle">Titel A–Z</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="category-filters" id="categoryFilters">
+          <button class="filter-button active" type="button" data-category="all"
+                  data-i18n="allWorks">Alle Werke</button>
+        </div>
+      </div>
+
+      <div class="results-bar">
+        <span class="results-count" id="resultsCount" aria-live="polite">
+          0 Kunstwerke
+        </span>
+        <span data-i18n="originalsOnly">Nur originale, handgemalte Kunstwerke</span>
+      </div>
+
+      <div class="status-area" id="loadingState">
+        <div class="spinner"></div>
+        <h2 data-i18n="loadingTitle">Galerie wird geladen</h2>
+        <p data-i18n="loadingText">Einen Moment bitte…</p>
+      </div>
+
+      <div class="status-area" id="errorState" hidden>
+        <h2 data-i18n="errorTitle">Galerie nicht verfügbar</h2>
+        <p id="errorMessage" data-i18n="errorText">
+          Die Kunstwerke konnten momentan nicht geladen werden.
+        </p>
+        <button class="button button-primary retry-button" id="retryButton"
+                type="button" data-i18n="retry">Erneut versuchen</button>
+      </div>
+
+      <div class="status-area" id="emptyState" hidden>
+        <h2 data-i18n="emptyTitle">Noch keine Kunstwerke sichtbar</h2>
+        <p data-i18n="emptyText">
+          Momentan sind keine veröffentlichten Gemälde vorhanden.
+        </p>
+      </div>
+
+      <div class="status-area" id="noResultsState" hidden>
+        <h2 data-i18n="noResultsTitle">Keine Treffer</h2>
+        <p data-i18n="noResultsText">
+          Versuchen Sie einen anderen Suchbegriff oder eine andere Kategorie.
+        </p>
+        <button class="button button-outline" id="resetFilters" type="button"
+                data-i18n="resetFilters">Filter zurücksetzen</button>
+      </div>
+
+      <div class="gallery-grid" id="galleryGrid"></div>
+
+      <section class="custom-cta">
+        <h2 data-i18n="customHeading">Sie suchen etwas ganz Besonderes?</h2>
+        <p data-i18n="customText">
+          Teilen Sie Ihre Idee mit Olga Morlang und fragen Sie ein individuelles
+          Gemälde an, das zu Ihnen und Ihrem Zuhause passt.
+        </p>
+        <a class="button button-primary" href="custom.html" data-i18n="customButton">
+          Individuelles Gemälde anfragen
+        </a>
+      </section>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <span class="footer-name">Olga Morlang</span>
+    <div data-i18n="footerText">Originale Kunstwerke, mit Liebe von Hand gemalt.</div>
+
+    <div class="footer-links">
+      <a href="index.html" data-i18n="navHome">Startseite</a>
+      <a href="gallery.html" data-i18n="navGallery">Galerie</a>
+      <a href="about.html" data-i18n="navAbout">Über die Künstlerin</a>
+      <a href="custom.html" data-i18n="navCustom">Individuelles Gemälde</a>
+    </div>
+
+    <div>© <span id="currentYear"></span> Olga Morlang</div>
+  </footer>
+
+  <!-- Artwork image modal -->
+  <div class="modal" id="artModal" role="dialog"
+       aria-modal="true" aria-labelledby="modalTitle">
+    <button class="modal-close" id="modalClose" type="button"
+            aria-label="Close">×</button>
+
+    <div class="modal-content">
+      <div class="modal-main">
+        <div class="modal-image-frame">
+          <img class="modal-main-image" id="modalMainImage" src="" alt="">
+        </div>
+        <div class="modal-caption" id="modalCaption"></div>
+      </div>
+
+      <div class="modal-side">
+        <p class="art-category" id="modalCategory"></p>
+        <h2 id="modalTitle"></h2>
+        <p id="modalDescription"></p>
+        <p id="modalDimensions"></p>
+        <p class="modal-price" id="modalPrice"></p>
+        <div class="thumbnail-list" id="thumbnailList"></div>
+        <button class="button button-primary" id="modalAddToCart" type="button"
+                data-i18n="addToCart">In den Warenkorb</button>
+        <button class="button button-outline" id="modalCloseSecondary" type="button"
+                data-i18n="close">Schließen</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <script>
+    "use strict";
+
+    /* Supabase configuration */
+    const SUPABASE_URL = "https://lcjtsyxeklltyoxovvzr.supabase.co";
+    const SUPABASE_KEY = "sb_publishable_Z5y2_ni_klXhEFU7I-OljA_JZcsyCVJ";
+
+    const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    const translations = {
+      de: {
+        galleryTitle: "Galerie",
+        navHome: "Startseite",
+        navGallery: "Galerie aller Werke",
+        navCategories: "Kategorien",
+        navMore: "Mehr entdecken",
+        navAbout: "Über die Künstlerin",
+        navCustom: "Individuelles Gemälde anfragen",
+        navCart: "Warenkorb / Anfrage",
+        allWorks: "Alle Werke",
+        eyebrow: "Originalkunst von Hand",
+        galleryHeading: "Die Kunstgalerie",
+        introText: "Entdecken Sie originale Gemälde von Olga Morlang. Jedes Werk ist ein einzigartiges, handgemaltes Original.",
+        searchLabel: "Kunstwerke suchen",
+        searchPlaceholder: "Titel oder Beschreibung eingeben…",
+        sortLabel: "Sortieren nach",
+        sortNewest: "Neueste zuerst",
+        sortOldest: "Älteste zuerst",
+        sortPriceAsc: "Preis: aufsteigend",
+        sortPriceDesc: "Preis: absteigend",
+        sortTitle: "Titel A–Z",
+        originalsOnly: "Nur originale, handgemalte Kunstwerke",
+        loadingTitle: "Galerie wird geladen",
+        loadingText: "Einen Moment bitte…",
+        errorTitle: "Galerie nicht verfügbar",
+        errorText: "Die Kunstwerke konnten momentan nicht geladen werden.",
+        retry: "Erneut versuchen",
+        emptyTitle: "Noch keine Kunstwerke sichtbar",
+        emptyText: "Momentan sind keine veröffentlichten Gemälde vorhanden.",
+        noResultsTitle: "Keine Treffer",
+        noResultsText: "Versuchen Sie einen anderen Suchbegriff oder eine andere Kategorie.",
+        resetFilters: "Filter zurücksetzen",
+        customHeading: "Sie suchen etwas ganz Besonderes?",
+        customText: "Teilen Sie Ihre Idee mit Olga Morlang und fragen Sie ein individuelles Gemälde an, das zu Ihnen und Ihrem Zuhause passt.",
+        customButton: "Individuelles Gemälde anfragen",
+        footerText: "Originale Kunstwerke, mit Liebe von Hand gemalt.",
+        addToCart: "In den Warenkorb",
+        viewArtwork: "Gemälde ansehen",
+        details: "Details ansehen",
+        close: "Schließen",
+        added: "Das Kunstwerk wurde zum Warenkorb hinzugefügt.",
+        alreadyAdded: "Dieses Kunstwerk befindet sich bereits im Warenkorb.",
+        cartError: "Der Warenkorb konnte nicht aktualisiert werden.",
+        noPrice: "Preis auf Anfrage",
+        dimensions: "Maße",
+        notSpecified: "Nicht angegeben",
+        artworkCount: "Kunstwerke",
+        categoryFallback: "Kunstwerk",
+        categoryError: "Die Kategorien konnten nicht geladen werden.",
+        imageAlt: "Gemälde",
+        menuOpen: "Menü öffnen",
+        menuClose: "Menü schließen"
+      },
+
+      en: {
+        galleryTitle: "Gallery",
+        navHome: "Home",
+        navGallery: "All artworks",
+        navCategories: "Categories",
+        navMore: "Discover more",
+        navAbout: "About the artist",
+        navCustom: "Request a custom painting",
+        navCart: "Cart / enquiry",
+        allWorks: "All artworks",
+        eyebrow: "Original art, painted by hand",
+        galleryHeading: "The Art Gallery",
+        introText: "Discover original paintings by Olga Morlang. Every work is a unique, hand-painted original.",
+        searchLabel: "Search artworks",
+        searchPlaceholder: "Enter a title or description…",
+        sortLabel: "Sort by",
+        sortNewest: "Newest first",
+        sortOldest: "Oldest first",
+        sortPriceAsc: "Price: low to high",
+        sortPriceDesc: "Price: high to low",
+        sortTitle: "Title A–Z",
+        originalsOnly: "Original, hand-painted artworks only",
+        loadingTitle: "Loading gallery",
+        loadingText: "Please wait…",
+        errorTitle: "Gallery unavailable",
+        errorText: "The artworks could not be loaded right now.",
+        retry: "Try again",
+        emptyTitle: "No artworks available yet",
+        emptyText: "There are currently no published paintings.",
+        noResultsTitle: "No results",
+        noResultsText: "Try a different search term or category.",
+        resetFilters: "Reset filters",
+        customHeading: "Looking for something special?",
+        customText: "Share your idea with Olga Morlang and request a custom painting created for you and your home.",
+        customButton: "Request a custom painting",
+        footerText: "Original artworks, lovingly painted by hand.",
+        addToCart: "Add to cart",
+        viewArtwork: "View painting",
+        details: "View details",
+        close: "Close",
+        added: "The artwork has been added to your cart.",
+        alreadyAdded: "This artwork is already in your cart.",
+        cartError: "The cart could not be updated.",
+        noPrice: "Price on request",
+        dimensions: "Dimensions",
+        notSpecified: "Not specified",
+        artworkCount: "artworks",
+        categoryFallback: "Artwork",
+        categoryError: "Categories could not be loaded.",
+        imageAlt: "Painting",
+        menuOpen: "Open menu",
+        menuClose: "Close menu"
+      },
+
+      ru: {
+        galleryTitle: "Галерея",
+        navHome: "Главная",
+        navGallery: "Все картины",
+        navCategories: "Категории",
+        navMore: "Другие разделы",
+        navAbout: "Об художнице",
+        navCustom: "Заказать картину",
+        navCart: "Корзина / заявка",
+        allWorks: "Все картины",
+        eyebrow: "Оригинальная живопись ручной работы",
+        galleryHeading: "Галерея картин",
+        introText: "Откройте для себя оригинальные картины Ольги Морланг. Каждая работа уникальна и написана вручную.",
+        searchLabel: "Поиск картин",
+        searchPlaceholder: "Введите название или описание…",
+        sortLabel: "Сортировка",
+        sortNewest: "Сначала новые",
+        sortOldest: "Сначала старые",
+        sortPriceAsc: "Цена: сначала дешевле",
+        sortPriceDesc: "Цена: сначала дороже",
+        sortTitle: "Название А–Я",
+        originalsOnly: "Только оригинальные картины ручной работы",
+        loadingTitle: "Загружаем галерею",
+        loadingText: "Пожалуйста, подождите…",
+        errorTitle: "Галерея недоступна",
+        errorText: "Сейчас не удалось загрузить картины.",
+        retry: "Попробовать снова",
+        emptyTitle: "Пока нет опубликованных картин",
+        emptyText: "В данный момент опубликованных картин нет.",
+        noResultsTitle: "Ничего не найдено",
+        noResultsText: "Попробуйте изменить поисковый запрос или категорию.",
+        resetFilters: "Сбросить фильтры",
+        customHeading: "Хотите что-то особенное?",
+        customText: "Расскажите Ольге Морланг о своей идее и закажите индивидуальную картину для себя и своего дома.",
+        customButton: "Заказать индивидуальную картину",
+        footerText: "Оригинальные картины, написанные вручную с любовью.",
+        addToCart: "Добавить в корзину",
+        viewArtwork: "Посмотреть картину",
+        details: "Подробнее",
+        close: "Закрыть",
+        added: "Картина добавлена в корзину.",
+        alreadyAdded: "Эта картина уже находится в корзине.",
+        cartError: "Не удалось обновить корзину.",
+        noPrice: "Цена по запросу",
+        dimensions: "Размер",
+        notSpecified: "Не указан",
+        artworkCount: "картин",
+        categoryFallback: "Картина",
+        categoryError: "Не удалось загрузить категории.",
+        imageAlt: "Картина",
+        menuOpen: "Открыть меню",
+        menuClose: "Закрыть меню"
+      },
+
+      fr: {
+        galleryTitle: "Galerie",
+        navHome: "Accueil",
+        navGallery: "Toutes les œuvres",
+        navCategories: "Catégories",
+        navMore: "Découvrir davantage",
+        navAbout: "À propos de l’artiste",
+        navCustom: "Demander un tableau personnalisé",
+        navCart: "Panier / demande",
+        allWorks: "Toutes les œuvres",
+        eyebrow: "Art original peint à la main",
+        galleryHeading: "La galerie d’art",
+        introText: "Découvrez les peintures originales d’Olga Morlang. Chaque œuvre est unique et peinte à la main.",
+        searchLabel: "Rechercher des œuvres",
+        searchPlaceholder: "Saisissez un titre ou une description…",
+        sortLabel: "Trier par",
+        sortNewest: "Les plus récentes",
+        sortOldest: "Les plus anciennes",
+        sortPriceAsc: "Prix croissant",
+        sortPriceDesc: "Prix décroissant",
+        sortTitle: "Titre A–Z",
+        originalsOnly: "Uniquement des œuvres originales peintes à la main",
+        loadingTitle: "Chargement de la galerie",
+        loadingText: "Veuillez patienter…",
+        errorTitle: "Galerie indisponible",
+        errorText: "Les œuvres ne peuvent pas être chargées pour le moment.",
+        retry: "Réessayer",
+        emptyTitle: "Aucune œuvre publiée",
+        emptyText: "Aucune peinture n’est actuellement publiée.",
+        noResultsTitle: "Aucun résultat",
+        noResultsText: "Essayez un autre terme de recherche ou une autre catégorie.",
+        resetFilters: "Réinitialiser les filtres",
+        customHeading: "Vous recherchez quelque chose de spécial ?",
+        customText: "Partagez votre idée avec Olga Morlang et demandez un tableau personnalisé pour vous et votre maison.",
+        customButton: "Demander un tableau personnalisé",
+        footerText: "Des œuvres originales peintes à la main avec amour.",
+        addToCart: "Ajouter au panier",
+        viewArtwork: "Voir le tableau",
+        details: "Voir les détails",
+        close: "Fermer",
+        added: "L’œuvre a été ajoutée au panier.",
+        alreadyAdded: "Cette œuvre est déjà dans le panier.",
+        cartError: "Le panier n’a pas pu être mis à jour.",
+        noPrice: "Prix sur demande",
+        dimensions: "Dimensions",
+        notSpecified: "Non indiqué",
+        artworkCount: "œuvres",
+        categoryFallback: "Œuvre",
+        categoryError: "Impossible de charger les catégories.",
+        imageAlt: "Peinture",
+        menuOpen: "Ouvrir le menu",
+        menuClose: "Fermer le menu"
+      },
+
+      nl: {
+        galleryTitle: "Galerij",
+        navHome: "Home",
+        navGallery: "Alle kunstwerken",
+        navCategories: "Categorieën",
+        navMore: "Meer ontdekken",
+        navAbout: "Over de kunstenares",
+        navCustom: "Een schilderij op maat aanvragen",
+        navCart: "Winkelwagen / aanvraag",
+        allWorks: "Alle kunstwerken",
+        eyebrow: "Originele handgeschilderde kunst",
+        galleryHeading: "De kunstgalerij",
+        introText: "Ontdek originele schilderijen van Olga Morlang. Elk werk is uniek en met de hand geschilderd.",
+        searchLabel: "Kunstwerken zoeken",
+        searchPlaceholder: "Voer een titel of beschrijving in…",
+        sortLabel: "Sorteren op",
+        sortNewest: "Nieuwste eerst",
+        sortOldest: "Oudste eerst",
+        sortPriceAsc: "Prijs: laag naar hoog",
+        sortPriceDesc: "Prijs: hoog naar laag",
+        sortTitle: "Titel A–Z",
+        originalsOnly: "Alleen originele handgeschilderde kunstwerken",
+        loadingTitle: "Galerij wordt geladen",
+        loadingText: "Even geduld…",
+        errorTitle: "Galerij niet beschikbaar",
+        errorText: "De kunstwerken konden momenteel niet worden geladen.",
+        retry: "Opnieuw proberen",
+        emptyTitle: "Nog geen kunstwerken beschikbaar",
+        emptyText: "Er zijn momenteel geen gepubliceerde schilderijen.",
+        noResultsTitle: "Geen resultaten",
+        noResultsText: "Probeer een andere zoekterm of categorie.",
+        resetFilters: "Filters wissen",
+        customHeading: "Op zoek naar iets bijzonders?",
+        customText: "Deel uw idee met Olga Morlang en vraag een persoonlijk schilderij aan voor uzelf en uw woning.",
+        customButton: "Een schilderij op maat aanvragen",
+        footerText: "Originele kunstwerken, met liefde met de hand geschilderd.",
+        addToCart: "In winkelwagen",
+        viewArtwork: "Schilderij bekijken",
+        details: "Details bekijken",
+        close: "Sluiten",
+        added: "Het kunstwerk is aan de winkelwagen toegevoegd.",
+        alreadyAdded: "Dit kunstwerk staat al in de winkelwagen.",
+        cartError: "De winkelwagen kon niet worden bijgewerkt.",
+        noPrice: "Prijs op aanvraag",
+        dimensions: "Afmetingen",
+        notSpecified: "Niet opgegeven",
+        artworkCount: "kunstwerken",
+        categoryFallback: "Kunstwerk",
+        categoryError: "De categorieën konden niet worden geladen.",
+        imageAlt: "Schilderij",
+        menuOpen: "Menu openen",
+        menuClose: "Menu sluiten"
+      }
+    };
+
+    let currentLanguage = localStorage.getItem("olgaLanguage") || "de";
+    let artworks = [];
+    let categories = [];
+    let activeCategory = "all";
+    let activeArtwork = null;
+    let activeModalImages = [];
+    let activeModalImageIndex = 0;
+
+    const elements = {
+      languageSelect: document.getElementById("languageSelect"),
+      menuOpen: document.getElementById("menuOpen"),
+      menuClose: document.getElementById("menuClose"),
+      drawer: document.getElementById("drawer"),
+      drawerOverlay: document.getElementById("drawerOverlay"),
+      drawerCategories: document.getElementById("drawerCategories"),
+      categoryFilters: document.getElementById("categoryFilters"),
+      searchInput: document.getElementById("searchInput"),
+      sortSelect: document.getElementById("sortSelect"),
+      galleryGrid: document.getElementById("galleryGrid"),
+      loadingState: document.getElementById("loadingState"),
+      errorState: document.getElementById("errorState"),
+      errorMessage: document.getElementById("errorMessage"),
+      emptyState: document.getElementById("emptyState"),
+      noResultsState: document.getElementById("noResultsState"),
+      resultsCount: document.getElementById("resultsCount"),
+      retryButton: document.getElementById("retryButton"),
+      resetFilters: document.getElementById("resetFilters"),
+      cartCount: document.getElementById("cartCount"),
+      artModal: document.getElementById("artModal"),
+      modalClose: document.getElementById("modalClose"),
+      modalCloseSecondary: document.getElementById("modalCloseSecondary"),
+      modalMainImage: document.getElementById("modalMainImage"),
+      modalCaption: document.getElementById("modalCaption"),
+      modalCategory: document.getElementById("modalCategory"),
+      modalTitle: document.getElementById("modalTitle"),
+      modalDescription: document.getElementById("modalDescription"),
+      modalDimensions: document.getElementById("modalDimensions"),
+      modalPrice: document.getElementById("modalPrice"),
+      thumbnailList: document.getElementById("thumbnailList"),
+      modalAddToCart: document.getElementById("modalAddToCart")
+    };
+
+    function t(key) {
+      return translations[currentLanguage]?.[key]
+        || translations.de[key]
+        || key;
+    }
+
+    function escapeHtml(value) {
+      return String(value ?? "").replace(/[&<>"']/g, character => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+      })[character]);
+    }
+
+    function safeUrl(value) {
+      if (typeof value !== "string") return "";
+
+      const url = value.trim();
+
+      if (
+        url.startsWith("https://") ||
+        url.startsWith("http://") ||
+        url.startsWith("/") ||
+        /^[a-zA-Z0-9._/-]+$/.test(url)
+      ) {
+        return url;
+      }
+
+      return "";
+    }
+
+    function getCategoryId(artwork) {
+      return artwork.category_id == null
+        ? ""
+        : String(artwork.category_id);
+    }
+
+    function getCategoryName(categoryId) {
+      const category = categories.find(
+        item => String(item.id) === String(categoryId)
+      );
+
+      if (!category) return "";
+
+      return category.name || category.title || "";
+    }
+
+    function getArtworkTitle(artwork) {
+      return artwork.title || t("categoryFallback");
+    }
+
+    function getArtworkDescription(artwork) {
+      return artwork.description || "";
+    }
+
+    function getArtworkPrice(artwork) {
+      if (
+        artwork.price === null ||
+        artwork.price === undefined ||
+        artwork.price === ""
+      ) {
+        return null;
+      }
+
+      const price = Number(artwork.price);
+      return Number.isFinite(price) ? price : null;
+    }
+
+    function formatPrice(artwork) {
+      const price = getArtworkPrice(artwork);
+
+      if (price === null) return t("noPrice");
+
+      try {
+        return new Intl.NumberFormat(
+          currentLanguage === "en" ? "en-GB" : currentLanguage,
+          {
+            style: "currency",
+            currency: "EUR"
+          }
+        ).format(price);
+      } catch {
+        return "€" + price.toFixed(2);
+      }
+    }
+
+    function formatDimensions(artwork) {
+      const width = Number(artwork.width_cm);
+      const height = Number(artwork.height_cm);
+
+      if (width > 0 && height > 0) {
+        return `${width} × ${height} cm`;
+      }
+
+      return t("notSpecified");
+    }
+
+    function getExtraImages(artwork) {
+      const images = [];
+      const raw = artwork.extra_images;
+
+      if (Array.isArray(raw)) {
+        raw.forEach(item => {
+          if (typeof item === "string") {
+            images.push(item);
+          } else if (item && typeof item === "object") {
+            if (item.url) images.push(item.url);
+            else if (item.image_url) images.push(item.image_url);
+          }
+        });
+      } else if (typeof raw === "string" && raw.trim()) {
+        try {
+          const parsed = JSON.parse(raw);
+
+          if (Array.isArray(parsed)) {
+            parsed.forEach(item => {
+              if (typeof item === "string") {
+                images.push(item);
+              } else if (item && typeof item === "object") {
+                if (item.url) images.push(item.url);
+                else if (item.image_url) images.push(item.image_url);
+              }
+            });
+          }
+        } catch {
+          // Invalid JSON is ignored.
+        }
+      }
+
+      return [...new Set(images.map(safeUrl).filter(Boolean))];
+    }
+
+    function getArtworkImages(artwork) {
+      const primary = safeUrl(artwork.image_url);
+      const extras = getExtraImages(artwork);
+
+      return [...new Set([primary, ...extras].filter(Boolean))];
+    }
+
+    function readCart() {
+      try {
+        const stored = JSON.parse(localStorage.getItem("olgaCart") || "[]");
+        return Array.isArray(stored) ? stored : [];
+      } catch {
+        return [];
+      }
+    }
+
+    function updateCartCount() {
+      const cart = readCart();
+      elements.cartCount.textContent = cart.reduce((total, item) => {
+        const quantity = Number(item.quantity || 1);
+        return total + (Number.isFinite(quantity) && quantity > 0 ? quantity : 1);
+      }, 0);
+    }
+
+    function addToCart(artwork) {
+      try {
+        const cart = readCart();
+        const artworkId = String(artwork.id);
+
+        const exists = cart.some(item => String(item.id) === artworkId);
+
+        if (exists) {
+          alert(t("alreadyAdded"));
+          return;
+        }
+
+        cart.push({
+          id: artwork.id,
+          title: artwork.title || "",
+          price: getArtworkPrice(artwork),
+          image_url: artwork.image_url || "",
+          quantity: 1
+        });
+
+        localStorage.setItem("olgaCart", JSON.stringify(cart));
+        updateCartCount();
+        alert(t("added"));
+      } catch (error) {
+        console.error("Cart error:", error);
+        alert(t("cartError"));
+      }
+    }
+
+    function setDrawer(open) {
+      elements.drawer.classList.toggle("open", open);
+      elements.drawerOverlay.classList.toggle("open", open);
+      document.body.classList.toggle("no-scroll", open);
+
+      elements.menuOpen.setAttribute("aria-expanded", String(open));
+      elements.drawer.setAttribute("aria-hidden", String(!open));
+    }
+
+    function applyTranslations() {
+      document.documentElement.lang = currentLanguage;
+      document.title = {
+        de: "Galerie | Olga Morlang",
+        en: "Gallery | Olga Morlang",
+        ru: "Галерея | Ольга Морланг",
+        fr: "Galerie | Olga Morlang",
+        nl: "Galerij | Olga Morlang"
+      }[currentLanguage] || "Galerie | Olga Morlang";
+
+      document.querySelectorAll("[data-i18n]").forEach(element => {
+        const key = element.getAttribute("data-i18n");
+        const value = t(key);
+
+        if (value) element.textContent = value;
+      });
+
+      document.querySelectorAll("[data-i18n-placeholder]").forEach(element => {
+        const key = element.getAttribute("data-i18n-placeholder");
+        element.placeholder = t(key);
+      });
+
+      elements.menuOpen.setAttribute("aria-label", t("menuOpen"));
+      elements.menuClose.setAttribute("aria-label", t("menuClose"));
+
+      renderCategoryFilters();
+      renderDrawerCategories();
+      renderGallery();
+      updateCartCount();
+
+      if (activeArtwork && elements.artModal.classList.contains("open")) {
+        updateModalArtwork(activeArtwork);
+      }
+    }
+
+    function switchLanguage(language) {
+      if (!translations[language]) language = "de";
+
+      currentLanguage = language;
+
+      try {
+        localStorage.setItem("olgaLanguage", language);
+      } catch {
+        // Language still works for the current page session.
+      }
+
+      elements.languageSelect.value = language;
+      applyTranslations();
+    }
+
+    function renderCategoryFilters() {
+      const buttons = [
+        `<button class="filter-button ${activeCategory === "all" ? "active" : ""}"
+          type="button" data-category="all">${escapeHtml(t("allWorks"))}</button>`
+      ];
+
+      categories.forEach(category => {
+        const id = String(category.id);
+        const name = category.name || category.title || "";
+
+        buttons.push(`
+          <button class="filter-button ${activeCategory === id ? "active" : ""}"
+            type="button" data-category="${escapeHtml(id)}">
+            ${escapeHtml(name)}
+          </button>
+        `);
+      });
+
+      elements.categoryFilters.innerHTML = buttons.join("");
+    }
+
+    function renderDrawerCategories() {
+      const links = [
+        `<a href="gallery.html" data-i18n="allWorks">${escapeHtml(t("allWorks"))}</a>`
+      ];
+
+      categories.forEach(category => {
+        const id = String(category.id);
+        const name = category.name || category.title || "";
+
+        links.push(`
+          <a href="gallery.html?category=${encodeURIComponent(id)}"
+             data-category-link="${escapeHtml(id)}">
+            ${escapeHtml(name)}
+          </a>
+        `);
+      });
+
+      elements.drawerCategories.innerHTML = links.join("");
+    }
+
+    function getFilteredArtworks() {
+      const query = elements.searchInput.value.trim().toLocaleLowerCase();
+      const sort = elements.sortSelect.value;
+
+      let result = artworks.filter(artwork => {
+        const categoryMatches =
+          activeCategory === "all" ||
+          getCategoryId(artwork) === activeCategory;
+
+        const searchableText = [
+          artwork.title,
+          artwork.description,
+          getCategoryName(artwork.category_id)
+        ].filter(Boolean).join(" ").toLocaleLowerCase();
+
+        const searchMatches = !query || searchableText.includes(query);
+
+        return categoryMatches && searchMatches;
+      });
+
+      result = [...result];
+
+      if (sort === "newest") {
+        result.sort((a, b) =>
+          new Date(b.created_at || 0) - new Date(a.created_at || 0)
+        );
+      } else if (sort === "oldest") {
+        result.sort((a, b) =>
+          new Date(a.created_at || 0) - new Date(b.created_at || 0)
+        );
+      } else if (sort === "priceAsc") {
+        result.sort((a, b) =>
+          (getArtworkPrice(a) ?? Infinity) -
+          (getArtworkPrice(b) ?? Infinity)
+        );
+      } else if (sort === "priceDesc") {
+        result.sort((a, b) =>
+          (getArtworkPrice(b) ?? -Infinity) -
+          (getArtworkPrice(a) ?? -Infinity)
+        );
+      } else if (sort === "title") {
+        result.sort((a, b) =>
+          getArtworkTitle(a).localeCompare(
+            getArtworkTitle(b),
+            currentLanguage
+          )
+        );
+      }
+
+      return result;
+    }
+
+    function showCardImageFallback(image, artwork) {
+      image.onerror = null;
+      image.alt = t("imageAlt");
+
+      const wrap = image.closest(".art-image-wrap");
+
+      if (wrap) {
+        wrap.innerHTML = `
+          <div style="padding:20px;color:#b9c2ca;text-align:center">
+            ${escapeHtml(getArtworkTitle(artwork))}
+          </div>
+        `;
+      }
+    }
+
+    function renderGallery() {
+      const filtered = getFilteredArtworks();
+
+      elements.galleryGrid.innerHTML = "";
+
+      elements.resultsCount.textContent =
+        `${filtered.length} ${t("artworkCount")}`;
+
+      elements.loadingState.hidden = true;
+      elements.errorState.hidden = true;
+      elements.emptyState.hidden = artworks.length !== 0;
+      elements.noResultsState.hidden =
+        artworks.length === 0 || filtered.length !== 0;
+
+      if (artworks.length === 0) return;
+
+      filtered.forEach(artwork => {
+        const category = getCategoryName(artwork.category_id);
+        const title = getArtworkTitle(artwork);
+        const description = getArtworkDescription(artwork);
+        const imageUrl = safeUrl(artwork.image_url);
+        const dimensions = formatDimensions(artwork);
+
+        const card = document.createElement("article");
+        card.className = "art-card";
+
+        const imageWrap = document.createElement("div");
+        imageWrap.className = "art-image-wrap";
+
+        if (imageUrl) {
+          const image = document.createElement("img");
+          image.className = "art-image";
+          image.src = imageUrl;
+          image.alt = title;
+          image.loading = "lazy";
+          image.decoding = "async";
+          image.addEventListener("error", () => showCardImageFallback(image, artwork));
+          image.addEventListener("click", () => openModal(artwork));
+
+          imageWrap.appendChild(image);
+
+          const zoom = document.createElement("span");
+          zoom.className = "image-zoom";
+          zoom.setAttribute("aria-hidden", "true");
+          zoom.textContent = "⌕";
+          imageWrap.appendChild(zoom);
+        } else {
+          imageWrap.innerHTML = `
+            <div style="padding:20px;color:#b9c2ca;text-align:center">
+              ${escapeHtml(title)}
+            </div>
+          `;
+        }
+
+        const details = document.createElement("div");
+        details.className = "art-details";
+
+        const categoryElement = document.createElement("p");
+        categoryElement.className = "art-category";
+        categoryElement.textContent = category || t("categoryFallback");
+
+        const titleElement = document.createElement("h2");
+        titleElement.className = "art-title";
+        titleElement.textContent = title;
+
+        const descriptionElement = document.createElement("p");
+        descriptionElement.className = "art-description";
+        descriptionElement.textContent = description.length > 145
+          ? description.slice(0, 142).trimEnd() + "…"
+          : description;
+
+        const meta = document.createElement("div");
+        meta.className = "art-meta";
+
+        const dimensionsElement = document.createElement("span");
+        dimensionsElement.textContent =
+          `${t("dimensions")}: ${dimensions}`;
+
+        meta.appendChild(dimensionsElement);
+
+        const price = document.createElement("div");
+        price.className = "art-price";
+        price.textContent = formatPrice(artwork);
+
+        const buttons = document.createElement("div");
+        buttons.className = "card-buttons";
+
+        const detailsButton = document.createElement("button");
+        detailsButton.type = "button";
+        detailsButton.className = "button button-outline";
+        detailsButton.textContent = t("details");
+        detailsButton.addEventListener("click", () => openModal(artwork));
+
+        const addButton = document.createElement("button");
+        addButton.type = "button";
+        addButton.className = "button button-primary";
+        addButton.textContent = t("addToCart");
+        addButton.addEventListener("click", () => addToCart(artwork));
+
+        buttons.append(detailsButton, addButton);
+        details.append(
+          categoryElement,
+          titleElement,
+          descriptionElement,
+          meta,
+          price,
+          buttons
+        );
+
+        card.append(imageWrap, details);
+        elements.galleryGrid.appendChild(card);
+      });
+    }
+
+    function openModal(artwork) {
+      activeArtwork = artwork;
+      activeModalImages = getArtworkImages(artwork);
+      activeModalImageIndex = 0;
+
+      updateModalArtwork(artwork);
+
+      elements.artModal.classList.add("open");
+      document.body.classList.add("no-scroll");
+      elements.modalClose.focus();
+    }
+
+    function updateModalArtwork(artwork) {
+      const images = getArtworkImages(artwork);
+
+      if (
+        JSON.stringify(images) !== JSON.stringify(activeModalImages)
+      ) {
+        activeModalImages = images;
+        activeModalImageIndex = 0;
+      }
+
+      const title = getArtworkTitle(artwork);
+
+      elements.modalTitle.textContent = title;
+      elements.modalCaption.textContent = title;
+      elements.modalCategory.textContent =
+        getCategoryName(artwork.category_id) || t("categoryFallback");
+      elements.modalDescription.textContent =
+        getArtworkDescription(artwork);
+      elements.modalDimensions.textContent =
+        `${t("dimensions")}: ${formatDimensions(artwork)}`;
+      elements.modalPrice.textContent = formatPrice(artwork);
+
+      renderModalImages();
+
+      elements.modalAddToCart.onclick = () => addToCart(artwork);
+    }
+
+    function renderModalImages() {
+      elements.thumbnailList.innerHTML = "";
+
+      if (activeModalImages.length === 0) {
+        elements.modalMainImage.removeAttribute("src");
+        elements.modalMainImage.alt = t("imageAlt");
+        return;
+      }
+
+      if (activeModalImageIndex >= activeModalImages.length) {
+        activeModalImageIndex = 0;
+      }
+
+      elements.modalMainImage.src =
+        activeModalImages[activeModalImageIndex];
+      elements.modalMainImage.alt =
+        getArtworkTitle(activeArtwork);
+
+      activeModalImages.forEach((url, index) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className =
+          "thumbnail-button" +
+          (index === activeModalImageIndex ? " active" : "");
+        button.setAttribute(
+          "aria-label",
+          `${t("viewArtwork")} ${index + 1}`
+        );
+
+        const image = document.createElement("img");
+        image.src = url;
+        image.alt = "";
+        image.loading = "lazy";
+
+        button.appendChild(image);
+
+        button.addEventListener("click", () => {
+          activeModalImageIndex = index;
+          renderModalImages();
+        });
+
+        elements.thumbnailList.appendChild(button);
+      });
+    }
+
+    function closeModal() {
+      elements.artModal.classList.remove("open");
+      document.body.classList.remove("no-scroll");
+      activeArtwork = null;
+    }
+
+    async function loadCategories() {
+      const { data, error } = await db
+        .from("categories")
+        .select("*")
+        .order("name", { ascending: true });
+
+      if (error) {
+        console.error("Category loading error:", error);
+        categories = [];
+        return;
+      }
+
+      categories = Array.isArray(data) ? data : [];
+    }
+
+    async function loadArtworks() {
+      elements.loadingState.hidden = false;
+      elements.errorState.hidden = true;
+      elements.emptyState.hidden = true;
+      elements.noResultsState.hidden = true;
+      elements.galleryGrid.innerHTML = "";
+
+      try {
+        await loadCategories();
+
+        const { data, error } = await db
+          .from("artworks")
+          .select("*")
+          .eq("published", true)
+          .order("created_at", { ascending: false });
+
+        if (error) throw error;
+
+        artworks = Array.isArray(data) ? data : [];
+
+        renderCategoryFilters();
+        renderDrawerCategories();
+
+        const params = new URLSearchParams(window.location.search);
+        const requestedCategory = params.get("category");
+
+        if (
+          requestedCategory &&
+          categories.some(category => String(category.id) === requestedCategory)
+        ) {
+          activeCategory = requestedCategory;
+        }
+
+        applyActiveCategoryButton();
+        elements.loadingState.hidden = true;
+
+        if (artworks.length === 0) {
+          elements.emptyState.hidden = false;
+        } else {
+          renderGallery();
+        }
+      } catch (error) {
+        console.error("Gallery loading error:", error);
+
+        artworks = [];
+        elements.loadingState.hidden = true;
+        elements.errorState.hidden = false;
+        elements.errorMessage.textContent = t("errorText");
+      }
+    }
+
+    function applyActiveCategoryButton() {
+      elements.categoryFilters
+        .querySelectorAll("[data-category]")
+        .forEach(button => {
+          button.classList.toggle(
+            "active",
+            button.dataset.category === activeCategory
+          );
+        });
+    }
+
+    elements.menuOpen.addEventListener("click", () => setDrawer(true));
+    elements.menuClose.addEventListener("click", () => setDrawer(false));
+    elements.drawerOverlay.addEventListener("click", () => setDrawer(false));
+
+    elements.drawer.addEventListener("click", event => {
+      const link = event.target.closest("a");
+      if (link) setDrawer(false);
+    });
+
+    document.addEventListener("keydown", event => {
+      if (event.key === "Escape") {
+        if (elements.artModal.classList.contains("open")) {
+          closeModal();
+        } else {
+          setDrawer(false);
+        }
+      }
+
+      if (
+        elements.artModal.classList.contains("open") &&
+        (event.key === "ArrowRight" || event.key === "ArrowLeft") &&
+        activeModalImages.length > 1
+      ) {
+        const direction = event.key === "ArrowRight" ? 1 : -1;
+
+        activeModalImageIndex =
+          (activeModalImageIndex + direction + activeModalImages.length) %
+          activeModalImages.length;
+
+        renderModalImages();
+      }
+    });
+
+    elements.languageSelect.addEventListener("change", event => {
+      switchLanguage(event.target.value);
+    });
+
+    elements.categoryFilters.addEventListener("click", event => {
+      const button = event.target.closest("[data-category]");
+      if (!button) return;
+
+      activeCategory = button.dataset.category;
+      applyActiveCategoryButton();
+      renderGallery();
+    });
+
+    elements.searchInput.addEventListener("input", renderGallery);
+    elements.sortSelect.addEventListener("change", renderGallery);
+
+    elements.retryButton.addEventListener("click", loadArtworks);
+
+    elements.resetFilters.addEventListener("click", () => {
+      activeCategory = "all";
+      elements.searchInput.value = "";
+      elements.sortSelect.value = "newest";
+      applyActiveCategoryButton();
+      renderGallery();
+    });
+
+    elements.modalClose.addEventListener("click", closeModal);
+    elements.modalCloseSecondary.addEventListener("click", closeModal);
+
+    elements.artModal.addEventListener("click", event => {
+      if (event.target === elements.artModal) closeModal();
+    });
+
+    document.getElementById("currentYear").textContent =
+      new Date().getFullYear();
+
+    elements.languageSelect.value = currentLanguage;
+    updateCartCount();
+    applyTranslations();
+    loadArtworks();
+  </script>
+</body>
+</html>
