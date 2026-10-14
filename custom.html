@@ -1,358 +1,1560 @@
-<!DOCTYPE html><html lang="de">
+<!DOCTYPE html>
+<html lang="de">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Individuelles Gemälde | Olga Morlang</title>
-<style>
-:root{--bg:#071426;--panel:#10243b;--gold:#d7b46a;--text:#f5f1e8;--muted:#bdc8d6;--border:rgba(215,180,106,.35)}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);font-family:Georgia,"Times New Roman",serif;line-height:1.65}
-a{color:var(--gold);text-decoration:none}
-button,input,select,textarea{font:inherit}
-header{height:82px;padding:12px 5%;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);background:rgba(7,20,38,.97);position:sticky;top:0;z-index:20}
-.logo img{height:54px;max-width:190px;object-fit:contain}
-.header-right{display:flex;align-items:center;gap:14px}
-.icon-btn{background:transparent;border:1px solid var(--border);color:var(--gold);padding:8px 12px;cursor:pointer;border-radius:7px}
-select{background:var(--panel);color:var(--text);border:1px solid var(--border);padding:8px;border-radius:7px;max-width:130px}
-.drawer{position:fixed;z-index:30;top:0;left:-330px;width:310px;max-width:85vw;height:100vh;overflow:auto;background:#0b1c31;padding:28px 22px;transition:left .3s;border-right:1px solid var(--border)}
-.drawer.open{left:0}
-.drawer .close{float:right;font-size:25px;background:none;border:0;color:var(--gold);cursor:pointer}
-.drawer a,.drawer button{display:block;width:100%;text-align:left;padding:12px 8px;color:var(--text);background:none;border:0;border-bottom:1px solid var(--border);cursor:pointer}
-.drawer a:hover,.drawer button:hover{color:var(--gold)}
-.overlay{display:none;position:fixed;inset:0;background:#0009;z-index:25}
-.overlay.show{display:block}
-main{max-width:1100px;margin:auto;padding:42px 20px 70px}
-.hero{text-align:center;padding:25px 10px 38px}
-.eyebrow{color:var(--gold);letter-spacing:3px;text-transform:uppercase;font-size:12px}
-h1,h2{font-weight:normal;line-height:1.2}
-h1{font-size:clamp(34px,5vw,54px);margin:15px 0}
-.hero p{max-width:680px;margin:0 auto;color:var(--muted);font-size:18px}
-.layout{display:grid;grid-template-columns:1fr 1.2fr;gap:28px;align-items:start}
-.info,.form-card{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:26px}
-.info h2,.form-card h2{color:var(--gold);margin-top:0}
-.info p{color:var(--muted)}
-.info li{margin:12px 0;color:var(--muted)}
-.gold-line{height:1px;background:var(--border);margin:22px 0}
-label{display:block;margin:15px 0 6px;color:var(--text)}
-input,textarea,select.field{display:block;width:100%;padding:12px;background:#071426;color:var(--text);border:1px solid #40516a;border-radius:7px}
-input:focus,textarea:focus,select.field:focus{outline:1px solid var(--gold);border-color:var(--gold)}
-textarea{min-height:145px;resize:vertical}
-input[type=file]{padding:10px}
-.small{font-size:13px;color:var(--muted)}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.check{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--muted);margin-top:18px}
-.check input{width:auto;margin-top:5px}
-.submit{margin-top:22px;width:100%;border:0;background:var(--gold);color:#071426;padding:14px 18px;border-radius:8px;font-weight:bold;cursor:pointer}
-.submit:hover{filter:brightness(1.08)}
-.submit:disabled{opacity:.6;cursor:wait}
-#status{display:none;padding:13px;border-radius:8px;margin-top:18px;overflow-wrap:anywhere}
-#status.success{display:block;background:#153d31;color:#d8ffeb}
-#status.error{display:block;background:#512b2b;color:#ffe5e5}
-footer{border-top:1px solid var(--border);text-align:center;padding:26px 15px;color:var(--muted);font-size:14px}
-footer a{margin:0 8px}
-@media(max-width:760px){.layout{grid-template-columns:1fr}.info,.form-card{padding:20px}header{padding:10px 4%;height:72px}.logo img{height:44px;max-width:130px}.header-right{gap:7px}.grid2{grid-template-columns:1fr}main{padding-top:25px}}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Individuelles Kunstwerk | Olga Morlang</title>
+  <meta name="description" content="Lassen Sie Ihr persönliches Kunstwerk von Olga Morlang gestalten.">
+
+  <style>
+    :root {
+      --navy: #081522;
+      --navy-light: #102438;
+      --navy-soft: #162e43;
+      --gold: #d4b16b;
+      --gold-light: #ecd29b;
+      --text: #f4f0e8;
+      --muted: #b9c2ca;
+      --border: rgba(212, 177, 107, 0.35);
+      --danger: #ffaaa0;
+      --success: #a9e6bd;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background:
+        linear-gradient(rgba(8, 21, 34, 0.92), rgba(8, 21, 34, 0.97)),
+        url("111.jpeg") center / cover fixed;
+      color: var(--text);
+      font-family: Georgia, "Times New Roman", serif;
+      line-height: 1.65;
+    }
+
+    body.menu-open {
+      overflow: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button,
+    input,
+    textarea,
+    select {
+      font: inherit;
+    }
+
+    button,
+    select {
+      cursor: pointer;
+    }
+
+    img {
+      max-width: 100%;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      min-height: 82px;
+      padding: 12px clamp(16px, 4vw, 55px);
+      border-bottom: 1px solid var(--border);
+      background: rgba(8, 21, 34, 0.96);
+      backdrop-filter: blur(12px);
+    }
+
+    .topbar-left,
+    .topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .menu-open {
+      display: grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      padding: 0;
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      background: transparent;
+      color: var(--gold);
+      font-size: 25px;
+    }
+
+    .menu-open:hover {
+      background: var(--navy-soft);
+    }
+
+    .logo {
+      display: block;
+      width: 150px;
+      max-height: 58px;
+      object-fit: contain;
+      object-position: left center;
+    }
+
+    .page-label {
+      color: var(--gold);
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .language-select {
+      max-width: 120px;
+      padding: 9px 8px;
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      background: var(--navy-light);
+      color: var(--text);
+    }
+
+    .cart-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 9px 12px;
+      border: 1px solid var(--border);
+      color: var(--gold-light);
+      white-space: nowrap;
+    }
+
+    .cart-count {
+      display: inline-grid;
+      place-items: center;
+      min-width: 22px;
+      height: 22px;
+      padding: 0 5px;
+      border-radius: 50%;
+      background: var(--gold);
+      color: var(--navy);
+      font: 12px Arial, sans-serif;
+    }
+
+    /* Боковое меню — единый стиль для всех страниц */
+
+    .drawer-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      background: rgba(0, 0, 0, 0.7);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.25s, visibility 0.25s;
+    }
+
+    .drawer-overlay.open {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .drawer {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 201;
+      display: flex;
+      flex-direction: column;
+      width: min(360px, 88vw);
+      padding: 24px;
+      overflow-y: auto;
+      border-right: 1px solid var(--border);
+      background:
+        linear-gradient(rgba(8, 21, 34, 0.97), rgba(8, 21, 34, 0.99)),
+        url("111.jpeg") center / cover;
+      transform: translateX(-105%);
+      transition: transform 0.3s ease;
+    }
+
+    .drawer.open {
+      transform: translateX(0);
+    }
+
+    .drawer-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .drawer-brand {
+      color: var(--gold);
+      font-size: 19px;
+      letter-spacing: 1px;
+    }
+
+    .drawer-close {
+      width: 40px;
+      height: 40px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--gold);
+      font-size: 25px;
+    }
+
+    .drawer-heading {
+      margin: 25px 0 10px;
+      color: var(--gold);
+      font: 11px Arial, sans-serif;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .drawer-nav {
+      display: grid;
+      gap: 4px;
+    }
+
+    .drawer-nav a {
+      display: block;
+      padding: 11px 12px;
+      border: 1px solid transparent;
+      color: var(--text);
+      transition: 0.2s;
+    }
+
+    .drawer-nav a:hover,
+    .drawer-nav a.active {
+      border-color: var(--border);
+      background: rgba(212, 177, 107, 0.08);
+      color: var(--gold-light);
+    }
+
+    .drawer-socials {
+      display: grid;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .drawer-socials a {
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      color: var(--gold-light);
+      text-align: center;
+    }
+
+    .drawer-footer {
+      margin-top: auto;
+      padding-top: 28px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    main {
+      width: min(1120px, calc(100% - 36px));
+      margin: 0 auto;
+      padding: 65px 0 90px;
+    }
+
+    .intro {
+      max-width: 780px;
+      margin: 0 auto 42px;
+      text-align: center;
+    }
+
+    .eyebrow {
+      color: var(--gold);
+      font: 12px Arial, sans-serif;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+    }
+
+    h1,
+    h2,
+    h3 {
+      font-weight: normal;
+      line-height: 1.25;
+    }
+
+    h1 {
+      margin: 14px 0 18px;
+      color: var(--gold-light);
+      font-size: clamp(34px, 5vw, 55px);
+    }
+
+    .intro p {
+      color: var(--muted);
+      font-size: 17px;
+    }
+
+    .form-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 300px;
+      align-items: start;
+      gap: 30px;
+    }
+
+    .form-card,
+    .info-card {
+      border: 1px solid var(--border);
+      background: rgba(8, 21, 34, 0.88);
+    }
+
+    .form-card {
+      padding: clamp(20px, 4vw, 40px);
+    }
+
+    .info-card {
+      padding: 26px;
+    }
+
+    .section-title {
+      margin: 0 0 25px;
+      color: var(--gold-light);
+      font-size: 25px;
+    }
+
+    .field {
+      margin-bottom: 23px;
+    }
+
+    .field label {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--text);
+      font-size: 15px;
+    }
+
+    .required {
+      color: var(--gold);
+    }
+
+    .field input,
+    .field textarea,
+    .field select {
+      display: block;
+      width: 100%;
+      padding: 13px 14px;
+      border: 1px solid rgba(212, 177, 107, 0.32);
+      border-radius: 2px;
+      outline: none;
+      background: #0d2031;
+      color: var(--text);
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .field input:focus,
+    .field textarea:focus,
+    .field select:focus {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 2px rgba(212, 177, 107, 0.1);
+    }
+
+    .field textarea {
+      min-height: 150px;
+      resize: vertical;
+    }
+
+    .field input::placeholder,
+    .field textarea::placeholder {
+      color: #82909c;
+    }
+
+    .field select option {
+      background: var(--navy);
+      color: var(--text);
+    }
+
+    .field-hint {
+      display: block;
+      margin-top: 7px;
+      color: var(--muted);
+      font: 12px/1.5 Arial, sans-serif;
+    }
+
+    .two-columns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .upload-box {
+      padding: 18px;
+      border: 1px dashed var(--border);
+      background: rgba(212, 177, 107, 0.035);
+    }
+
+    .upload-box input {
+      border: 0;
+      padding: 8px 0;
+      background: transparent;
+    }
+
+    .preview-wrap {
+      display: none;
+      margin-top: 15px;
+    }
+
+    .preview-wrap.visible {
+      display: block;
+    }
+
+    .reference-preview {
+      display: block;
+      max-width: 100%;
+      max-height: 280px;
+      margin: 0 auto;
+      object-fit: contain;
+      border: 1px solid var(--border);
+    }
+
+    .remove-preview {
+      display: block;
+      margin: 10px auto 0;
+      padding: 7px 12px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--gold-light);
+    }
+
+    .consent {
+      display: flex;
+      align-items: flex-start;
+      gap: 11px;
+      margin: 25px 0;
+      color: var(--muted);
+      font: 13px/1.6 Arial, sans-serif;
+    }
+
+    .consent input {
+      flex: 0 0 auto;
+      width: 17px;
+      height: 17px;
+      margin-top: 3px;
+      accent-color: var(--gold);
+    }
+
+    .consent a {
+      color: var(--gold-light);
+      text-decoration: underline;
+    }
+
+    .submit-button {
+      display: block;
+      width: 100%;
+      padding: 15px 20px;
+      border: 1px solid var(--gold);
+      background: var(--gold);
+      color: var(--navy);
+      font-weight: bold;
+      transition: 0.2s;
+    }
+
+    .submit-button:hover:not(:disabled) {
+      background: var(--gold-light);
+    }
+
+    .submit-button:disabled {
+      cursor: wait;
+      opacity: 0.65;
+    }
+
+    .status-message {
+      display: none;
+      margin-top: 20px;
+      padding: 14px 16px;
+      border: 1px solid var(--border);
+      overflow-wrap: anywhere;
+      font: 14px/1.6 Arial, sans-serif;
+    }
+
+    .status-message.visible {
+      display: block;
+    }
+
+    .status-message.success {
+      border-color: rgba(169, 230, 189, 0.45);
+      color: var(--success);
+    }
+
+    .status-message.error {
+      border-color: rgba(255, 170, 160, 0.5);
+      color: var(--danger);
+    }
+
+    .info-card h2 {
+      margin-top: 0;
+      color: var(--gold-light);
+      font-size: 24px;
+    }
+
+    .info-card p {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .info-item {
+      margin: 22px 0;
+      padding-bottom: 18px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .info-item:last-child {
+      margin-bottom: 0;
+      padding-bottom: 0;
+      border-bottom: 0;
+    }
+
+    .info-item h3 {
+      margin: 0 0 7px;
+      color: var(--gold);
+      font-size: 18px;
+    }
+
+    .footer {
+      padding: 28px 18px;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 12px;
+      text-align: center;
+    }
+
+    .footer a {
+      margin: 0 8px;
+      color: var(--gold-light);
+    }
+
+    @media (max-width: 800px) {
+      .form-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .info-card {
+        order: -1;
+      }
+
+      .info-card .info-item {
+        margin: 14px 0;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .topbar {
+        min-height: 70px;
+        gap: 8px;
+        padding: 10px 12px;
+      }
+
+      .topbar-left,
+      .topbar-right {
+        gap: 8px;
+      }
+
+      .logo {
+        width: 100px;
+        max-height: 44px;
+      }
+
+      .page-label {
+        display: none;
+      }
+
+      .language-select {
+        max-width: 86px;
+        padding: 8px 4px;
+        font-size: 12px;
+      }
+
+      .cart-link {
+        gap: 4px;
+        padding: 8px;
+        font-size: 12px;
+      }
+
+      .menu-open {
+        width: 40px;
+        height: 40px;
+      }
+
+      main {
+        width: calc(100% - 24px);
+        padding-top: 42px;
+      }
+
+      .two-columns {
+        grid-template-columns: 1fr;
+        gap: 0;
+      }
+
+      .info-card {
+        padding: 20px;
+      }
+    }
+  </style>
 </head>
-<body><div class="overlay" id="overlay" onclick="closeMenu()"></div><nav class="drawer" id="drawer" aria-label="Hauptmenü">
-<button class="close" onclick="closeMenu()" aria-label="Menü schließen">×</button>
-<div style="clear:both"></div>
-<a href="index.html" data-i18n="home">Startseite</a>
-<a href="gallery.html" data-i18n="gallery">Galerie</a>
-<div id="categoryLinks"></div>
-<a href="about.html" data-i18n="about">Über die Künstlerin</a>
-<a href="custom.html" data-i18n="custom">Individuelles Gemälde</a>
-<a href="cart.html" data-i18n="cart">Warenkorb</a>
-<a href="https://www.instagram.com/morlang643art/" target="_blank" rel="noopener">Instagram</a>
-<a href="https://www.facebook.com/share/19STKtEPq9/" target="_blank" rel="noopener">Facebook</a>
-</nav><header>
-<button class="icon-btn" onclick="openMenu()" aria-label="Menü öffnen">☰</button>
-<a class="logo" href="index.html"><img src="logo.jpeg" alt="Olga Morlang"></a>
-<div class="header-right">
-<select id="language" aria-label="Sprache" onchange="setLanguage(this.value)">
-<option value="de">DE</option><option value="en">EN</option><option value="ru">RU</option><option value="fr">FR</option><option value="nl">NL</option>
-</select>
-<a class="icon-btn" href="cart.html" aria-label="Warenkorb">♧ <span id="cartCount">0</span></a>
-</div>
-</header><main>
-<section class="hero">
-<div class="eyebrow" data-i18n="eyebrow">Ein persönliches Kunstwerk</div>
-<h1 data-i18n="title">Deine Idee. Ein einzigartiges Gemälde.</h1>
-<p data-i18n="intro">Du hast eine Vorstellung von einem besonderen Bild? Erzähle Olga davon. Beschreibe deine Idee, die gewünschte Größe und dein Budget. Du kannst auch ein Referenzbild hinzufügen.</p>
-</section><div class="layout">
-<aside class="info">
-<h2 data-i18n="howTitle">So funktioniert es</h2>
-<p data-i18n="howIntro">Jedes individuelle Gemälde beginnt mit deiner Idee.</p>
-<ul>
-<li data-i18n="step1">Beschreibe das Motiv, die Stimmung und die gewünschten Farben.</li>
-<li data-i18n="step2">Gib die ungefähre Größe und dein Budget an.</li>
-<li data-i18n="step3">Füge optional ein Foto als Inspiration hinzu.</li>
-<li data-i18n="step4">Olga prüft deine Anfrage und meldet sich, um die Möglichkeiten und den Preis zu besprechen.</li>
-</ul>
-<div class="gold-line"></div>
-<h2 data-i18n="importantTitle">Wichtig</h2>
-<p data-i18n="importantText">Das Absenden der Anfrage ist noch keine verbindliche Bestellung. Preis, Lieferzeit und Versand werden individuell abgestimmt.</p>
-<p class="small" data-i18n="originalText">Es geht um ein originales, handgemaltes Kunstwerk – keine gedruckte Reproduktion.</p>
-</aside><section class="form-card">
-<h2 data-i18n="formTitle">Anfrage für ein individuelles Gemälde</h2>
-<form id="customForm">
-<div class="grid2">
-<div>
-<label for="name" data-i18n="nameLabel">Dein Name *</label>
-<input id="name" name="name" required maxlength="120" autocomplete="name">
-</div>
-<div>
-<label for="email" data-i18n="emailLabel">E-Mail-Adresse *</label>
-<input id="email" name="email" type="email" required maxlength="254" autocomplete="email">
-</div>
-</div><div class="grid2">
-<div>
-<label for="country" data-i18n="countryLabel">Land *</label>
-<input id="country" name="country" required maxlength="100" autocomplete="country-name">
-</div>
-<div>
-<label for="city" data-i18n="cityLabel">Stadt (optional)</label>
-<input id="city" name="city" maxlength="100" autocomplete="address-level2">
-</div>
-</div><label for="description" data-i18n="descriptionLabel">Beschreibe deine Idee *</label>
 
-<textarea id="description" name="description" required minlength="10" maxlength="5000" data-i18n-placeholder="descriptionPlaceholder" placeholder="Was soll auf dem Bild zu sehen sein? Welche Farben oder Stimmung wünschst du dir?"></textarea><div class="grid2">
-<div>
-<label for="size" data-i18n="sizeLabel">Gewünschte Größe</label>
-<input id="size" name="size" maxlength="100" data-i18n-placeholder="sizePlaceholder" placeholder="z. B. 60 × 80 cm">
-</div>
-<div>
-<label for="budget" data-i18n="budgetLabel">Budget (optional)</label>
-<input id="budget" name="budget" maxlength="100" data-i18n-placeholder="budgetPlaceholder" placeholder="z. B. 300–500 €">
-</div>
-</div><label for="reference" data-i18n="referenceLabel">Referenzfoto (optional)</label>
-<input id="reference" name="reference" type="file" accept="image/jpeg,image/png,image/webp">
+<body>
+  <header class="topbar">
+    <div class="topbar-left">
+      <button
+        class="menu-open"
+        id="menuOpen"
+        type="button"
+        aria-label="Menü öffnen"
+        aria-controls="drawer"
+        aria-expanded="false"
+      >☰</button>
 
-<p class="small" data-i18n="referenceHelp">Nur JPG, PNG oder WebP, maximal 5 MB. Bitte verwende nur Bilder, die du teilen darfst.</p><label for="comment" data-i18n="commentLabel">Weitere Wünsche (optional)</label>
+      <a href="index.html" aria-label="Zur Startseite">
+        <img class="logo" src="logo.jpeg" alt="Olga Morlang">
+      </a>
 
-<textarea id="comment" name="comment" maxlength="2000" style="min-height:80px" data-i18n-placeholder="commentPlaceholder" placeholder="Weitere Details, Fragen oder Wünsche"></textarea><label class="check">
-<input type="checkbox" id="privacy" required>
-<span data-i18n="privacyText">Ich habe die Datenschutzhinweise gelesen und bin mit der Verarbeitung meiner Angaben zur Bearbeitung dieser Anfrage einverstanden. *</span>
-</label><button type="submit" class="submit" id="submitBtn" data-i18n="submit">Anfrage senden</button>
+      <span class="page-label" data-i18n="pageLabel">Auftragskunst</span>
+    </div>
 
-<div id="status" role="status" aria-live="polite"></div>
-<p class="small" data-i18n="privacyNote">Bitte sende keine vertraulichen oder sensiblen Informationen über dieses Formular.</p>
-</form>
-</section>
-</div>
-</main><footer>
-<div>© <span id="year"></span> Olga Morlang</div>
-<p>
-<a href="index.html" data-i18n="home">Startseite</a>
-<a href="gallery.html" data-i18n="gallery">Galerie</a>
-<a href="about.html" data-i18n="about">Über die Künstlerin</a>
-<a href="custom.html" data-i18n="custom">Individuelles Gemälde</a>
-</p>
-<p><a href="https://www.instagram.com/morlang643art/" target="_blank" rel="noopener">Instagram</a> · <a href="https://www.facebook.com/share/19STKtEPq9/" target="_blank" rel="noopener">Facebook</a></p>
-</footer><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script>
-const SUPABASE_URL = "https://lcjtsyxeklltyoxovvzr.supabase.co";
-const SUPABASE_KEY = "sb_publishable_Z5y2_ni_klXhEFU7I-OljA_JZcsyCVJ";
-const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    <div class="topbar-right">
+      <select class="language-select" id="languageSelect" aria-label="Sprache auswählen">
+        <option value="de">Deutsch</option>
+        <option value="en">English</option>
+        <option value="ru">Русский</option>
+        <option value="fr">Français</option>
+        <option value="nl">Nederlands</option>
+      </select>
 
-const translations = {
-de:{
-home:"Startseite",gallery:"Galerie",about:"Über die Künstlerin",custom:"Individuelles Gemälde",cart:"Warenkorb",
-eyebrow:"Ein persönliches Kunstwerk",title:"Deine Idee. Ein einzigartiges Gemälde.",
-intro:"Du hast eine Vorstellung von einem besonderen Bild? Erzähle Olga davon. Beschreibe deine Idee, die gewünschte Größe und dein Budget. Du kannst auch ein Referenzbild hinzufügen.",
-howTitle:"So funktioniert es",howIntro:"Jedes individuelle Gemälde beginnt mit deiner Idee.",
-step1:"Beschreibe das Motiv, die Stimmung und die gewünschten Farben.",step2:"Gib die ungefähre Größe und dein Budget an.",step3:"Füge optional ein Foto als Inspiration hinzu.",step4:"Olga prüft deine Anfrage und meldet sich, um die Möglichkeiten und den Preis zu besprechen.",
-importantTitle:"Wichtig",importantText:"Das Absenden der Anfrage ist noch keine verbindliche Bestellung. Preis, Lieferzeit und Versand werden individuell abgestimmt.",originalText:"Es geht um ein originales, handgemaltes Kunstwerk – keine gedruckte Reproduktion.",
-formTitle:"Anfrage für ein individuelles Gemälde",nameLabel:"Dein Name *",emailLabel:"E-Mail-Adresse *",countryLabel:"Land *",cityLabel:"Stadt (optional)",descriptionLabel:"Beschreibe deine Idee *",descriptionPlaceholder:"Was soll auf dem Bild zu sehen sein? Welche Farben oder Stimmung wünschst du dir?",sizeLabel:"Gewünschte Größe",sizePlaceholder:"z. B. 60 × 80 cm",budgetLabel:"Budget (optional)",budgetPlaceholder:"z. B. 300–500 €",referenceLabel:"Referenzfoto (optional)",referenceHelp:"Nur JPG, PNG oder WebP, maximal 5 MB. Bitte verwende nur Bilder, die du teilen darfst.",commentLabel:"Weitere Wünsche (optional)",commentPlaceholder:"Weitere Details, Fragen oder Wünsche",privacyText:"Ich habe die Datenschutzhinweise gelesen und bin mit der Verarbeitung meiner Angaben zur Bearbeitung dieser Anfrage einverstanden. *",submit:"Anfrage senden",privacyNote:"Bitte sende keine vertraulichen oder sensiblen Informationen über dieses Formular.",
-sending:"Deine Anfrage wird gesendet …",success:"Vielen Dank! Wenn die Anfrage erfolgreich übermittelt wurde, wird Olga deine Angaben prüfen und sich bei dir melden.",error:"Die Anfrage konnte nicht gesendet werden. Bitte versuche es später erneut oder kontaktiere Olga über Instagram.",fileError:"Bitte wähle ein JPG-, PNG- oder WebP-Bild bis maximal 5 MB.",missingConfig:"Der Anfrage-Service ist noch nicht vollständig eingerichtet. Bitte kontaktiere Olga direkt über Instagram."
-},
-en:{
-home:"Home",gallery:"Gallery",about:"About the Artist",custom:"Custom Painting",cart:"Cart",
-eyebrow:"A personal work of art",title:"Your idea. A one-of-a-kind painting.",
-intro:"Have an idea for a special painting? Tell Olga about it. Describe your idea, preferred size and budget. You can also attach a reference image.",
-howTitle:"How it works",howIntro:"Every custom painting starts with your idea.",
-step1:"Describe the subject, mood and colours you would like.",step2:"Enter your approximate size and budget.",step3:"Optionally add a photo for inspiration.",step4:"Olga will review your request and contact you to discuss the possibilities and price.",
-importantTitle:"Please note",importantText:"Submitting this form is not a binding order. Price, delivery time and shipping will be agreed individually.",originalText:"The aim is an original, hand-painted artwork—not a printed reproduction.",
-formTitle:"Request a custom painting",nameLabel:"Your name *",emailLabel:"Email address *",countryLabel:"Country *",cityLabel:"City (optional)",descriptionLabel:"Describe your idea *",descriptionPlaceholder:"What would you like the painting to show? Which colours or mood do you prefer?",sizeLabel:"Preferred size",sizePlaceholder:"e.g. 60 × 80 cm",budgetLabel:"Budget (optional)",budgetPlaceholder:"e.g. €300–500",referenceLabel:"Reference photo (optional)",referenceHelp:"JPG, PNG or WebP only, maximum 5 MB. Only upload images you are allowed to share.",commentLabel:"Additional wishes (optional)",commentPlaceholder:"Any other details, questions or wishes",privacyText:"I have read the privacy information and agree to the processing of my details to handle this request. *",submit:"Send request",privacyNote:"Please do not submit confidential or sensitive information through this form.",
-sending:"Sending your request …",success:"Thank you! If your request was submitted successfully, Olga will review your details and get in touch.",error:"Your request could not be sent. Please try again later or contact Olga on Instagram.",fileError:"Please choose a JPG, PNG or WebP image no larger than 5 MB.",missingConfig:"The request service is not fully configured yet. Please contact Olga directly on Instagram."
-},
-ru:{
-home:"Главная",gallery:"Галерея",about:"Об художнице",custom:"Заказать картину",cart:"Корзина",
-eyebrow:"Искусство по вашей идее",title:"Ваша идея — уникальная картина.",
-intro:"Хотите особенную картину? Расскажите Ольге о своей задумке. Опишите сюжет, желаемый размер и бюджет. При желании можно прикрепить фотографию-пример.",
-howTitle:"Как это работает",howIntro:"Каждая индивидуальная картина начинается с вашей идеи.",
-step1:"Опишите сюжет, настроение и желаемые цвета.",step2:"Укажите примерный размер и бюджет.",step3:"При желании добавьте фотографию для вдохновения.",step4:"Ольга рассмотрит заявку и свяжется с вами, чтобы обсудить возможности и стоимость.",
-importantTitle:"Важно",importantText:"Отправка заявки ещё не является обязательным заказом. Стоимость, сроки и доставку согласуют отдельно.",originalText:"Речь идёт об оригинальной картине, написанной вручную, а не о печатной копии.",
-formTitle:"Заявка на индивидуальную картину",nameLabel:"Ваше имя *",emailLabel:"Электронная почта *",countryLabel:"Страна *",cityLabel:"Город (необязательно)",descriptionLabel:"Опишите вашу идею *",descriptionPlaceholder:"Что вы хотите видеть на картине? Какие цвета и настроение предпочитаете?",sizeLabel:"Желаемый размер",sizePlaceholder:"Например, 60 × 80 см",budgetLabel:"Бюджет (необязательно)",budgetPlaceholder:"Например, 300–500 €",referenceLabel:"Фотография-пример (необязательно)",referenceHelp:"Только JPG, PNG или WebP, не более 5 МБ. Загружайте только изображения, которыми разрешено делиться.",commentLabel:"Дополнительные пожелания (необязательно)",commentPlaceholder:"Другие детали, вопросы или пожелания",privacyText:"Я ознакомился(-лась) с информацией о конфиденциальности и согласен(-на) на обработку данных для рассмотрения заявки. *",submit:"Отправить заявку",privacyNote:"Не отправляйте через эту форму конфиденциальную или чувствительную информацию.",
-sending:"Отправляем заявку …",success:"Спасибо! Если заявка успешно отправлена, Ольга рассмотрит её и свяжется с вами.",error:"Не удалось отправить заявку. Попробуйте позже или свяжитесь с Ольгой через Instagram.",fileError:"Выберите изображение JPG, PNG или WebP размером не более 5 МБ.",missingConfig:"Сервис заявок ещё не настроен полностью. Пожалуйста, свяжитесь с Ольгой напрямую через Instagram."
-},
-fr:{
-home:"Accueil",gallery:"Galerie",about:"À propos de l’artiste",custom:"Peinture personnalisée",cart:"Panier",
-eyebrow:"Une œuvre personnelle",title:"Votre idée. Une peinture unique.",
-intro:"Vous imaginez un tableau particulier ? Parlez-en à Olga. Décrivez votre idée, la taille souhaitée et votre budget. Vous pouvez aussi joindre une image de référence.",
-howTitle:"Comment ça marche",howIntro:"Chaque peinture personnalisée commence par votre idée.",
-step1:"Décrivez le sujet, l’ambiance et les couleurs souhaitées.",step2:"Indiquez la taille approximative et votre budget.",step3:"Ajoutez éventuellement une photo d’inspiration.",step4:"Olga étudiera votre demande et vous contactera pour discuter des possibilités et du prix.",
-importantTitle:"À noter",importantText:"L’envoi de ce formulaire ne constitue pas une commande ferme. Le prix, le délai et la livraison seront convenus individuellement.",originalText:"Il s’agit d’une œuvre originale peinte à la main, et non d’une reproduction imprimée.",
-formTitle:"Demande de peinture personnalisée",nameLabel:"Votre nom *",emailLabel:"Adresse e-mail *",countryLabel:"Pays *",cityLabel:"Ville (facultatif)",descriptionLabel:"Décrivez votre idée *",descriptionPlaceholder:"Que souhaitez-vous voir sur le tableau ? Quelles couleurs ou ambiance préférez-vous ?",sizeLabel:"Taille souhaitée",sizePlaceholder:"Ex. : 60 × 80 cm",budgetLabel:"Budget (facultatif)",budgetPlaceholder:"Ex. : 300–500 €",referenceLabel:"Photo de référence (facultatif)",referenceHelp:"JPG, PNG ou WebP uniquement, 5 Mo maximum. N’envoyez que des images que vous êtes autorisé à partager.",commentLabel:"Autres souhaits (facultatif)",commentPlaceholder:"Autres détails, questions ou souhaits",privacyText:"J’ai lu les informations relatives à la confidentialité et j’accepte le traitement de mes données pour répondre à cette demande. *",submit:"Envoyer la demande",privacyNote:"N’envoyez pas d’informations confidentielles ou sensibles via ce formulaire.",
-sending:"Envoi de votre demande …",success:"Merci ! Si votre demande a bien été envoyée, Olga l’examinera et vous contactera.",error:"Impossible d’envoyer votre demande. Réessayez plus tard ou contactez Olga sur Instagram.",fileError:"Choisissez une image JPG, PNG ou WebP de 5 Mo maximum.",missingConfig:"Le service de demande n’est pas encore entièrement configuré. Contactez Olga directement sur Instagram."
-},
-nl:{
-home:"Home",gallery:"Galerij",about:"Over de kunstenares",custom:"Schilderij op maat",cart:"Winkelwagen",
-eyebrow:"Een persoonlijk kunstwerk",title:"Jouw idee. Een uniek schilderij.",
-intro:"Heb je een idee voor een bijzonder schilderij? Vertel Olga erover. Beschrijf je idee, de gewenste afmetingen en je budget. Je kunt ook een voorbeeldfoto toevoegen.",
-howTitle:"Zo werkt het",howIntro:"Elk schilderij op maat begint met jouw idee.",
-step1:"Beschrijf het onderwerp, de sfeer en de gewenste kleuren.",step2:"Geef de geschatte afmetingen en je budget op.",step3:"Voeg eventueel een inspiratiefoto toe.",step4:"Olga bekijkt je aanvraag en neemt contact met je op om de mogelijkheden en prijs te bespreken.",
-importantTitle:"Belangrijk",importantText:"Het versturen van dit formulier is nog geen bindende bestelling. Prijs, levertijd en verzending worden individueel afgesproken.",originalText:"Het gaat om een origineel, handgeschilderd kunstwerk, geen gedrukte reproductie.",
-formTitle:"Aanvraag voor een schilderij op maat",nameLabel:"Je naam *",emailLabel:"E-mailadres *",countryLabel:"Land *",cityLabel:"Stad (optioneel)",descriptionLabel:"Beschrijf je idee *",descriptionPlaceholder:"Wat wil je op het schilderij zien? Welke kleuren of sfeer vind je mooi?",sizeLabel:"Gewenste afmetingen",sizePlaceholder:"Bijv. 60 × 80 cm",budgetLabel:"Budget (optioneel)",budgetPlaceholder:"Bijv. €300–500",referenceLabel:"Voorbeeldfoto (optioneel)",referenceHelp:"Alleen JPG, PNG of WebP, maximaal 5 MB. Upload alleen afbeeldingen die je mag delen.",commentLabel:"Extra wensen (optioneel)",commentPlaceholder:"Andere details, vragen of wensen",privacyText:"Ik heb de privacyinformatie gelezen en ga akkoord met de verwerking van mijn gegevens om deze aanvraag te behandelen. *",submit:"Aanvraag versturen",privacyNote:"Verstuur geen vertrouwelijke of gevoelige informatie via dit formulier.",
-sending:"Je aanvraag wordt verstuurd …",success:"Bedankt! Als je aanvraag succesvol is verzonden, bekijkt Olga je gegevens en neemt ze contact met je op.",error:"Je aanvraag kon niet worden verzonden. Probeer het later opnieuw of neem contact op met Olga via Instagram.",fileError:"Kies een JPG-, PNG- of WebP-afbeelding van maximaal 5 MB.",missingConfig:"De aanvraagservice is nog niet volledig ingesteld. Neem rechtstreeks contact op met Olga via Instagram."
-}
-};
+      <a class="cart-link" href="cart.html">
+        <span data-i18n="cart">Warenkorb</span>
+        <span class="cart-count" id="cartCount">0</span>
+      </a>
+    </div>
+  </header>
 
-function openMenu(){document.getElementById("drawer").classList.add("open");document.getElementById("overlay").classList.add("show")}
-function closeMenu(){document.getElementById("drawer").classList.remove("open");document.getElementById("overlay").classList.remove("show")}
+  <div class="drawer-overlay" id="drawerOverlay"></div>
 
-function setLanguage(lang){
-const t=translations[lang]||translations.de;
-document.documentElement.lang=lang;
-document.querySelectorAll("[data-i18n]").forEach(el=>{
-const key=el.dataset.i18n;
-if(t[key])el.textContent=t[key];
-});
-document.querySelectorAll("[data-i18n-placeholder]").forEach(el=>{
-const key=el.dataset.i18nPlaceholder;
-if(t[key])el.placeholder=t[key];
-});
-document.getElementById("language").value=lang;
-localStorage.setItem("olgaLanguage",lang);
-}
+  <aside
+    class="drawer"
+    id="drawer"
+    aria-label="Hauptmenü"
+    aria-hidden="true"
+  >
+    <div class="drawer-top">
+      <a class="drawer-brand" href="index.html">Olga Morlang</a>
 
-function updateCartCount(){
-try{
-const cart=JSON.parse(localStorage.getItem("olgaCart")||"[]");
-document.getElementById("cartCount").textContent=cart.reduce((sum,item)=>sum+(Number(item.quantity)||1),0);
-}catch(e){document.getElementById("cartCount").textContent="0"}
-}
+      <button
+        class="drawer-close"
+        id="menuClose"
+        type="button"
+        aria-label="Menü schließen"
+      >×</button>
+    </div>
 
-async function loadCategories(){
-try{
-const {data,error}=await db.from("categories").select("*").order("name");
-if(error||!data)return;
-const container=document.getElementById("categoryLinks");
-data.forEach(cat=>{
-const a=document.createElement("a");
-a.href="gallery.html?category="+encodeURIComponent(cat.id);
-a.textContent=cat.name||cat.title||"Category";
-container.appendChild(a);
-});
-}catch(e){console.warn("Categories unavailable",e)}
-}
+    <div class="drawer-heading" data-i18n="navigation">Navigation</div>
 
-function showStatus(type,message){
-const box=document.getElementById("status");
-box.className=type;
-box.textContent=message;
-box.style.display="block";
-}
+    <nav class="drawer-nav">
+      <a href="index.html" data-i18n="home">Startseite</a>
+      <a href="gallery.html" data-i18n="gallery">Galerie</a>
+      <a href="gallery.html" data-i18n="categories">Kategorien</a>
+      <a href="about.html" data-i18n="about">Über die Künstlerin</a>
+      <a class="active" href="custom.html" data-i18n="custom">Individuelles Kunstwerk</a>
+      <a href="cart.html" data-i18n="cart">Warenkorb</a>
+    </nav>
 
-document.getElementById("customForm").addEventListener("submit",async function(e){
-e.preventDefault();
-const lang=document.getElementById("language").value||"de";
-const t=translations[lang]||translations.de;
-const file=document.getElementById("reference").files[0];
+    <div class="drawer-heading" data-i18n="follow">Folgen Sie der Künstlerin</div>
 
-if(file){
-const allowed=["image/jpeg","image/png","image/webp"];
-if(!allowed.includes(file.type)||file.size>5*1024*1024){
-showStatus("error",t.fileError);
-return;
-}
-}
+    <div class="drawer-socials">
+      <a href="https://www.instagram.com/morlang643art/"
+         target="_blank" rel="noopener noreferrer">Instagram ↗</a>
 
-const button=document.getElementById("submitBtn");
-button.disabled=true;
-button.textContent=t.sending;
-document.getElementById("status").style.display="none";
+      <a href="https://www.facebook.com/share/19STKtEPq9/"
+         target="_blank" rel="noopener noreferrer">Facebook ↗</a>
+    </div>
 
-try{
-/*
-Backend contract to confirm:
-This page sends JSON to the existing dynamic-service Edge Function.
-The function must accept action "custom_request", the fields below,
-and (if a reference photo is attached) reference_image_base64.
-The image is sent as base64 in JSON; the private storage upload is not
-assumed to exist. If the Edge Function expects a different payload,
-adjust this request to match its implemented contract.
-*/
-let referenceImage=null;
-if(file){
-referenceImage={
-name:file.name,
-type:file.type,
-base64:await fileToBase64(file)
-};
-}
+    <div class="drawer-footer">
+      © <span id="drawerYear"></span> Olga Morlang
+    </div>
+  </aside>
 
-const payload={
-action:"custom_request",
-order_type:"custom",
-buyer_name:document.getElementById("name").value.trim(),
-buyer_email:document.getElementById("email").value.trim(),
-buyer_country:document.getElementById("country").value.trim(),
-buyer_city:document.getElementById("city").value.trim(),
-custom_description:document.getElementById("description").value.trim(),
-custom_size:document.getElementById("size").value.trim(),
-custom_budget:document.getElementById("budget").value.trim(),
-buyer_comment:document.getElementById("comment").value.trim(),
-reference_image:referenceImage,
-language:lang
-};
+  <main>
+    <section class="intro">
+      <div class="eyebrow" data-i18n="eyebrow">Ein Kunstwerk nur für Sie</div>
 
-const response=await fetch(SUPABASE_URL+"/functions/v1/dynamic-service",{
-method:"POST",
-headers:{
-"Content-Type":"application/json",
-"apikey":SUPABASE_KEY,
-"Authorization":"Bearer "+SUPABASE_KEY
-},
-body:JSON.stringify(payload)
-});
+      <h1 data-i18n="title">Ihre persönliche Bildidee</h1>
 
-let result={};
-try{result=await response.json()}catch(e){}
-if(!response.ok||result.error||result.success===false){
-throw new Error(result.error||result.message||"Request failed ("+response.status+")");
-}
+      <p data-i18n="intro">
+        Haben Sie eine besondere Vorstellung? Beschreiben Sie Ihre Idee,
+        wählen Sie die gewünschte Größe und teilen Sie Ihr Budget mit.
+        Olga Morlang kann Ihre Anfrage anschließend persönlich prüfen.
+      </p>
+    </section>
 
-showStatus("success",result.message||t.success);
-this.reset();
-}catch(err){
-console.error("Custom request error:",err);
-const message=String(err.message||"");
-if(message.includes("not configured")||message.includes("Failed to fetch")){
-showStatus("error",t.error);
-}else{
-showStatus("error",t.error+" ("+message+")");
-}
-}finally{
-button.disabled=false;
-button.textContent=t.submit;
-}
-});
+    <div class="form-layout">
+      <section class="form-card">
+        <h2 class="section-title" data-i18n="formTitle">Anfrage für ein individuelles Kunstwerk</h2>
 
-function fileToBase64(file){
-return new Promise((resolve,reject)=>{
-const reader=new FileReader();
-reader.onload=()=>{
-const value=String(reader.result||"");
-resolve(value.includes(",")?value.split(",")[1]:value);
-};
-reader.onerror=()=>reject(new Error("Could not read reference image"));
-reader.readAsDataURL(file);
-});
-}
+        <form id="customForm">
+          <div class="two-columns">
+            <div class="field">
+              <label for="customerName">
+                <span data-i18n="nameLabel">Ihr Name</span>
+                <span class="required">*</span>
+              </label>
+              <input
+                type="text"
+                id="customerName"
+                name="customerName"
+                required
+                maxlength="120"
+                autocomplete="name"
+                data-i18n-placeholder="namePlaceholder"
+                placeholder="Vor- und Nachname"
+              >
+            </div>
 
-document.getElementById("year").textContent=new Date().getFullYear();
-const savedLanguage=localStorage.getItem("olgaLanguage")||"de";
-setLanguage(savedLanguage);
-updateCartCount();
-loadCategories();
-</script></body>
+            <div class="field">
+              <label for="customerEmail">
+                <span data-i18n="emailLabel">E-Mail-Adresse</span>
+                <span class="required">*</span>
+              </label>
+              <input
+                type="email"
+                id="customerEmail"
+                name="customerEmail"
+                required
+                maxlength="254"
+                autocomplete="email"
+                data-i18n-placeholder="emailPlaceholder"
+                placeholder="name@example.com"
+              >
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="country">
+              <span data-i18n="countryLabel">Lieferland</span>
+              <span class="required">*</span>
+            </label>
+
+            <select id="country" name="country" required>
+              <option value="" data-i18n="countryPlaceholder">Land auswählen</option>
+              <option value="Belgium">Belgien / Belgium</option>
+              <option value="Germany">Deutschland / Germany</option>
+              <option value="Netherlands">Niederlande / Netherlands</option>
+              <option value="France">Frankreich / France</option>
+              <option value="Austria">Österreich / Austria</option>
+              <option value="Luxembourg">Luxemburg / Luxembourg</option>
+              <option value="Other">Anderes Land / Other</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="description">
+              <span data-i18n="descriptionLabel">Beschreiben Sie Ihre Bildidee</span>
+              <span class="required">*</span>
+            </label>
+
+            <textarea
+              id="description"
+              name="description"
+              required
+              minlength="10"
+              maxlength="5000"
+              data-i18n-placeholder="descriptionPlaceholder"
+              placeholder="Motiv, Farben, Stil, Stimmung und weitere Wünsche ..."
+            ></textarea>
+
+            <span class="field-hint" data-i18n="descriptionHint">
+              Je genauer Ihre Beschreibung, desto besser können wir Ihre Idee verstehen.
+            </span>
+          </div>
+
+          <div class="two-columns">
+            <div class="field">
+              <label for="size" data-i18n="sizeLabel">Gewünschte Größe</label>
+
+              <select id="size" name="size">
+                <option value="" data-i18n="sizePlaceholder">Größe auswählen</option>
+                <option value="Small" data-i18n="sizeSmall">Klein — bis ca. 30 × 40 cm</option>
+                <option value="Medium" data-i18n="sizeMedium">Mittel — ca. 40 × 60 cm</option>
+                <option value="Large" data-i18n="sizeLarge">Groß — ca. 60 × 80 cm</option>
+                <option value="Custom" data-i18n="sizeCustom">Andere Größe / nach Absprache</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="budget" data-i18n="budgetLabel">Ihr Budget</label>
+
+              <select id="budget" name="budget">
+                <option value="" data-i18n="budgetPlaceholder">Budget auswählen</option>
+                <option value="Under 150 EUR">Unter 150 €</option>
+                <option value="150-300 EUR">150–300 €</option>
+                <option value="300-500 EUR">300–500 €</option>
+                <option value="500-1000 EUR">500–1.000 €</option>
+                <option value="Over 1000 EUR">Über 1.000 €</option>
+                <option value="To discuss" data-i18n="budgetDiscuss">Noch offen / besprechen</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="referenceImage" data-i18n="referenceLabel">
+              Referenzfoto (optional)
+            </label>
+
+            <div class="upload-box">
+              <input
+                type="file"
+                id="referenceImage"
+                name="referenceImage"
+                accept="image/jpeg,image/png,image/webp"
+              >
+
+              <span class="field-hint" data-i18n="referenceHint">
+                JPG, PNG oder WebP; maximal 5 MB. Sie können auch ohne Foto eine Anfrage senden.
+              </span>
+
+              <div class="preview-wrap" id="previewWrap">
+                <img
+                  class="reference-preview"
+                  id="referencePreview"
+                  alt="Referenzfoto"
+                >
+                <button
+                  type="button"
+                  class="remove-preview"
+                  id="removePreview"
+                  data-i18n="removePhoto"
+                >Foto entfernen</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="additionalNotes" data-i18n="notesLabel">
+              Weitere Wünsche (optional)
+            </label>
+
+            <textarea
+              id="additionalNotes"
+              name="additionalNotes"
+              maxlength="2000"
+              style="min-height: 100px"
+              data-i18n-placeholder="notesPlaceholder"
+              placeholder="Zum Beispiel: gewünschter Zeitraum oder besondere Details ..."
+            ></textarea>
+          </div>
+
+          <label class="consent">
+            <input type="checkbox" id="privacyConsent" required>
+
+            <span data-i18n-html="privacyConsent">
+              Ich habe die <a href="datenschutz.html" target="_blank" rel="noopener">Datenschutzhinweise</a>
+              gelesen und bin mit der Verarbeitung meiner Angaben zur Bearbeitung meiner Anfrage einverstanden.
+              <span class="required">*</span>
+            </span>
+          </label>
+
+          <button class="submit-button" id="submitButton" type="submit" data-i18n="submit">
+            Anfrage senden
+          </button>
+
+          <div
+            class="status-message"
+            id="statusMessage"
+            role="status"
+            aria-live="polite"
+          ></div>
+        </form>
+      </section>
+
+      <aside class="info-card">
+        <h2 data-i18n="infoTitle">So funktioniert es</h2>
+
+        <p data-i18n="infoIntro">
+          Jedes individuelle Kunstwerk wird nach Ihren Wünschen besprochen.
+        </p>
+
+        <div class="info-item">
+          <h3 data-i18n="step1Title">01. Ihre Idee</h3>
+          <p data-i18n="step1Text">
+            Beschreiben Sie das Motiv, die Farben und die gewünschte Stimmung.
+          </p>
+        </div>
+
+        <div class="info-item">
+          <h3 data-i18n="step2Title">02. Persönliche Rückmeldung</h3>
+          <p data-i18n="step2Text">
+            Olga prüft Ihre Anfrage und meldet sich per E-Mail.
+          </p>
+        </div>
+
+        <div class="info-item">
+          <h3 data-i18n="step3Title">03. Preis und Details</h3>
+          <p data-i18n="step3Text">
+            Preis, Fertigstellung und Versand werden vor einer verbindlichen Bestellung abgestimmt.
+          </p>
+        </div>
+
+        <div class="info-item">
+          <h3 data-i18n="importantTitle">Wichtig</h3>
+          <p data-i18n="importantText">
+            Das Absenden der Anfrage ist noch keine verbindliche Bestellung und löst keine Zahlung aus.
+          </p>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="footer">
+    © <span id="footerYear"></span> Olga Morlang
+    <br><br>
+    <a href="impressum.html" data-i18n="imprint">Impressum</a>
+    <a href="datenschutz.html" data-i18n="privacy">Datenschutz</a>
+    <a href="agb.html" data-i18n="terms">AGB</a>
+    <a href="widerruf.html" data-i18n="withdrawal">Widerruf</a>
+  </footer>
+
+  <script>
+    /*
+      Supabase project settings.
+      The publishable key is intended for browser use.
+      Never place a Supabase service-role key in this file.
+    */
+    const SUPABASE_URL = "https://lcjtsyxeklltyoxovvzr.supabase.co";
+    const SUPABASE_PUBLISHABLE_KEY =
+      "sb_publishable_Z5y2_ni_klXhEFU7I-OljA_JZcsyCVJ";
+
+    /*
+      This endpoint must match the deployed Supabase Edge Function.
+      Its request format and reference-photo upload handling must match
+      the current dynamic-service implementation.
+    */
+    const EDGE_FUNCTION_URL =
+      `${SUPABASE_URL}/functions/v1/dynamic-service`;
+
+    const translations = {
+      de: {
+        pageLabel: "Auftragskunst",
+        cart: "Warenkorb",
+        navigation: "Navigation",
+        home: "Startseite",
+        gallery: "Galerie",
+        categories: "Kategorien",
+        about: "Über die Künstlerin",
+        custom: "Individuelles Kunstwerk",
+        follow: "Folgen Sie der Künstlerin",
+        eyebrow: "Ein Kunstwerk nur für Sie",
+        title: "Ihre persönliche Bildidee",
+        intro: "Haben Sie eine besondere Vorstellung? Beschreiben Sie Ihre Idee, wählen Sie die gewünschte Größe und teilen Sie Ihr Budget mit. Olga Morlang kann Ihre Anfrage anschließend persönlich prüfen.",
+        formTitle: "Anfrage für ein individuelles Kunstwerk",
+        nameLabel: "Ihr Name",
+        namePlaceholder: "Vor- und Nachname",
+        emailLabel: "E-Mail-Adresse",
+        emailPlaceholder: "name@example.com",
+        countryLabel: "Lieferland",
+        countryPlaceholder: "Land auswählen",
+        descriptionLabel: "Beschreiben Sie Ihre Bildidee",
+        descriptionPlaceholder: "Motiv, Farben, Stil, Stimmung und weitere Wünsche ...",
+        descriptionHint: "Je genauer Ihre Beschreibung, desto besser können wir Ihre Idee verstehen.",
+        sizeLabel: "Gewünschte Größe",
+        sizePlaceholder: "Größe auswählen",
+        sizeSmall: "Klein — bis ca. 30 × 40 cm",
+        sizeMedium: "Mittel — ca. 40 × 60 cm",
+        sizeLarge: "Groß — ca. 60 × 80 cm",
+        sizeCustom: "Andere Größe / nach Absprache",
+        budgetLabel: "Ihr Budget",
+        budgetPlaceholder: "Budget auswählen",
+        budgetDiscuss: "Noch offen / besprechen",
+        referenceLabel: "Referenzfoto (optional)",
+        referenceHint: "JPG, PNG oder WebP; maximal 5 MB. Sie können auch ohne Foto eine Anfrage senden.",
+        removePhoto: "Foto entfernen",
+        notesLabel: "Weitere Wünsche (optional)",
+        notesPlaceholder: "Zum Beispiel: gewünschter Zeitraum oder besondere Details ...",
+        privacyConsent: "Ich habe die <a href=\"datenschutz.html\" target=\"_blank\" rel=\"noopener\">Datenschutzhinweise</a> gelesen und bin mit der Verarbeitung meiner Angaben zur Bearbeitung meiner Anfrage einverstanden. <span class=\"required\">*</span>",
+        submit: "Anfrage senden",
+        infoTitle: "So funktioniert es",
+        infoIntro: "Jedes individuelle Kunstwerk wird nach Ihren Wünschen besprochen.",
+        step1Title: "01. Ihre Idee",
+        step1Text: "Beschreiben Sie das Motiv, die Farben und die gewünschte Stimmung.",
+        step2Title: "02. Persönliche Rückmeldung",
+        step2Text: "Olga prüft Ihre Anfrage und meldet sich per E-Mail.",
+        step3Title: "03. Preis und Details",
+        step3Text: "Preis, Fertigstellung und Versand werden vor einer verbindlichen Bestellung abgestimmt.",
+        importantTitle: "Wichtig",
+        importantText: "Das Absenden der Anfrage ist noch keine verbindliche Bestellung und löst keine Zahlung aus.",
+        imprint: "Impressum",
+        privacy: "Datenschutz",
+        terms: "AGB",
+        withdrawal: "Widerruf",
+        sending: "Ihre Anfrage wird gesendet ...",
+        success: "Vielen Dank! Ihre Anfrage wurde gesendet. Olga kann sich unter der angegebenen E-Mail-Adresse bei Ihnen melden.",
+        error: "Die Anfrage konnte nicht gesendet werden. Bitte versuchen Sie es später erneut.",
+        imageTooLarge: "Das Foto ist größer als 5 MB. Bitte wählen Sie eine kleinere Datei.",
+        imageInvalid: "Bitte wählen Sie eine JPG-, PNG- oder WebP-Bilddatei.",
+        consentRequired: "Bitte bestätigen Sie die Datenschutzhinweise.",
+        descriptionRequired: "Bitte beschreiben Sie Ihre Bildidee ausführlicher.",
+        configurationError: "Die Anfragefunktion ist momentan nicht korrekt konfiguriert. Bitte versuchen Sie es später erneut."
+      },
+
+      en: {
+        pageLabel: "Commissioned Art",
+        cart: "Cart",
+        navigation: "Navigation",
+        home: "Home",
+        gallery: "Gallery",
+        categories: "Categories",
+        about: "About the Artist",
+        custom: "Custom Artwork",
+        follow: "Follow the Artist",
+        eyebrow: "A work of art just for you",
+        title: "Your personal artwork idea",
+        intro: "Have a special idea in mind? Describe it, choose your preferred size and share your budget. Olga Morlang can then review your request personally.",
+        formTitle: "Request a Custom Artwork",
+        nameLabel: "Your name",
+        namePlaceholder: "First and last name",
+        emailLabel: "Email address",
+        emailPlaceholder: "name@example.com",
+        countryLabel: "Delivery country",
+        countryPlaceholder: "Select a country",
+        descriptionLabel: "Describe your artwork idea",
+        descriptionPlaceholder: "Subject, colours, style, mood and other wishes ...",
+        descriptionHint: "The more detail you provide, the easier it is to understand your idea.",
+        sizeLabel: "Preferred size",
+        sizePlaceholder: "Choose a size",
+        sizeSmall: "Small — up to approx. 30 × 40 cm",
+        sizeMedium: "Medium — approx. 40 × 60 cm",
+        sizeLarge: "Large — approx. 60 × 80 cm",
+        sizeCustom: "Other size / to be discussed",
+        budgetLabel: "Your budget",
+        budgetPlaceholder: "Choose a budget",
+        budgetDiscuss: "Not decided / discuss",
+        referenceLabel: "Reference photo (optional)",
+        referenceHint: "JPG, PNG or WebP; maximum 5 MB. You can submit a request without a photo.",
+        removePhoto: "Remove photo",
+        notesLabel: "Additional wishes (optional)",
+        notesPlaceholder: "For example, preferred timing or special details ...",
+        privacyConsent: "I have read the <a href=\"datenschutz.html\" target=\"_blank\" rel=\"noopener\">privacy information</a> and agree to the processing of my details to handle this request. <span class=\"required\">*</span>",
+        submit: "Send request",
+        infoTitle: "How it works",
+        infoIntro: "Every custom artwork is discussed according to your wishes.",
+        step1Title: "01. Your idea",
+        step1Text: "Describe the subject, colours and atmosphere you would like.",
+        step2Title: "02. Personal response",
+        step2Text: "Olga reviews your request and contacts you by email.",
+        step3Title: "03. Price and details",
+        step3Text: "The price, completion time and shipping are discussed before any binding order.",
+        importantTitle: "Important",
+        importantText: "Submitting this request is not a binding order and does not trigger a payment.",
+        imprint: "Legal Notice",
+        privacy: "Privacy",
+        terms: "Terms",
+        withdrawal: "Withdrawal",
+        sending: "Sending your request ...",
+        success: "Thank you! Your request has been sent. Olga may contact you using the email address you provided.",
+        error: "Your request could not be sent. Please try again later.",
+        imageTooLarge: "The photo is larger than 5 MB. Please choose a smaller file.",
+        imageInvalid: "Please select a JPG, PNG or WebP image.",
+        consentRequired: "Please confirm the privacy information.",
+        descriptionRequired: "Please describe your artwork idea in more detail.",
+        configurationError: "The request feature is not configured correctly at the moment. Please try again later."
+      },
+
+      ru: {
+        pageLabel: "Картины на заказ",
+        cart: "Корзина",
+        navigation: "Навигация",
+        home: "Главная",
+        gallery: "Галерея",
+        categories: "Категории",
+        about: "О художнице",
+        custom: "Картина на заказ",
+        follow: "Социальные сети художницы",
+        eyebrow: "Картина специально для вас",
+        title: "Ваша идея картины",
+        intro: "Есть особенная идея? Опишите её, выберите желаемый размер и укажите бюджет. После этого Ольга Морланг сможет лично рассмотреть вашу заявку.",
+        formTitle: "Заявка на индивидуальную картину",
+        nameLabel: "Ваше имя",
+        namePlaceholder: "Имя и фамилия",
+        emailLabel: "Электронная почта",
+        emailPlaceholder: "name@example.com",
+        countryLabel: "Страна доставки",
+        countryPlaceholder: "Выберите страну",
+        descriptionLabel: "Опишите вашу идею картины",
+        descriptionPlaceholder: "Сюжет, цвета, стиль, настроение и другие пожелания ...",
+        descriptionHint: "Чем подробнее описание, тем легче понять вашу задумку.",
+        sizeLabel: "Желаемый размер",
+        sizePlaceholder: "Выберите размер",
+        sizeSmall: "Маленький — примерно до 30 × 40 см",
+        sizeMedium: "Средний — примерно 40 × 60 см",
+        sizeLarge: "Большой — примерно 60 × 80 см",
+        sizeCustom: "Другой размер / обсудим",
+        budgetLabel: "Ваш бюджет",
+        budgetPlaceholder: "Выберите бюджет",
+        budgetDiscuss: "Пока не определён / обсудим",
+        referenceLabel: "Фотография-пример (необязательно)",
+        referenceHint: "JPG, PNG или WebP; максимум 5 МБ. Заявку можно отправить и без фотографии.",
+        removePhoto: "Удалить фотографию",
+        notesLabel: "Дополнительные пожелания (необязательно)",
+        notesPlaceholder: "Например, желаемый срок или особые детали ...",
+        privacyConsent: "Я прочитал(а) <a href=\"datenschutz.html\" target=\"_blank\" rel=\"noopener\">информацию о конфиденциальности</a> и согласен(на) на обработку моих данных для рассмотрения заявки. <span class=\"required\">*</span>",
+        submit: "Отправить заявку",
+        infoTitle: "Как это работает",
+        infoIntro: "Детали каждой индивидуальной картины обсуждаются с учётом ваших пожеланий.",
+        step1Title: "01. Ваша идея",
+        step1Text: "Опишите сюжет, цвета и настроение будущей картины.",
+        step2Title: "02. Личный ответ",
+        step2Text: "Ольга рассмотрит заявку и свяжется с вами по электронной почте.",
+        step3Title: "03. Цена и детали",
+        step3Text: "Цена, сроки изготовления и доставка согласовываются до оформления обязательного заказа.",
+        importantTitle: "Важно",
+        importantText: "Отправка заявки ещё не является обязательным заказом и не требует оплаты.",
+        imprint: "Выходные данные",
+        privacy: "Конфиденциальность",
+        terms: "Условия продажи",
+        withdrawal: "Отказ от покупки",
+        sending: "Отправляем вашу заявку ...",
+        success: "Спасибо! Ваша заявка отправлена. Ольга сможет связаться с вами по указанной электронной почте.",
+        error: "Не удалось отправить заявку. Пожалуйста, попробуйте позже.",
+        imageTooLarge: "Фотография больше 5 МБ. Пожалуйста, выберите файл меньшего размера.",
+        imageInvalid: "Выберите изображение в формате JPG, PNG или WebP.",
+        consentRequired: "Пожалуйста, подтвердите согласие с информацией о конфиденциальности.",
+        descriptionRequired: "Пожалуйста, подробнее опишите вашу идею картины.",
+        configurationError: "Функция отправки заявок пока настроена некорректно. Попробуйте позже."
+      },
+
+      fr: {
+        pageLabel: "Œuvres sur commande",
+        cart: "Panier",
+        navigation: "Navigation",
+        home: "Accueil",
+        gallery: "Galerie",
+        categories: "Catégories",
+        about: "À propos de l’artiste",
+        custom: "Œuvre personnalisée",
+        follow: "Suivre l’artiste",
+        eyebrow: "Une œuvre rien que pour vous",
+        title: "Votre idée de tableau",
+        intro: "Vous avez une idée particulière ? Décrivez-la, choisissez la taille souhaitée et indiquez votre budget. Olga Morlang pourra ensuite examiner votre demande personnellement.",
+        formTitle: "Demande d’œuvre personnalisée",
+        nameLabel: "Votre nom",
+        namePlaceholder: "Prénom et nom",
+        emailLabel: "Adresse e-mail",
+        emailPlaceholder: "name@example.com",
+        countryLabel: "Pays de livraison",
+        countryPlaceholder: "Choisir un pays",
+        descriptionLabel: "Décrivez votre idée",
+        descriptionPlaceholder: "Sujet, couleurs, style, ambiance et autres souhaits ...",
+        descriptionHint: "Plus votre description est précise, plus votre idée sera facile à comprendre.",
+        sizeLabel: "Taille souhaitée",
+        sizePlaceholder: "Choisir une taille",
+        sizeSmall: "Petite — jusqu’à environ 30 × 40 cm",
+        sizeMedium: "Moyenne — environ 40 × 60 cm",
+        sizeLarge: "Grande — environ 60 × 80 cm",
+        sizeCustom: "Autre taille / à discuter",
+        budgetLabel: "Votre budget",
+        budgetPlaceholder: "Choisir un budget",
+        budgetDiscuss: "À définir / à discuter",
+        referenceLabel: "Photo de référence (facultatif)",
+        referenceHint: "JPG, PNG ou WebP ; 5 Mo maximum. Vous pouvez envoyer la demande sans photo.",
+        removePhoto: "Supprimer la photo",
+        notesLabel: "Autres souhaits (facultatif)",
+        notesPlaceholder: "Par exemple, délai souhaité ou détails particuliers ...",
+        privacyConsent: "J’ai lu les <a href=\"datenschutz.html\" target=\"_blank\" rel=\"noopener\">informations sur la confidentialité</a> et j’accepte le traitement de mes données pour examiner ma demande. <span class=\"required\">*</span>",
+        submit: "Envoyer la demande",
+        infoTitle: "Comment ça marche",
+        infoIntro: "Chaque œuvre personnalisée est discutée selon vos souhaits.",
+        step1Title: "01. Votre idée",
+        step1Text: "Décrivez le sujet, les couleurs et l’ambiance souhaitée.",
+        step2Title: "02. Réponse personnelle",
+        step2Text: "Olga examine votre demande et vous contacte par e-mail.",
+        step3Title: "03. Prix et détails",
+        step3Text: "Le prix, le délai de réalisation et l’expédition sont convenus avant toute commande ferme.",
+        importantTitle: "Important",
+        importantText: "L’envoi de cette demande ne constitue pas une commande ferme et n’entraîne aucun paiement.",
+        imprint: "Mentions légales",
+        privacy: "Confidentialité",
+        terms: "Conditions",
+        withdrawal: "Rétractation",
+        sending: "Envoi de votre demande ...",
+        success: "Merci ! Votre demande a été envoyée. Olga pourra vous contacter à l’adresse e-mail indiquée.",
+        error: "Votre demande n’a pas pu être envoyée. Veuillez réessayer plus tard.",
+        imageTooLarge: "La photo dépasse 5 Mo. Veuillez choisir un fichier plus petit.",
+        imageInvalid: "Veuillez sélectionner une image JPG, PNG ou WebP.",
+        consentRequired: "Veuillez confirmer les informations sur la confidentialité.",
+        descriptionRequired: "Veuillez décrire votre idée plus en détail.",
+        configurationError: "La fonction de demande n’est pas correctement configurée. Veuillez réessayer plus tard."
+      },
+
+      nl: {
+        pageLabel: "Kunst op bestelling",
+        cart: "Winkelwagen",
+        navigation: "Navigatie",
+        home: "Startpagina",
+        gallery: "Galerij",
+        categories: "Categorieën",
+        about: "Over de kunstenares",
+        custom: "Kunstwerk op maat",
+        follow: "Volg de kunstenares",
+        eyebrow: "Een kunstwerk speciaal voor u",
+        title: "Uw persoonlijke schilderijidee",
+        intro: "Heeft u een bijzonder idee? Beschrijf het, kies het gewenste formaat en geef uw budget aan. Olga Morlang kan uw aanvraag daarna persoonlijk bekijken.",
+        formTitle: "Aanvraag voor een kunstwerk op maat",
+        nameLabel: "Uw naam",
+        namePlaceholder: "Voor- en achternaam",
+        emailLabel: "E-mailadres",
+        emailPlaceholder: "name@example.com",
+        countryLabel: "Land van levering",
+        countryPlaceholder: "Kies een land",
+        descriptionLabel: "Beschrijf uw idee",
+        descriptionPlaceholder: "Onderwerp, kleuren, stijl, sfeer en andere wensen ...",
+        descriptionHint: "Hoe nauwkeuriger uw beschrijving, hoe beter uw idee kan worden begrepen.",
+        sizeLabel: "Gewenst formaat",
+        sizePlaceholder: "Kies een formaat",
+        sizeSmall: "Klein — tot ongeveer 30 × 40 cm",
+        sizeMedium: "Middel — ongeveer 40 × 60 cm",
+        sizeLarge: "Groot — ongeveer 60 × 80 cm",
+        sizeCustom: "Ander formaat / in overleg",
+        budgetLabel: "Uw budget",
+        budgetPlaceholder: "Kies een budget",
+        budgetDiscuss: "Nog niet bepaald / bespreken",
+        referenceLabel: "Referentiefoto (optioneel)",
+        referenceHint: "JPG, PNG of WebP; maximaal 5 MB. U kunt ook zonder foto een aanvraag indienen.",
+        removePhoto: "Foto verwijderen",
+        notesLabel: "Aanvullende wensen (optioneel)",
+        notesPlaceholder: "Bijvoorbeeld gewenste termijn of bijzondere details ...",
+        privacyConsent: "Ik heb de <a href=\"datenschutz.html\" target=\"_blank\" rel=\"noopener\">privacyinformatie</a> gelezen en ga akkoord met de verwerking van mijn gegevens om mijn aanvraag te behandelen. <span class=\"required\">*</span>",
+        submit: "Aanvraag verzenden",
+        infoTitle: "Zo werkt het",
+        infoIntro: "Elk kunstwerk op maat wordt volgens uw wensen besproken.",
+        step1Title: "01. Uw idee",
+        step1Text: "Beschrijf het onderwerp, de kleuren en de gewenste sfeer.",
+        step2Title: "02. Persoonlijke reactie",
+        step2Text: "Olga bekijkt uw aanvraag en neemt via e-mail contact met u op.",
+        step3Title: "03. Prijs en details",
+        step3Text: "Prijs, uitvoeringstermijn en verzending worden besproken voordat een bindende bestelling wordt geplaatst.",
+        importantTitle: "Belangrijk",
+        importantText: "Het verzenden van deze aanvraag is nog geen bindende bestelling en leidt niet tot een betaling.",
+        imprint: "Colofon",
+        privacy: "Privacy",
+        terms: "Voorwaarden",
+        withdrawal: "Herroeping",
+        sending: "Uw aanvraag wordt verzonden ...",
+        success: "Bedankt! Uw aanvraag is verzonden. Olga kan contact met u opnemen via het opgegeven e-mailadres.",
+        error: "Uw aanvraag kon niet worden verzonden. Probeer het later opnieuw.",
+        imageTooLarge: "De foto is groter dan 5 MB. Kies een kleiner bestand.",
+        imageInvalid: "Selecteer een JPG-, PNG- of WebP-afbeelding.",
+        consentRequired: "Bevestig de privacyinformatie.",
+        descriptionRequired: "Beschrijf uw idee alstublieft uitgebreider.",
+        configurationError: "De aanvraagfunctie is momenteel niet correct ingesteld. Probeer het later opnieuw."
+      }
+    };
+
+    const languageSelect = document.getElementById("languageSelect");
+    const form = document.getElementById("customForm");
+    const submitButton = document.getElementById("submitButton");
+    const statusMessage = document.getElementById("statusMessage");
+    const referenceInput = document.getElementById("referenceImage");
+    const previewWrap = document.getElementById("previewWrap");
+    const referencePreview = document.getElementById("referencePreview");
+
+    let currentLanguage = "de";
+    let previewObjectUrl = null;
+
+    function translatePage(language) {
+      currentLanguage = translations[language] ? language : "de";
+      const dictionary = translations[currentLanguage];
+
+      document.documentElement.lang = currentLanguage;
+      document.title = {
+        de: "Individuelles Kunstwerk | Olga Morlang",
+        en: "Custom Artwork | Olga Morlang",
+        ru: "Картина на заказ | Olga Morlang",
+        fr: "Œuvre personnalisée | Olga Morlang",
+        nl: "Kunstwerk op maat | Olga Morlang"
+      }[currentLanguage];
+
+      document.querySelectorAll("[data-i18n]").forEach(element => {
+        const key = element.dataset.i18n;
+        if (dictionary[key] !== undefined) {
+          element.textContent = dictionary[key];
+        }
+      });
+
+      document.querySelectorAll("[data-i18n-placeholder]").forEach(element => {
+        const key = element.dataset.i18nPlaceholder;
+        if (dictionary[key] !== undefined) {
+          element.placeholder = dictionary[key];
+        }
+      });
+
+      document.querySelectorAll("[data-i18n-html]").forEach(element => {
+        const key = element.dataset.i18nHtml;
+        if (dictionary[key] !== undefined) {
+          element.innerHTML = dictionary[key];
+        }
+      });
+
+      languageSelect.value = currentLanguage;
+      localStorage.setItem("olgaLanguage", currentLanguage);
+    }
+
+    function text(key) {
+      return translations[currentLanguage][key] || translations.de[key] || key;
+    }
+
+    languageSelect.addEventListener("change", () => {
+      translatePage(languageSelect.value);
+    });
+
+    const savedLanguage = localStorage.getItem("olgaLanguage") || "de";
+    translatePage(savedLanguage);
+
+    /* Shared drawer menu */
+
+    const drawer = document.getElementById("drawer");
+    const overlay = document.getElementById("drawerOverlay");
+    const openButton = document.getElementById("menuOpen");
+    const closeButton = document.getElementById("menuClose");
+
+    function openMenu() {
+      drawer.classList.add("open");
+      overlay.classList.add("open");
+      document.body.classList.add("menu-open");
+      drawer.setAttribute("aria-hidden", "false");
+      openButton.setAttribute("aria-expanded", "true");
+      closeButton.focus();
+    }
+
+    function closeMenu() {
+      drawer.classList.remove("open");
+      overlay.classList.remove("open");
+      document.body.classList.remove("menu-open");
+      drawer.setAttribute("aria-hidden", "true");
+      openButton.setAttribute("aria-expanded", "false");
+      openButton.focus();
+    }
+
+    openButton.addEventListener("click", openMenu);
+    closeButton.addEventListener("click", closeMenu);
+    overlay.addEventListener("click", closeMenu);
+
+    document.addEventListener("keydown", event => {
+      if (event.key === "Escape" && drawer.classList.contains("open")) {
+        closeMenu();
+      }
+    });
+
+    /* Cart count */
+
+    function updateCartCount() {
+      try {
+        const cart = JSON.parse(localStorage.getItem("olgaCart") || "[]");
+        const count = Array.isArray(cart)
+          ? cart.reduce((sum, item) => sum + Math.max(1, Number(item.quantity) || 1), 0)
+          : 0;
+
+        document.getElementById("cartCount").textContent = count;
+      } catch {
+        document.getElementById("cartCount").textContent = "0";
+      }
+    }
+
+    updateCartCount();
+
+    /* Footer year */
+
+    document.getElementById("footerYear").textContent = new Date().getFullYear();
+    document.getElementById("drawerYear").textContent = new Date().getFullYear();
+
+    /* Reference photo preview and validation */
+
+    function clearPhotoPreview() {
+      if (previewObjectUrl) {
+        URL.revokeObjectURL(previewObjectUrl);
+        previewObjectUrl = null;
+      }
+
+      referenceInput.value = "";
+      referencePreview.removeAttribute("src");
+      previewWrap.classList.remove("visible");
+    }
+
+    referenceInput.addEventListener("change", () => {
+      const file = referenceInput.files && referenceInput.files[0];
+
+      if (!file) {
+        clearPhotoPreview();
+        return;
+      }
+
+      const allowedTypes = ["image/jpeg", "image/png", "image/webp"];
+
+      if (!allowedTypes.includes(file.type)) {
+        clearPhotoPreview();
+        showStatus(text("imageInvalid"), "error");
+        return;
+      }
+
+      if (file.size > 5 * 1024 * 1024) {
+        clearPhotoPreview();
+        showStatus(text("imageTooLarge"), "error");
+        return;
+      }
+
+      hideStatus();
+
+      if (previewObjectUrl) {
+        URL.revokeObjectURL(previewObjectUrl);
+      }
+
+      previewObjectUrl = URL.createObjectURL(file);
+      referencePreview.src = previewObjectUrl;
+      previewWrap.classList.add("visible");
+    });
+
+    document.getElementById("removePreview").addEventListener("click", clearPhotoPreview);
+
+    function showStatus(message, type) {
+      statusMessage.textContent = message;
+      statusMessage.className = "status-message visible " + type;
+    }
+
+    function hideStatus() {
+      statusMessage.textContent = "";
+      statusMessage.className = "status-message";
+    }
+
+    /*
+      IMPORTANT:
+      The endpoint needs to accept the JSON field names sent below.
+      The optional reference photo is encoded as a data URL.
+      The Edge Function should validate it, store it in a private bucket,
+      and record its private storage path in the custom order.
+      Do not make private reference photos publicly accessible.
+    */
+
+    function fileToDataUrl(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = () => reject(new Error("Could not read the reference photo"));
+
+        reader.readAsDataURL(file);
+      });
+    }
+
+    form.addEventListener("submit", async event => {
+      event.preventDefault();
+      hideStatus();
+
+      if (!form.reportValidity()) {
+        return;
+      }
+
+      if (!document.getElementById("privacyConsent").checked) {
+        showStatus(text("consentRequired"), "error");
+        return;
+      }
+
+      const description = document.getElementById("description").value.trim();
+
+      if (description.length < 10) {
+        showStatus(text("descriptionRequired"), "error");
+        return;
+      }
+
+      const photo = referenceInput.files && referenceInput.files[0];
+
+      if (photo && photo.size > 5 * 1024 * 1024) {
+        showStatus(text("imageTooLarge"), "error");
+        return;
+      }
+
+      if (!SUPABASE_URL || !SUPABASE_PUBLISHABLE_KEY || !EDGE_FUNCTION_URL) {
+        showStatus(text("configurationError"), "error");
+        return;
+      }
+
+      submitButton.disabled = true;
+      submitButton.textContent = text("sending");
+
+      try {
+        let referencePhoto = null;
+
+        if (photo) {
+          referencePhoto = {
+            fileName: photo.name,
+            mimeType: photo.type,
+            dataUrl: await fileToDataUrl(photo)
+          };
+        }
+
+        /*
+          This payload must match the deployed dynamic-service function.
+          If the current function expects different field names, update this
+          object to its exact contract before publishing the form.
+        */
+        const payload = {
+          order_type: "custom",
+          customer: {
+            name: document.getElementById("customerName").value.trim(),
+            email: document.getElementById("customerEmail").value.trim(),
+            country: document.getElementById("country").value
+          },
+          custom_description: description,
+          custom_size: document.getElementById("size").value,
+          custom_budget: document.getElementById("budget").value,
+          custom_notes: document.getElementById("additionalNotes").value.trim(),
+          reference_photo: referencePhoto,
+          language: currentLanguage,
+          privacy_consent: true
+        };
+
+        const response = await fetch(EDGE_FUNCTION_URL, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "apikey": SUPABASE_PUBLISHABLE_KEY,
+            "Authorization": `Bearer ${SUPABASE_PUBLISHABLE_KEY}`
+          },
+          body: JSON.stringify(payload)
+        });
+
+        let result = {};
+
+        try {
+          result = await response.json();
+        } catch {
+          result = {};
+        }
+
+        if (!response.ok || result.success === false || result.error) {
+          throw new Error(result.message || result.error || "Request failed");
+        }
+
+        form.reset();
+        clearPhotoPreview();
+        updateCartCount();
+
+        showStatus(text("success"), "success");
+      } catch (error) {
+        console.error("Custom artwork request failed:", error);
+        showStatus(text("error"), "error");
+      } finally {
+        submitButton.disabled = false;
+        submitButton.textContent = text("submit");
+      }
+    });
+  </script>
+</body>
 </html>
