@@ -1,0 +1,1209 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#081522">
+
+  <title>Über die Künstlerin | Olga Morlang</title>
+  <meta name="description" content="Lernen Sie die Künstlerin Olga Morlang und ihre originalen handgemalten Kunstwerke kennen.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --navy: #081522;
+      --navy-light: #102337;
+      --gold: #d4b16b;
+      --gold-light: #f0d9a0;
+      --cream: #f5efe3;
+      --muted: #b9c2ca;
+      --border: rgba(212, 177, 107, 0.28);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--cream);
+      background:
+        linear-gradient(rgba(5, 15, 25, 0.88), rgba(5, 15, 25, 0.96)),
+        url("111.jpeg") center / cover fixed;
+      font-family: "Montserrat", sans-serif;
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    body.no-scroll {
+      overflow: hidden;
+    }
+
+    button,
+    select {
+      font: inherit;
+    }
+
+    button,
+    a {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: 15px;
+      min-height: 86px;
+      padding: 12px clamp(16px, 4vw, 55px);
+      background: rgba(5, 16, 27, 0.96);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(14px);
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      min-width: 0;
+    }
+
+    .menu-button,
+    .cart-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 43px;
+      height: 43px;
+      flex-shrink: 0;
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      color: var(--gold-light);
+      background: transparent;
+      font-size: 21px;
+    }
+
+    .menu-button:hover,
+    .cart-link:hover {
+      background: rgba(212, 177, 107, 0.12);
+    }
+
+    .logo-link {
+      display: flex;
+      align-items: center;
+      min-width: 0;
+    }
+
+    .logo {
+      display: block;
+      width: auto;
+      max-width: 185px;
+      max-height: 62px;
+      object-fit: contain;
+    }
+
+    .brand-fallback {
+      color: var(--gold-light);
+      font-family: "Cormorant Garamond", serif;
+      font-size: 27px;
+      line-height: 1.1;
+      letter-spacing: 1px;
+    }
+
+    .header-title {
+      justify-self: center;
+      color: var(--gold-light);
+      font-family: "Cormorant Garamond", serif;
+      font-size: clamp(23px, 3vw, 34px);
+      letter-spacing: 1px;
+      text-align: center;
+    }
+
+    .header-actions {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .language-select {
+      max-width: 120px;
+      padding: 9px 10px;
+      color: var(--cream);
+      background: var(--navy-light);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      outline: none;
+    }
+
+    .language-select option {
+      color: var(--cream);
+      background: var(--navy);
+    }
+
+    .cart-link {
+      position: relative;
+      font-size: 19px;
+    }
+
+    .cart-count {
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 19px;
+      height: 19px;
+      padding: 0 5px;
+      border-radius: 50px;
+      background: var(--gold);
+      color: var(--navy);
+      font-size: 10px;
+      font-weight: 700;
+    }
+
+    .drawer-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      background: rgba(0, 0, 0, 0.65);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.25s, visibility 0.25s;
+    }
+
+    .drawer-overlay.open {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .drawer {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 201;
+      width: min(350px, 88vw);
+      height: 100%;
+      padding: 25px 23px 35px;
+      overflow-y: auto;
+      background: #091827;
+      border-right: 1px solid var(--border);
+      transform: translateX(-105%);
+      transition: transform 0.28s ease;
+    }
+
+    .drawer.open {
+      transform: translateX(0);
+    }
+
+    .drawer-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 25px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .drawer-brand {
+      color: var(--gold-light);
+      font-family: "Cormorant Garamond", serif;
+      font-size: 25px;
+    }
+
+    .drawer-close {
+      width: 39px;
+      height: 39px;
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      background: transparent;
+      color: var(--cream);
+      font-size: 22px;
+    }
+
+    .drawer a,
+    .drawer-category {
+      display: block;
+      width: 100%;
+      padding: 12px 9px;
+      border: 0;
+      border-bottom: 1px solid rgba(212, 177, 107, 0.12);
+      background: transparent;
+      color: var(--cream);
+      text-align: left;
+      transition: color 0.2s, padding-left 0.2s;
+    }
+
+    .drawer a:hover,
+    .drawer-category:hover {
+      padding-left: 15px;
+      color: var(--gold-light);
+    }
+
+    .drawer-heading {
+      margin: 22px 0 7px;
+      color: var(--gold);
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .drawer-socials {
+      display: flex;
+      gap: 12px;
+      margin-top: 25px;
+    }
+
+    .drawer-socials a {
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      text-align: center;
+    }
+
+    .hero {
+      position: relative;
+      padding: 72px 20px 60px;
+      text-align: center;
+    }
+
+    .eyebrow {
+      margin: 0 0 12px;
+      color: var(--gold);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+    }
+
+    h1,
+    h2,
+    h3 {
+      font-family: "Cormorant Garamond", serif;
+      font-weight: 500;
+    }
+
+    .hero h1 {
+      max-width: 950px;
+      margin: 0 auto;
+      color: var(--gold-light);
+      font-size: clamp(43px, 7vw, 72px);
+      line-height: 1.05;
+    }
+
+    .gold-line {
+      width: 75px;
+      height: 1px;
+      margin: 24px auto;
+      background: var(--gold);
+    }
+
+    .hero p:last-child {
+      max-width: 680px;
+      margin: 0 auto;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.9;
+    }
+
+    .content {
+      width: min(1200px, 100%);
+      margin: 0 auto;
+      padding: 0 25px 85px;
+    }
+
+    .artist-section {
+      display: grid;
+      grid-template-columns: minmax(280px, 0.85fr) minmax(0, 1.15fr);
+      align-items: center;
+      gap: clamp(30px, 6vw, 75px);
+      padding: 20px 0 75px;
+    }
+
+    .portrait-frame {
+      position: relative;
+      width: 100%;
+      max-width: 440px;
+      margin: 0 auto;
+      padding: 12px;
+      border: 1px solid var(--border);
+      background: rgba(8, 21, 34, 0.7);
+    }
+
+    .portrait-frame::before {
+      position: absolute;
+      inset: -8px 18px 18px -8px;
+      z-index: -1;
+      border: 1px solid rgba(212, 177, 107, 0.35);
+      content: "";
+    }
+
+    .portrait {
+      display: block;
+      width: 100%;
+      max-height: 610px;
+      aspect-ratio: 4 / 5;
+      object-fit: cover;
+      object-position: center;
+      background: var(--navy-light);
+    }
+
+    .portrait-caption {
+      margin: 14px 0 0;
+      color: var(--gold);
+      font-family: "Cormorant Garamond", serif;
+      font-size: 21px;
+      text-align: center;
+    }
+
+    .artist-copy {
+      padding: 15px 0;
+    }
+
+    .section-label {
+      margin: 0 0 11px;
+      color: var(--gold);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+    }
+
+    .artist-copy h2,
+    .section-heading {
+      margin: 0 0 22px;
+      color: var(--gold-light);
+      font-size: clamp(35px, 5vw, 50px);
+      line-height: 1.1;
+    }
+
+    .artist-copy p,
+    .story-card p {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 2;
+    }
+
+    .signature {
+      margin-top: 27px;
+      color: var(--gold-light);
+      font-family: "Cormorant Garamond", serif;
+      font-size: 35px;
+      font-style: italic;
+    }
+
+    .story-section {
+      padding: 65px 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .section-intro {
+      max-width: 700px;
+      margin: 0 auto 40px;
+      text-align: center;
+    }
+
+    .section-intro p:last-child {
+      color: var(--muted);
+      line-height: 1.9;
+    }
+
+    .story-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 20px;
+    }
+
+    .story-card {
+      padding: 27px 24px;
+      background: rgba(11, 28, 44, 0.82);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+    }
+
+    .story-number {
+      color: var(--gold);
+      font-family: "Cormorant Garamond", serif;
+      font-size: 38px;
+      line-height: 1;
+    }
+
+    .story-card h3 {
+      margin: 17px 0 10px;
+      color: var(--gold-light);
+      font-size: 28px;
+      line-height: 1.15;
+    }
+
+    .story-card p {
+      margin-bottom: 0;
+    }
+
+    .quote-section {
+      position: relative;
+      margin: 15px 0 75px;
+      padding: 50px 28px;
+      background:
+        linear-gradient(rgba(5, 16, 27, 0.83), rgba(5, 16, 27, 0.94)),
+        url("111.jpeg") center / cover;
+      border: 1px solid var(--border);
+      text-align: center;
+    }
+
+    .quote-mark {
+      color: var(--gold);
+      font-family: "Cormorant Garamond", serif;
+      font-size: 65px;
+      line-height: 0.7;
+    }
+
+    .quote-section h2 {
+      max-width: 800px;
+      margin: 16px auto;
+      color: var(--gold-light);
+      font-size: clamp(28px, 4.5vw, 43px);
+      line-height: 1.3;
+    }
+
+    .quote-section p {
+      margin-bottom: 0;
+      color: var(--muted);
+    }
+
+    .cta {
+      padding: 50px 25px;
+      border: 1px solid var(--border);
+      background: rgba(8, 21, 34, 0.88);
+      text-align: center;
+    }
+
+    .cta h2 {
+      margin: 0;
+      color: var(--gold-light);
+      font-size: clamp(32px, 5vw, 46px);
+      line-height: 1.15;
+    }
+
+    .cta p {
+      max-width: 650px;
+      margin: 16px auto 24px;
+      color: var(--muted);
+      line-height: 1.9;
+    }
+
+    .button-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 46px;
+      padding: 12px 20px;
+      border: 1px solid var(--gold);
+      border-radius: 3px;
+      font-size: 11px;
+      font-weight: 600;
+      text-align: center;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .button-primary {
+      color: #081522;
+      background: var(--gold);
+    }
+
+    .button-primary:hover {
+      background: var(--gold-light);
+    }
+
+    .button-outline {
+      color: var(--gold-light);
+      background: transparent;
+    }
+
+    .button-outline:hover {
+      color: var(--navy);
+      background: var(--gold-light);
+    }
+
+    .site-footer {
+      margin-top: 80px;
+      padding: 27px 20px;
+      border-top: 1px solid var(--border);
+      background: rgba(5, 16, 27, 0.96);
+      color: var(--muted);
+      text-align: center;
+      font-size: 11px;
+    }
+
+    .footer-name {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--gold-light);
+      font-family: "Cormorant Garamond", serif;
+      font-size: 24px;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px 20px;
+      margin: 13px 0;
+    }
+
+    .footer-links a:hover {
+      color: var(--gold-light);
+    }
+
+    @media (max-width: 850px) {
+      .artist-section {
+        grid-template-columns: minmax(220px, 0.8fr) minmax(0, 1.2fr);
+        gap: 30px;
+      }
+
+      .story-grid {
+        grid-template-columns: 1fr;
+        gap: 14px;
+      }
+
+      .story-card {
+        padding: 23px;
+      }
+    }
+
+    @media (max-width: 650px) {
+      .topbar {
+        grid-template-columns: 1fr auto;
+        min-height: 72px;
+        gap: 8px;
+        padding: 10px 13px;
+      }
+
+      .header-left {
+        gap: 9px;
+      }
+
+      .menu-button,
+      .cart-link {
+        width: 38px;
+        height: 38px;
+      }
+
+      .logo {
+        max-width: 125px;
+        max-height: 48px;
+      }
+
+      .brand-fallback {
+        font-size: 21px;
+      }
+
+      .header-title {
+        display: none;
+      }
+
+      .header-actions {
+        gap: 8px;
+      }
+
+      .language-select {
+        width: 83px;
+        padding: 8px 4px;
+        font-size: 11px;
+      }
+
+      .hero {
+        padding: 53px 18px 42px;
+      }
+
+      .content {
+        padding: 0 17px 55px;
+      }
+
+      .artist-section {
+        grid-template-columns: 1fr;
+        gap: 30px;
+        padding-top: 5px;
+      }
+
+      .portrait-frame {
+        max-width: 370px;
+      }
+
+      .artist-copy {
+        padding-top: 0;
+      }
+
+      .story-section {
+        padding: 45px 0;
+      }
+
+      .quote-section {
+        margin-bottom: 45px;
+        padding: 38px 19px;
+      }
+
+      .cta {
+        padding: 38px 17px;
+      }
+
+      .button-row {
+        flex-direction: column;
+      }
+
+      .button-row .button {
+        width: 100%;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="topbar">
+    <div class="header-left">
+      <button class="menu-button" id="menuOpen" type="button"
+              aria-label="Open menu" aria-controls="drawer" aria-expanded="false">
+        ☰
+      </button>
+
+      <a class="logo-link" href="index.html" aria-label="Olga Morlang – Home">
+        <img class="logo" src="logo.jpeg" alt="Olga Morlang"
+             onerror="this.style.display='none';document.getElementById('brandFallback').style.display='block'">
+        <span class="brand-fallback" id="brandFallback" style="display:none">Olga Morlang</span>
+      </a>
+    </div>
+
+    <div class="header-title" data-i18n="pageTitle">Über die Künstlerin</div>
+
+    <div class="header-actions">
+      <select class="language-select" id="languageSelect" aria-label="Language">
+        <option value="de">Deutsch</option>
+        <option value="en">English</option>
+        <option value="ru">Русский</option>
+        <option value="fr">Français</option>
+        <option value="nl">Nederlands</option>
+      </select>
+
+      <a class="cart-link" href="cart.html" aria-label="Shopping cart">
+        ♧
+        <span class="cart-count" id="cartCount">0</span>
+      </a>
+    </div>
+  </header>
+
+  <div class="drawer-overlay" id="drawerOverlay"></div>
+
+  <nav class="drawer" id="drawer" aria-label="Main navigation" aria-hidden="true">
+    <div class="drawer-top">
+      <div class="drawer-brand">Olga Morlang</div>
+      <button class="drawer-close" id="menuClose" type="button"
+              aria-label="Close menu">×</button>
+    </div>
+
+    <a href="index.html" data-i18n="navHome">Startseite</a>
+    <a href="gallery.html" data-i18n="navGallery">Galerie aller Werke</a>
+
+    <div class="drawer-heading" data-i18n="navCategories">Kategorien</div>
+    <a href="gallery.html" data-i18n="allWorks">Alle Werke</a>
+
+    <div class="drawer-heading" data-i18n="navMore">Mehr entdecken</div>
+    <a href="about.html" data-i18n="navAbout">Über die Künstlerin</a>
+    <a href="custom.html" data-i18n="navCustom">Individuelles Gemälde anfragen</a>
+    <a href="cart.html" data-i18n="navCart">Warenkorb / Anfrage</a>
+
+    <div class="drawer-socials">
+      <a href="https://www.instagram.com/morlang643art/"
+         target="_blank" rel="noopener noreferrer">Instagram</a>
+      <a href="https://www.facebook.com/share/19STKtEPq9/"
+         target="_blank" rel="noopener noreferrer">Facebook</a>
+    </div>
+  </nav>
+
+  <main>
+    <section class="hero">
+      <p class="eyebrow" data-i18n="eyebrow">Kunst mit Persönlichkeit</p>
+      <h1 data-i18n="heroTitle">Olga Morlang</h1>
+      <div class="gold-line"></div>
+      <p data-i18n="heroText">
+        Willkommen in der Welt meiner Kunst. Entdecken Sie originale Gemälde,
+        in denen Farben, Formen und persönliche Eindrücke ihren eigenen Ausdruck finden.
+      </p>
+    </section>
+
+    <div class="content">
+      <section class="artist-section">
+        <div class="portrait-frame">
+          <img class="portrait" src="333.jpeg" alt="Olga Morlang"
+               loading="eager"
+               onerror="this.style.display='none';this.parentElement.style.minHeight='300px';this.parentElement.style.display='flex';this.parentElement.style.alignItems='center';this.parentElement.style.justifyContent='center';this.parentElement.innerHTML='<p style=&quot;color:#d4b16b;text-align:center;padding:30px&quot;>Olga Morlang</p>'">
+          <p class="portrait-caption">Olga Morlang</p>
+        </div>
+
+        <div class="artist-copy">
+          <p class="section-label" data-i18n="aboutLabel">Die Künstlerin</p>
+          <h2 data-i18n="aboutHeading">Kunst, die ihren eigenen Weg findet</h2>
+
+          <p data-i18n="aboutText1">
+            Für mich ist Malerei eine Möglichkeit, Gedanken, Stimmungen und
+            Eindrücke in Farben und Formen auszudrücken. Jedes Bild entwickelt
+            dabei seinen eigenen Charakter.
+          </p>
+
+          <p data-i18n="aboutText2">
+            Ich lade Sie ein, meine Arbeiten in Ruhe zu entdecken und das Werk
+            zu finden, das Sie persönlich anspricht. Meine Galerie zeigt originale
+            Gemälde, die mit der Hand geschaffen wurden.
+          </p>
+
+          <p data-i18n="aboutText3">
+            Wenn Sie eine eigene Vorstellung haben, können Sie auch eine
+            individuelle Arbeit anfragen. Gemeinsam lassen sich Ihre Wünsche
+            und die passende Idee besprechen.
+          </p>
+
+          <div class="signature">Olga Morlang</div>
+        </div>
+      </section>
+
+      <section class="story-section">
+        <div class="section-intro">
+          <p class="section-label" data-i18n="valuesLabel">Meine Kunst</p>
+          <h2 class="section-heading" data-i18n="valuesHeading">
+            Was meine Arbeiten auszeichnet
+          </h2>
+          <p data-i18n="valuesIntro">
+            Jedes Gemälde ist ein eigenständiges Original. Entdecken Sie die
+            Arbeiten und entscheiden Sie selbst, welches Bild zu Ihnen passt.
+          </p>
+        </div>
+
+        <div class="story-grid">
+          <article class="story-card">
+            <div class="story-number">01</div>
+            <h3 data-i18n="card1Title">Originale Werke</h3>
+            <p data-i18n="card1Text">
+              Die Galerie ist auf originale, handgemalte Gemälde ausgerichtet.
+              Jedes Werk wird als eigenständiges Kunstobjekt präsentiert.
+            </p>
+          </article>
+
+          <article class="story-card">
+            <div class="story-number">02</div>
+            <h3 data-i18n="card2Title">Farben und Ausdruck</h3>
+            <p data-i18n="card2Text">
+              Farben und Formen schaffen eine besondere Atmosphäre. Nehmen Sie
+              sich Zeit, die Details der einzelnen Werke zu entdecken.
+            </p>
+          </article>
+
+          <article class="story-card">
+            <div class="story-number">03</div>
+            <h3 data-i18n="card3Title">Individuelle Ideen</h3>
+            <p data-i18n="card3Text">
+              Sie wünschen sich ein persönliches Motiv? Senden Sie eine Anfrage
+              mit Ihren Vorstellungen, der gewünschten Größe und weiteren Details.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="quote-section">
+        <div class="quote-mark">“</div>
+        <h2 data-i18n="quote">
+          Ein Kunstwerk findet seinen Platz dort, wo es Menschen persönlich berührt.
+        </h2>
+        <div class="gold-line"></div>
+        <p data-i18n="quoteCaption">Entdecken Sie die Galerie von Olga Morlang.</p>
+      </section>
+
+      <section class="cta">
+        <p class="section-label" data-i18n="ctaLabel">Entdecken und anfragen</p>
+        <h2 data-i18n="ctaHeading">Finden Sie Ihr Lieblingswerk</h2>
+        <p data-i18n="ctaText">
+          Sehen Sie sich die verfügbaren Gemälde an oder senden Sie eine Anfrage
+          für ein individuelles Kunstwerk.
+        </p>
+
+        <div class="button-row">
+          <a class="button button-primary" href="gallery.html"
+             data-i18n="galleryButton">Zur Kunstgalerie</a>
+
+          <a class="button button-outline" href="custom.html"
+             data-i18n="customButton">Individuelles Gemälde anfragen</a>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <span class="footer-name">Olga Morlang</span>
+    <div data-i18n="footerText">Originale Kunstwerke, mit Liebe von Hand gemalt.</div>
+
+    <div class="footer-links">
+      <a href="index.html" data-i18n="navHome">Startseite</a>
+      <a href="gallery.html" data-i18n="navGallery">Galerie</a>
+      <a href="about.html" data-i18n="navAbout">Über die Künstlerin</a>
+      <a href="custom.html" data-i18n="navCustom">Individuelles Gemälde</a>
+    </div>
+
+    <div>© <span id="currentYear"></span> Olga Morlang</div>
+  </footer>
+
+  <script>
+    "use strict";
+
+    const translations = {
+      de: {
+        pageTitle: "Über die Künstlerin",
+        navHome: "Startseite",
+        navGallery: "Galerie aller Werke",
+        navCategories: "Kategorien",
+        navMore: "Mehr entdecken",
+        navAbout: "Über die Künstlerin",
+        navCustom: "Individuelles Gemälde anfragen",
+        navCart: "Warenkorb / Anfrage",
+        allWorks: "Alle Werke",
+        eyebrow: "Kunst mit Persönlichkeit",
+        heroTitle: "Olga Morlang",
+        heroText: "Willkommen in der Welt meiner Kunst. Entdecken Sie originale Gemälde, in denen Farben, Formen und persönliche Eindrücke ihren eigenen Ausdruck finden.",
+        aboutLabel: "Die Künstlerin",
+        aboutHeading: "Kunst, die ihren eigenen Weg findet",
+        aboutText1: "Für mich ist Malerei eine Möglichkeit, Gedanken, Stimmungen und Eindrücke in Farben und Formen auszudrücken. Jedes Bild entwickelt dabei seinen eigenen Charakter.",
+        aboutText2: "Ich lade Sie ein, meine Arbeiten in Ruhe zu entdecken und das Werk zu finden, das Sie persönlich anspricht. Meine Galerie zeigt originale Gemälde, die mit der Hand geschaffen wurden.",
+        aboutText3: "Wenn Sie eine eigene Vorstellung haben, können Sie auch eine individuelle Arbeit anfragen. Gemeinsam lassen sich Ihre Wünsche und die passende Idee besprechen.",
+        valuesLabel: "Meine Kunst",
+        valuesHeading: "Was meine Arbeiten auszeichnet",
+        valuesIntro: "Jedes Gemälde ist ein eigenständiges Original. Entdecken Sie die Arbeiten und entscheiden Sie selbst, welches Bild zu Ihnen passt.",
+        card1Title: "Originale Werke",
+        card1Text: "Die Galerie ist auf originale, handgemalte Gemälde ausgerichtet. Jedes Werk wird als eigenständiges Kunstobjekt präsentiert.",
+        card2Title: "Farben und Ausdruck",
+        card2Text: "Farben und Formen schaffen eine besondere Atmosphäre. Nehmen Sie sich Zeit, die Details der einzelnen Werke zu entdecken.",
+        card3Title: "Individuelle Ideen",
+        card3Text: "Sie wünschen sich ein persönliches Motiv? Senden Sie eine Anfrage mit Ihren Vorstellungen, der gewünschten Größe und weiteren Details.",
+        quote: "Ein Kunstwerk findet seinen Platz dort, wo es Menschen persönlich berührt.",
+        quoteCaption: "Entdecken Sie die Galerie von Olga Morlang.",
+        ctaLabel: "Entdecken und anfragen",
+        ctaHeading: "Finden Sie Ihr Lieblingswerk",
+        ctaText: "Sehen Sie sich die verfügbaren Gemälde an oder senden Sie eine Anfrage für ein individuelles Kunstwerk.",
+        galleryButton: "Zur Kunstgalerie",
+        customButton: "Individuelles Gemälde anfragen",
+        footerText: "Originale Kunstwerke, mit Liebe von Hand gemalt.",
+        menuOpen: "Menü öffnen",
+        menuClose: "Menü schließen"
+      },
+
+      en: {
+        pageTitle: "About the artist",
+        navHome: "Home",
+        navGallery: "All artworks",
+        navCategories: "Categories",
+        navMore: "Discover more",
+        navAbout: "About the artist",
+        navCustom: "Request a custom painting",
+        navCart: "Cart / enquiry",
+        allWorks: "All artworks",
+        eyebrow: "Art with personality",
+        heroTitle: "Olga Morlang",
+        heroText: "Welcome to my world of art. Discover original paintings in which colours, shapes and personal impressions find their own expression.",
+        aboutLabel: "The artist",
+        aboutHeading: "Art that finds its own path",
+        aboutText1: "For me, painting is a way to express thoughts, moods and impressions through colours and shapes. Each painting develops its own character.",
+        aboutText2: "I invite you to explore my work and find the piece that speaks to you personally. My gallery presents original paintings created by hand.",
+        aboutText3: "If you have an idea of your own, you can also enquire about a custom painting. We can discuss your wishes and the right concept together.",
+        valuesLabel: "My art",
+        valuesHeading: "What makes my work special",
+        valuesIntro: "Every painting is an original in its own right. Explore the works and decide which one feels right for you.",
+        card1Title: "Original artworks",
+        card1Text: "The gallery focuses on original, hand-painted works. Each painting is presented as an individual piece of art.",
+        card2Title: "Colour and expression",
+        card2Text: "Colours and shapes create a distinctive atmosphere. Take your time to explore the details of each artwork.",
+        card3Title: "Personal ideas",
+        card3Text: "Have a particular subject in mind? Send an enquiry with your ideas, preferred size and other details.",
+        quote: "A work of art finds its place where it personally moves someone.",
+        quoteCaption: "Discover the gallery of Olga Morlang.",
+        ctaLabel: "Explore and enquire",
+        ctaHeading: "Find your favourite artwork",
+        ctaText: "Explore the available paintings or enquire about a custom artwork.",
+        galleryButton: "Visit the gallery",
+        customButton: "Request a custom painting",
+        footerText: "Original artworks, lovingly painted by hand.",
+        menuOpen: "Open menu",
+        menuClose: "Close menu"
+      },
+
+      ru: {
+        pageTitle: "Об художнице",
+        navHome: "Главная",
+        navGallery: "Все картины",
+        navCategories: "Категории",
+        navMore: "Другие разделы",
+        navAbout: "Об художнице",
+        navCustom: "Заказать картину",
+        navCart: "Корзина / заявка",
+        allWorks: "Все картины",
+        eyebrow: "Искусство с характером",
+        heroTitle: "Ольга Морланг",
+        heroText: "Добро пожаловать в мир моего искусства. Здесь вы можете познакомиться с оригинальными картинами, в которых цвет, форма и личные впечатления обретают собственное выражение.",
+        aboutLabel: "Художница",
+        aboutHeading: "Искусство, которое находит свой путь",
+        aboutText1: "Для меня живопись — это возможность выражать мысли, настроение и впечатления с помощью цветов и форм. Каждая картина приобретает собственный характер.",
+        aboutText2: "Приглашаю вас спокойно познакомиться с моими работами и найти ту, которая откликается именно вам. В галерее представлены оригинальные картины, созданные вручную.",
+        aboutText3: "Если у вас есть собственная идея, вы также можете отправить запрос на индивидуальную картину. Мы сможем обсудить ваши пожелания и подходящую концепцию.",
+        valuesLabel: "Моё искусство",
+        valuesHeading: "Что отличает мои работы",
+        valuesIntro: "Каждая картина — самостоятельный оригинал. Посмотрите работы и выберите ту, которая подходит именно вам.",
+        card1Title: "Оригинальные работы",
+        card1Text: "В галерее представлены оригинальные картины ручной работы. Каждая работа является самостоятельным произведением искусства.",
+        card2Title: "Цвет и выразительность",
+        card2Text: "Цвета и формы создают особую атмосферу. Рассмотрите детали каждой картины и найдите то, что вам близко.",
+        card3Title: "Индивидуальные идеи",
+        card3Text: "Хотите картину на определённую тему? Отправьте запрос, указав свои пожелания, размер и другие подробности.",
+        quote: "У произведения искусства есть своё место там, где оно находит отклик в душе человека.",
+        quoteCaption: "Откройте для себя галерею Ольги Морланг.",
+        ctaLabel: "Посмотреть и заказать",
+        ctaHeading: "Найдите свою любимую картину",
+        ctaText: "Посмотрите доступные картины или отправьте запрос на создание индивидуальной работы.",
+        galleryButton: "Перейти в галерею",
+        customButton: "Заказать индивидуальную картину",
+        footerText: "Оригинальные картины, написанные вручную с любовью.",
+        menuOpen: "Открыть меню",
+        menuClose: "Закрыть меню"
+      },
+
+      fr: {
+        pageTitle: "À propos de l’artiste",
+        navHome: "Accueil",
+        navGallery: "Toutes les œuvres",
+        navCategories: "Catégories",
+        navMore: "Découvrir davantage",
+        navAbout: "À propos de l’artiste",
+        navCustom: "Demander un tableau personnalisé",
+        navCart: "Panier / demande",
+        allWorks: "Toutes les œuvres",
+        eyebrow: "L’art avec personnalité",
+        heroTitle: "Olga Morlang",
+        heroText: "Bienvenue dans mon univers artistique. Découvrez des peintures originales où les couleurs, les formes et les impressions personnelles trouvent leur propre expression.",
+        aboutLabel: "L’artiste",
+        aboutHeading: "Un art qui suit son propre chemin",
+        aboutText1: "Pour moi, la peinture est une façon d’exprimer des pensées, des émotions et des impressions à travers les couleurs et les formes. Chaque tableau développe son propre caractère.",
+        aboutText2: "Je vous invite à découvrir mes œuvres et à trouver celle qui vous touche personnellement. Ma galerie présente des peintures originales réalisées à la main.",
+        aboutText3: "Si vous avez une idée personnelle, vous pouvez également demander un tableau sur mesure. Nous pourrons discuter ensemble de vos souhaits et du concept adapté.",
+        valuesLabel: "Mon art",
+        valuesHeading: "Ce qui caractérise mes œuvres",
+        valuesIntro: "Chaque tableau est un original à part entière. Découvrez les œuvres et choisissez celle qui vous correspond.",
+        card1Title: "Œuvres originales",
+        card1Text: "La galerie présente des tableaux originaux peints à la main. Chaque œuvre est présentée comme une création artistique unique.",
+        card2Title: "Couleurs et expression",
+        card2Text: "Les couleurs et les formes créent une atmosphère particulière. Prenez le temps d’explorer les détails de chaque œuvre.",
+        card3Title: "Idées personnelles",
+        card3Text: "Vous avez un sujet particulier en tête ? Envoyez une demande avec vos idées, la taille souhaitée et d’autres détails.",
+        quote: "Une œuvre d’art trouve sa place là où elle touche personnellement quelqu’un.",
+        quoteCaption: "Découvrez la galerie d’Olga Morlang.",
+        ctaLabel: "Découvrir et demander",
+        ctaHeading: "Trouvez votre œuvre préférée",
+        ctaText: "Découvrez les tableaux disponibles ou demandez une création personnalisée.",
+        galleryButton: "Voir la galerie",
+        customButton: "Demander un tableau personnalisé",
+        footerText: "Des œuvres originales peintes à la main avec amour.",
+        menuOpen: "Ouvrir le menu",
+        menuClose: "Fermer le menu"
+      },
+
+      nl: {
+        pageTitle: "Over de kunstenares",
+        navHome: "Home",
+        navGallery: "Alle kunstwerken",
+        navCategories: "Categorieën",
+        navMore: "Meer ontdekken",
+        navAbout: "Over de kunstenares",
+        navCustom: "Een schilderij op maat aanvragen",
+        navCart: "Winkelwagen / aanvraag",
+        allWorks: "Alle kunstwerken",
+        eyebrow: "Kunst met persoonlijkheid",
+        heroTitle: "Olga Morlang",
+        heroText: "Welkom in mijn wereld van kunst. Ontdek originele schilderijen waarin kleuren, vormen en persoonlijke indrukken hun eigen uitdrukking vinden.",
+        aboutLabel: "De kunstenares",
+        aboutHeading: "Kunst die haar eigen weg vindt",
+        aboutText1: "Voor mij is schilderen een manier om gedachten, stemmingen en indrukken uit te drukken met kleuren en vormen. Elk schilderij ontwikkelt zijn eigen karakter.",
+        aboutText2: "Ik nodig u uit om mijn werken te ontdekken en het werk te vinden dat u persoonlijk aanspreekt. Mijn galerij toont originele schilderijen die met de hand zijn gemaakt.",
+        aboutText3: "Heeft u zelf een idee? Dan kunt u ook een aanvraag doen voor een schilderij op maat. Samen kunnen we uw wensen en een passend concept bespreken.",
+        valuesLabel: "Mijn kunst",
+        valuesHeading: "Wat mijn werken bijzonder maakt",
+        valuesIntro: "Elk schilderij is een origineel op zichzelf. Ontdek de werken en kies het schilderij dat bij u past.",
+        card1Title: "Originele werken",
+        card1Text: "De galerij richt zich op originele, handgeschilderde werken. Elk schilderij wordt als een zelfstandig kunstwerk gepresenteerd.",
+        card2Title: "Kleur en expressie",
+        card2Text: "Kleuren en vormen creëren een bijzondere sfeer. Neem de tijd om de details van elk kunstwerk te ontdekken.",
+        card3Title: "Persoonlijke ideeën",
+        card3Text: "Heeft u een bepaald onderwerp in gedachten? Stuur een aanvraag met uw ideeën, gewenste afmetingen en andere details.",
+        quote: "Een kunstwerk vindt zijn plaats waar het iemand persoonlijk raakt.",
+        quoteCaption: "Ontdek de galerij van Olga Morlang.",
+        ctaLabel: "Ontdekken en aanvragen",
+        ctaHeading: "Vind uw favoriete kunstwerk",
+        ctaText: "Bekijk de beschikbare schilderijen of vraag een persoonlijk kunstwerk aan.",
+        galleryButton: "Naar de galerij",
+        customButton: "Een schilderij op maat aanvragen",
+        footerText: "Originele kunstwerken, met liefde met de hand geschilderd.",
+        menuOpen: "Menu openen",
+        menuClose: "Menu sluiten"
+      }
+    };
+
+    let currentLanguage = "de";
+
+    try {
+      const savedLanguage = localStorage.getItem("olgaLanguage");
+      if (savedLanguage && translations[savedLanguage]) {
+        currentLanguage = savedLanguage;
+      }
+    } catch {
+      // The default language remains German if storage is unavailable.
+    }
+
+    const languageSelect = document.getElementById("languageSelect");
+    const menuOpen = document.getElementById("menuOpen");
+    const menuClose = document.getElementById("menuClose");
+    const drawer = document.getElementById("drawer");
+    const drawerOverlay = document.getElementById("drawerOverlay");
+    const cartCount = document.getElementById("cartCount");
+
+    function t(key) {
+      return translations[currentLanguage]?.[key]
+        || translations.de[key]
+        || key;
+    }
+
+    function applyTranslations() {
+      document.documentElement.lang = currentLanguage;
+
+      const titles = {
+        de: "Über die Künstlerin | Olga Morlang",
+        en: "About the Artist | Olga Morlang",
+        ru: "Об художнице | Ольга Морланг",
+        fr: "À propos de l’artiste | Olga Morlang",
+        nl: "Over de kunstenares | Olga Morlang"
+      };
+
+      document.title = titles[currentLanguage] || titles.de;
+
+      document.querySelectorAll("[data-i18n]").forEach(element => {
+        const key = element.getAttribute("data-i18n");
+        element.textContent = t(key);
+      });
+
+      menuOpen.setAttribute("aria-label", t("menuOpen"));
+      menuClose.setAttribute("aria-label", t("menuClose"));
+      updateCartCount();
+    }
+
+    function changeLanguage(language) {
+      if (!translations[language]) {
+        language = "de";
+      }
+
+      currentLanguage = language;
+
+      try {
+        localStorage.setItem("olgaLanguage", language);
+      } catch {
+        // Language still changes for this page session.
+      }
+
+      languageSelect.value = language;
+      applyTranslations();
+    }
+
+    function setDrawer(open) {
+      drawer.classList.toggle("open", open);
+      drawerOverlay.classList.toggle("open", open);
+      document.body.classList.toggle("no-scroll", open);
+      menuOpen.setAttribute("aria-expanded", String(open));
+      drawer.setAttribute("aria-hidden", String(!open));
+    }
+
+    function updateCartCount() {
+      try {
+        const cart = JSON.parse(localStorage.getItem("olgaCart") || "[]");
+
+        const total = Array.isArray(cart)
+          ? cart.reduce((sum, item) => {
+              const quantity = Number(item.quantity || 1);
+              return sum + (
+                Number.isFinite(quantity) && quantity > 0
+                  ? quantity
+                  : 1
+              );
+            }, 0)
+          : 0;
+
+        cartCount.textContent = String(total);
+      } catch {
+        cartCount.textContent = "0";
+      }
+    }
+
+    menuOpen.addEventListener("click", () => setDrawer(true));
+    menuClose.addEventListener("click", () => setDrawer(false));
+    drawerOverlay.addEventListener("click", () => setDrawer(false));
+
+    drawer.addEventListener("click", event => {
+      if (event.target.closest("a")) {
+        setDrawer(false);
+      }
+    });
+
+    document.addEventListener("keydown", event => {
+      if (event.key === "Escape") {
+        setDrawer(false);
+      }
+    });
+
+    languageSelect.addEventListener("change", event => {
+      changeLanguage(event.target.value);
+    });
+
+    document.getElementById("currentYear").textContent =
+      new Date().getFullYear();
+
+    languageSelect.value = currentLanguage;
+    applyTranslations();
+  </script>
+</body>
+</html>
