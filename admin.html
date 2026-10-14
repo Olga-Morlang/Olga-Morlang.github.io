@@ -94,6 +94,11 @@ button:hover {
     opacity: .88;
 }
 
+button:disabled {
+    opacity: .45;
+    cursor: not-allowed;
+}
+
 .secondary {
     background: #293b5c;
     color: white;
@@ -113,6 +118,12 @@ button:hover {
     display: flex;
     flex-wrap: wrap;
     gap: 5px;
+    align-items: center;
+}
+
+.tabs button.active {
+    outline: 2px solid white;
+    outline-offset: 2px;
 }
 
 .msg {
@@ -139,6 +150,7 @@ button:hover {
 table {
     width: 100%;
     border-collapse: collapse;
+    min-width: 750px;
 }
 
 th, td {
@@ -155,6 +167,7 @@ th, td {
     padding: 4px 8px;
     color: var(--gold);
     font-size: 12px;
+    margin: 3px 0;
 }
 
 .artwork-card {
@@ -212,6 +225,7 @@ th, td {
     font-size: 12px;
     color: var(--muted);
     overflow-wrap: anywhere;
+    margin-top: 5px;
 }
 
 .notice {
@@ -228,6 +242,24 @@ th, td {
     gap: 4px;
 }
 
+.section-heading {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+hr {
+    border: 0;
+    border-top: 1px solid var(--line);
+    margin: 22px 0;
+}
+
+a {
+    color: var(--gold);
+}
+
 @media (max-width: 600px) {
     main {
         padding: 12px;
@@ -241,6 +273,10 @@ th, td {
         width: 100%;
         height: 220px;
     }
+
+    .card {
+        padding: 13px;
+    }
 }
 </style>
 </head>
@@ -248,11 +284,10 @@ th, td {
 <body>
 <main>
 
-<h1>Olga Morlang — Администратор</h1>
-
-<p class="small">
-Закрытая панель управления сайтом.
-</p>
+<header>
+    <h1>Olga Morlang — Администратор</h1>
+    <p class="small">Закрытая панель управления сайтом.</p>
+</header>
 
 <section id="login" class="card">
     <h2>Вход</h2>
@@ -281,59 +316,57 @@ th, td {
         <button type="submit">Войти</button>
     </form>
 
-    <p id="loginMsg" class="msg"></p>
+    <p id="loginMsg" class="msg" role="status"></p>
 </section>
 
 <div id="dashboard" class="hidden">
 
+    <!-- Верхнее меню остаётся видимым при переключении разделов -->
     <section class="card">
         <div class="tabs">
-            <button data-tab="orders">Заказы</button>
-            <button data-tab="artworks">Картины</button>
-            <button data-tab="categories">Категории</button>
-            <button id="logout" class="secondary">Выйти</button>
+            <button type="button" data-tab="orders">Заказы</button>
+            <button type="button" data-tab="artworks">Картины</button>
+            <button type="button" data-tab="categories">Категории</button>
+            <button type="button" id="logout" class="secondary">Выйти</button>
         </div>
 
-        <p id="status" class="msg"></p>
+        <p id="status" class="msg" role="status"></p>
     </section>
 
     <!-- ЗАКАЗЫ -->
-
-    <section id="orders" class="card">
-        <h2>Заказы и индивидуальные запросы</h2>
-
-        <button id="reloadOrders" class="secondary">
-            Обновить заказы
-        </button>
+    <section id="orders" class="card hidden">
+        <div class="section-heading">
+            <h2>Заказы и индивидуальные запросы</h2>
+            <button type="button" id="reloadOrders" class="secondary">
+                Обновить заказы
+            </button>
+        </div>
 
         <div id="ordersList"></div>
     </section>
 
     <!-- КАРТИНЫ -->
+    <section id="artworks" class="card">
 
-    <section id="artworks" class="card hidden">
-
-        <h2>Управление картинами</h2>
+        <div class="section-heading">
+            <h2>Управление картинами</h2>
+            <button type="button" id="refreshArtworks" class="secondary">
+                Обновить список
+            </button>
+        </div>
 
         <form id="artForm">
-
             <input id="artId" type="hidden">
 
             <div class="grid">
-
                 <label>
                     Название картины
-                    <input id="artTitle" required>
+                    <input id="artTitle" required maxlength="250">
                 </label>
 
                 <label>
                     Цена (€)
-                    <input
-                        id="artPrice"
-                        type="number"
-                        min="0"
-                        step="0.01"
-                    >
+                    <input id="artPrice" type="number" min="0" step="0.01">
                 </label>
 
                 <label>
@@ -351,34 +384,29 @@ th, td {
                         accept="image/jpeg,image/png,image/webp,image/gif"
                     >
                     <span class="small">
-                        Для новой картины обязательно.
-                        Для существующей можно оставить пустым.
+                        Для новой картины обязательно. Для существующей можно оставить пустым.
                     </span>
                 </label>
 
                 <label>
                     Ширина (см)
-                    <input id="artWidth" type="number" min="0">
+                    <input id="artWidth" type="number" min="0" step="0.1">
                 </label>
 
                 <label>
                     Высота (см)
-                    <input id="artHeight" type="number" min="0">
+                    <input id="artHeight" type="number" min="0" step="0.1">
                 </label>
-
             </div>
 
             <label>
                 Описание картины
-                <textarea id="artDescription"></textarea>
+                <textarea id="artDescription" maxlength="10000"></textarea>
             </label>
 
             <label>
                 <span>
-                    <input
-                        id="artPublished"
-                        type="checkbox"
-                    >
+                    <input id="artPublished" type="checkbox">
                     Опубликовать картину на сайте
                 </span>
             </label>
@@ -388,9 +416,9 @@ th, td {
             <h3>Дополнительные фотографии</h3>
 
             <p class="small">
-                Выбери сразу несколько фотографий одной картины.
-                Они будут привязаны к этой картине, а не станут
-                отдельными товарами.
+                Можно выбрать сразу несколько фотографий одной картины.
+                Они сохраняются как дополнительные изображения этой картины,
+                а не как отдельные товары.
             </p>
 
             <label>
@@ -404,10 +432,9 @@ th, td {
             </label>
 
             <div class="notice">
-                Уже сохранённые фотографии можно просматривать,
-                удалять и переставлять местами. Первая фотография
-                в списке дополнительных изображений будет первой
-                после главной фотографии.
+                Используй стрелки, чтобы изменить порядок дополнительных
+                фотографий. Удаление из списка удаляет привязку к картине,
+                но не удаляет сам файл из хранилища.
             </div>
 
             <h3>Сохранённые дополнительные фотографии</h3>
@@ -416,62 +443,54 @@ th, td {
             <h3>Новые фотографии</h3>
             <div id="newPhotos" class="photo-grid"></div>
 
-            <button type="submit">
+            <button type="submit" id="saveArtworkButton">
                 Сохранить картину
             </button>
 
-            <button
-                type="button"
-                id="artReset"
-                class="secondary"
-            >
+            <button type="button" id="artReset" class="secondary">
                 Очистить форму
             </button>
-
         </form>
 
         <hr>
 
         <h2>Существующие картины</h2>
         <div id="artList"></div>
-
     </section>
 
     <!-- КАТЕГОРИИ -->
-
     <section id="categories" class="card hidden">
 
+        <button type="button" id="backToArtworks" class="secondary">
+            ← Назад к картинам
+        </button>
+
         <h2>Категории картин</h2>
+
+        <p class="small">
+            Создавай категории для галереи. После сохранения они будут
+            доступны в списке категорий при редактировании картин.
+        </p>
 
         <form id="catForm">
             <label>
                 Название категории
-                <input id="catName" required>
+                <input id="catName" required maxlength="120">
             </label>
 
-            <button type="submit">
-                Добавить категорию
-            </button>
+            <button type="submit">Добавить категорию</button>
         </form>
 
         <div id="catList"></div>
-
     </section>
 
 </div>
-
 </main>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
 "use strict";
-
-/*
- * Подключение к существующему проекту Supabase.
- * Publishable key предназначен для клиентского приложения.
- * Никогда не вставляй сюда service_role key.
- */
 
 const SUPABASE_URL =
     "https://lcjtsyxeklltyoxovvzr.supabase.co";
@@ -490,6 +509,7 @@ let categories = [];
 let savedExtraImages = [];
 let pendingExtraFiles = [];
 let currentMainImage = null;
+let initialized = false;
 
 const ALLOWED_IMAGE_TYPES = [
     "image/jpeg",
@@ -501,7 +521,7 @@ const ALLOWED_IMAGE_TYPES = [
 const MAX_IMAGE_SIZE = 10 * 1024 * 1024;
 
 function say(message) {
-    $("status").textContent = message;
+    $("status").textContent = message || "";
 }
 
 function escapeHTML(value = "") {
@@ -535,19 +555,23 @@ function validateImage(file) {
     }
 
     if (!ALLOWED_IMAGE_TYPES.includes(file.type)) {
-        throw new Error(
-            "Разрешены JPG, PNG, WEBP и GIF."
-        );
+        throw new Error("Разрешены форматы JPG, PNG, WEBP и GIF.");
     }
 
     if (file.size > MAX_IMAGE_SIZE) {
-        throw new Error(
-            "Размер одной фотографии не должен превышать 10 МБ."
-        );
+        throw new Error("Размер одной фотографии не должен превышать 10 МБ.");
     }
 }
 
-/* ---------------- ВХОД И ВЫХОД ---------------- */
+function normalizeExtraImages(value) {
+    if (!Array.isArray(value)) return [];
+
+    return value.filter(item =>
+        typeof item === "string" && item.trim() !== ""
+    );
+}
+
+/* ---------------- АВТОРИЗАЦИЯ ---------------- */
 
 $("loginForm").addEventListener("submit", async event => {
     event.preventDefault();
@@ -560,8 +584,7 @@ $("loginForm").addEventListener("submit", async event => {
     });
 
     if (error) {
-        $("loginMsg").textContent =
-            "Ошибка входа: " + error.message;
+        $("loginMsg").textContent = "Ошибка входа: " + error.message;
         return;
     }
 
@@ -577,13 +600,11 @@ async function init() {
     if (userError || !user) {
         $("login").classList.remove("hidden");
         $("dashboard").classList.add("hidden");
+        initialized = false;
         return;
     }
 
-    const {
-        data: allowed,
-        error
-    } = await db.rpc("is_admin");
+    const { data: allowed, error } = await db.rpc("is_admin");
 
     if (error || allowed !== true) {
         $("loginMsg").textContent =
@@ -596,9 +617,16 @@ async function init() {
     $("login").classList.add("hidden");
     $("dashboard").classList.remove("hidden");
 
-    await loadCategories();
-    await loadOrders();
-    await loadArtworks();
+    if (!initialized) {
+        initialized = true;
+        showTab("artworks");
+    }
+
+    await Promise.all([
+        loadCategories(),
+        loadOrders(),
+        loadArtworks()
+    ]);
 }
 
 $("logout").addEventListener("click", async () => {
@@ -606,13 +634,41 @@ $("logout").addEventListener("click", async () => {
     location.reload();
 });
 
-document.querySelectorAll("[data-tab]").forEach(button => {
-    button.addEventListener("click", () => {
-        document.querySelectorAll("#dashboard > section")
-            .forEach(section => section.classList.add("hidden"));
+/* ---------------- ПЕРЕКЛЮЧЕНИЕ РАЗДЕЛОВ ---------------- */
 
-        $(button.dataset.tab).classList.remove("hidden");
+function showTab(tabName) {
+    ["orders", "artworks", "categories"].forEach(id => {
+        $(id).classList.toggle("hidden", id !== tabName);
     });
+
+    document.querySelectorAll("[data-tab]").forEach(button => {
+        const active = button.dataset.tab === tabName;
+        button.classList.toggle("active", active);
+        button.setAttribute("aria-pressed", String(active));
+    });
+
+    say("");
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+}
+
+document.querySelectorAll("[data-tab]").forEach(button => {
+    button.addEventListener("click", async () => {
+        const tabName = button.dataset.tab;
+        showTab(tabName);
+
+        if (tabName === "orders") await loadOrders();
+        if (tabName === "artworks") await loadArtworks();
+        if (tabName === "categories") await loadCategories();
+    });
+});
+
+$("backToArtworks").addEventListener("click", async () => {
+    showTab("artworks");
+    await loadArtworks();
 });
 
 /* ---------------- ЗАГРУЗКА ФОТОГРАФИЙ ---------------- */
@@ -624,19 +680,13 @@ async function uploadImage(file) {
         ? file.name.split(".").pop().toLowerCase()
         : "jpg";
 
-    const allowedExtensions = [
-        "jpg", "jpeg", "png", "webp", "gif"
-    ];
+    const allowedExtensions = ["jpg", "jpeg", "png", "webp", "gif"];
 
     const safeExtension = allowedExtensions.includes(extension)
         ? extension
         : "jpg";
 
-    const path =
-        "paintings/" +
-        crypto.randomUUID() +
-        "." +
-        safeExtension;
+    const path = "paintings/" + crypto.randomUUID() + "." + safeExtension;
 
     const { data, error } = await db.storage
         .from("artworks")
@@ -647,9 +697,7 @@ async function uploadImage(file) {
         });
 
     if (error) {
-        throw new Error(
-            "Не удалось загрузить фотографию: " + error.message
-        );
+        throw new Error("Не удалось загрузить фотографию: " + error.message);
     }
 
     const { data: publicData } = db.storage
@@ -659,26 +707,14 @@ async function uploadImage(file) {
     return publicData.publicUrl;
 }
 
-/* ---------------- ДОПОЛНИТЕЛЬНЫЕ ФОТО ---------------- */
-
-function normalizeExtraImages(value) {
-    if (!Array.isArray(value)) {
-        return [];
-    }
-
-    return value.filter(item =>
-        typeof item === "string" &&
-        item.trim() !== ""
-    );
-}
+/* ---------------- ДОПОЛНИТЕЛЬНЫЕ ФОТОГРАФИИ ---------------- */
 
 function renderSavedPhotos() {
     const box = $("savedPhotos");
     box.replaceChildren();
 
-    if (savedExtraImages.length === 0) {
-        box.innerHTML =
-            '<p class="small">Дополнительных фотографий пока нет.</p>';
+    if (!savedExtraImages.length) {
+        box.textContent = "Дополнительных фотографий пока нет.";
         return;
     }
 
@@ -707,13 +743,8 @@ function renderSavedPhotos() {
         left.addEventListener("click", () => {
             if (index === 0) return;
 
-            [
-                savedExtraImages[index - 1],
-                savedExtraImages[index]
-            ] = [
-                savedExtraImages[index],
-                savedExtraImages[index - 1]
-            ];
+            [savedExtraImages[index - 1], savedExtraImages[index]] =
+                [savedExtraImages[index], savedExtraImages[index - 1]];
 
             renderSavedPhotos();
         });
@@ -723,19 +754,13 @@ function renderSavedPhotos() {
         right.className = "secondary";
         right.textContent = "→";
         right.title = "Переместить вправо";
-        right.disabled =
-            index === savedExtraImages.length - 1;
+        right.disabled = index === savedExtraImages.length - 1;
 
         right.addEventListener("click", () => {
             if (index >= savedExtraImages.length - 1) return;
 
-            [
-                savedExtraImages[index],
-                savedExtraImages[index + 1]
-            ] = [
-                savedExtraImages[index + 1],
-                savedExtraImages[index]
-            ];
+            [savedExtraImages[index], savedExtraImages[index + 1]] =
+                [savedExtraImages[index + 1], savedExtraImages[index]];
 
             renderSavedPhotos();
         });
@@ -761,9 +786,8 @@ function renderNewPhotos() {
     const box = $("newPhotos");
     box.replaceChildren();
 
-    if (pendingExtraFiles.length === 0) {
-        box.innerHTML =
-            '<p class="small">Новых фотографий не выбрано.</p>';
+    if (!pendingExtraFiles.length) {
+        box.textContent = "Новых фотографий не выбрано.";
         return;
     }
 
@@ -775,7 +799,6 @@ function renderNewPhotos() {
         const objectUrl = URL.createObjectURL(file);
         image.src = objectUrl;
         image.alt = file.name;
-
         image.onload = () => URL.revokeObjectURL(objectUrl);
 
         const label = document.createElement("div");
@@ -794,13 +817,8 @@ function renderNewPhotos() {
         left.addEventListener("click", () => {
             if (index === 0) return;
 
-            [
-                pendingExtraFiles[index - 1],
-                pendingExtraFiles[index]
-            ] = [
-                pendingExtraFiles[index],
-                pendingExtraFiles[index - 1]
-            ];
+            [pendingExtraFiles[index - 1], pendingExtraFiles[index]] =
+                [pendingExtraFiles[index], pendingExtraFiles[index - 1]];
 
             renderNewPhotos();
         });
@@ -809,19 +827,13 @@ function renderNewPhotos() {
         right.type = "button";
         right.className = "secondary";
         right.textContent = "→";
-        right.disabled =
-            index === pendingExtraFiles.length - 1;
+        right.disabled = index === pendingExtraFiles.length - 1;
 
         right.addEventListener("click", () => {
             if (index >= pendingExtraFiles.length - 1) return;
 
-            [
-                pendingExtraFiles[index],
-                pendingExtraFiles[index + 1]
-            ] = [
-                pendingExtraFiles[index + 1],
-                pendingExtraFiles[index]
-            ];
+            [pendingExtraFiles[index], pendingExtraFiles[index + 1]] =
+                [pendingExtraFiles[index + 1], pendingExtraFiles[index]];
 
             renderNewPhotos();
         });
@@ -848,19 +860,14 @@ $("extraFiles").addEventListener("change", event => {
 
     try {
         selected.forEach(validateImage);
-
         pendingExtraFiles.push(...selected);
-
         renderNewPhotos();
 
-        $("status").textContent =
-            "Выбрано дополнительных фотографий: " +
-            pendingExtraFiles.length;
+        say("Выбрано дополнительных фотографий: " + pendingExtraFiles.length);
     } catch (error) {
         alert(error.message);
     }
 
-    // Позволяет выбрать тот же файл ещё раз после удаления.
     event.target.value = "";
 });
 
@@ -883,37 +890,60 @@ async function loadCategories() {
 
     $("artCategory").innerHTML =
         '<option value="">Без категории</option>' +
-        categories.map(category =>
-            `<option value="${escapeHTML(category.id)}">${
-                escapeHTML(category.name)
-            }</option>`
-        ).join("");
+        categories.map(category => `
+            <option value="${escapeHTML(category.id)}">
+                ${escapeHTML(category.name || category.title || "Без названия")}
+            </option>
+        `).join("");
 
-    if (categories.some(category =>
-        String(category.id) === currentValue
-    )) {
+    if (categories.some(category => String(category.id) === currentValue)) {
         $("artCategory").value = currentValue;
     }
 
-    $("catList").innerHTML = categories.map(category => `
-        <div class="card">
-            <b>${escapeHTML(category.name)}</b>
-            <button
-                class="danger"
-                onclick="deleteCategory('${makeSafeId(category.id)}')"
-            >
-                Удалить
-            </button>
-        </div>
-    `).join("") || "Категорий пока нет.";
+    const box = $("catList");
+    box.replaceChildren();
+
+    if (!categories.length) {
+        box.textContent = "Категорий пока нет.";
+        return;
+    }
+
+    categories.forEach(category => {
+        const card = document.createElement("div");
+        card.className = "card";
+
+        const title = document.createElement("strong");
+        title.textContent = category.name || category.title || "Без названия";
+
+        const remove = document.createElement("button");
+        remove.type = "button";
+        remove.className = "danger";
+        remove.textContent = "Удалить";
+
+        remove.addEventListener("click", () => {
+            deleteCategory(category.id);
+        });
+
+        card.append(title, remove);
+        box.appendChild(card);
+    });
 }
 
 $("catForm").addEventListener("submit", async event => {
     event.preventDefault();
 
     const name = $("catName").value.trim();
-
     if (!name) return;
+
+    const duplicate = categories.some(category =>
+        String(category.name || "").toLocaleLowerCase() ===
+        name.toLocaleLowerCase()
+    );
+
+    if (duplicate) {
+        say("Категория с таким названием уже существует.");
+        return;
+    }
 
     const { error } = await db
         .from("categories")
@@ -927,16 +957,13 @@ $("catForm").addEventListener("submit", async event => {
     $("catName").value = "";
 
     await loadCategories();
-
     say("Категория добавлена.");
 });
 
-window.deleteCategory = async id => {
+async function deleteCategory(id) {
     if (!confirm(
-        "Удалить категорию? Сначала убедись, что она не нужна картинам."
-    )) {
-        return;
-    }
+        "Удалить категорию? Если к ней привязаны картины, сначала проверь эти связи."
+    )) return;
 
     const { error } = await db
         .from("categories")
@@ -949,78 +976,92 @@ window.deleteCategory = async id => {
     }
 
     await loadCategories();
+    await loadArtworks();
 
     say("Категория удалена.");
-};
+}
 
 /* ---------------- КАРТИНЫ ---------------- */
 
 async function loadArtworks() {
+    const box = $("artList");
+    box.textContent = "Загружаем картины…";
+
     const { data, error } = await db
         .from("artworks")
         .select("*")
         .order("created_at", { ascending: false });
 
     if (error) {
-        $("artList").textContent =
-            "Ошибка загрузки картин: " + error.message;
+        box.textContent = "Ошибка загрузки картин: " + error.message;
         return;
     }
 
-    $("artList").innerHTML = (data || []).map(artwork => {
+    box.replaceChildren();
+
+    if (!data || !data.length) {
+        box.textContent = "Картин пока нет.";
+        return;
+    }
+
+    data.forEach(artwork => {
+        const card = document.createElement("div");
+        card.className = "card artwork-card";
+
+        const image = document.createElement("img");
+        image.className = "artwork-main-image";
+        image.src = artwork.image_url || "";
+        image.alt = artwork.title || "Картина";
+
+        const content = document.createElement("div");
+
+        const title = document.createElement("h3");
+        title.textContent = artwork.title || "Без названия";
+
+        const price = document.createElement("p");
+        price.textContent = money(artwork.price);
+
         const extras = normalizeExtraImages(artwork.extra_images);
 
-        return `
-            <div class="card artwork-card">
-                <img
-                    class="artwork-main-image"
-                    src="${escapeHTML(artwork.image_url || "")}"
-                    alt="${escapeHTML(artwork.title || "Картина")}"
-                >
+        const status = document.createElement("p");
+        status.className = "small";
+        status.textContent =
+            (artwork.published ? "Опубликована" : "Черновик") +
+            " · Дополнительных фото: " + extras.length;
 
-                <div>
-                    <h3>${escapeHTML(artwork.title || "Без названия")}</h3>
+        const description = document.createElement("p");
+        description.textContent = artwork.description || "";
 
-                    <p>${money(artwork.price)}</p>
+        const actions = document.createElement("div");
+        actions.className = "actions";
 
-                    <p class="small">
-                        ${artwork.published ? "Опубликована" : "Черновик"}
-                        · Дополнительных фото: ${extras.length}
-                    </p>
+        const edit = document.createElement("button");
+        edit.type = "button";
+        edit.textContent = "Редактировать";
+        edit.addEventListener("click", () => editArt(artwork.id));
 
-                    <p>${escapeHTML(artwork.description || "")}</p>
+        const toggle = document.createElement("button");
+        toggle.type = "button";
+        toggle.className = "secondary";
+        toggle.textContent = artwork.published ? "Скрыть" : "Опубликовать";
+        toggle.addEventListener("click", () => {
+            toggleArt(artwork.id, !artwork.published);
+        });
 
-                    <div class="actions">
-                        <button
-                            onclick="editArt('${makeSafeId(artwork.id)}')"
-                        >
-                            Редактировать
-                        </button>
+        const remove = document.createElement("button");
+        remove.type = "button";
+        remove.className = "danger";
+        remove.textContent = "Удалить картину";
+        remove.addEventListener("click", () => deleteArt(artwork.id));
 
-                        <button
-                            class="secondary"
-                            onclick="toggleArt(
-                                '${makeSafeId(artwork.id)}',
-                                ${!artwork.published}
-                            )"
-                        >
-                            ${artwork.published ? "Скрыть" : "Опубликовать"}
-                        </button>
-
-                        <button
-                            class="danger"
-                            onclick="deleteArt('${makeSafeId(artwork.id)}')"
-                        >
-                            Удалить картину
-                        </button>
-                    </div>
-                </div>
-            </div>
-        `;
-    }).join("") || "Картин пока нет.";
+        actions.append(edit, toggle, remove);
+        content.append(title, price, status, description, actions);
+        card.append(image, content);
+        box.appendChild(card);
+    });
 }
 
-window.editArt = async id => {
+async function editArt(id) {
     const { data, error } = await db
         .from("artworks")
         .select("*")
@@ -1042,7 +1083,6 @@ window.editArt = async id => {
     $("artPublished").checked = !!data.published;
 
     currentMainImage = data.image_url || null;
-
     savedExtraImages = normalizeExtraImages(data.extra_images);
     pendingExtraFiles = [];
 
@@ -1052,17 +1092,14 @@ window.editArt = async id => {
     renderSavedPhotos();
     renderNewPhotos();
 
-    $("artworks").classList.remove("hidden");
+    showTab("artworks");
 
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-    });
+    $("artTitle").focus();
 
     say("Картина открыта для редактирования.");
-};
+}
 
-window.toggleArt = async (id, published) => {
+async function toggleArt(id, published) {
     const { error } = await db
         .from("artworks")
         .update({ published })
@@ -1073,20 +1110,14 @@ window.toggleArt = async (id, published) => {
         return;
     }
 
-    say(published
-        ? "Картина опубликована."
-        : "Картина скрыта."
-    );
-
+    say(published ? "Картина опубликована." : "Картина скрыта.");
     await loadArtworks();
-};
+}
 
-window.deleteArt = async id => {
+async function deleteArt(id) {
     if (!confirm(
         "Удалить картину из базы данных? Это действие нельзя отменить."
-    )) {
-        return;
-    }
+    )) return;
 
     const { error } = await db
         .from("artworks")
@@ -1099,15 +1130,13 @@ window.deleteArt = async id => {
     }
 
     say("Картина удалена из базы данных.");
-
     await loadArtworks();
-};
+}
 
 function resetArtworkForm() {
     $("artForm").reset();
 
     $("artId").value = "";
-
     currentMainImage = null;
     savedExtraImages = [];
     pendingExtraFiles = [];
@@ -1119,13 +1148,12 @@ function resetArtworkForm() {
 }
 
 $("artReset").addEventListener("click", resetArtworkForm);
+$("refreshArtworks").addEventListener("click", loadArtworks);
 
 $("artForm").addEventListener("submit", async event => {
     event.preventDefault();
 
-    const submitButton =
-        $("artForm").querySelector('button[type="submit"]');
-
+    const submitButton = $("saveArtworkButton");
     submitButton.disabled = true;
 
     try {
@@ -1134,38 +1162,28 @@ $("artForm").addEventListener("submit", async event => {
         const id = $("artId").value;
         const mainFile = $("artFile").files[0];
 
-        let image_url = currentMainImage;
+        let imageUrl = currentMainImage;
 
         if (mainFile) {
             say("Загружаем главную фотографию…");
-            image_url = await uploadImage(mainFile);
+            imageUrl = await uploadImage(mainFile);
         }
 
-        if (!image_url) {
-            throw new Error(
-                "Выбери главную фотографию картины."
-            );
+        if (!imageUrl) {
+            throw new Error("Выбери главную фотографию картины.");
         }
 
         const uploadedExtraUrls = [];
 
-        for (let index = 0;
-             index < pendingExtraFiles.length;
-             index++) {
-
+        for (let index = 0; index < pendingExtraFiles.length; index++) {
             say(
                 "Загружаем дополнительную фотографию " +
-                (index + 1) +
-                " из " +
-                pendingExtraFiles.length +
-                "…"
+                (index + 1) + " из " + pendingExtraFiles.length + "…"
             );
 
-            const url = await uploadImage(
-                pendingExtraFiles[index]
+            uploadedExtraUrls.push(
+                await uploadImage(pendingExtraFiles[index])
             );
-
-            uploadedExtraUrls.push(url);
         }
 
         const allExtraImages = [
@@ -1173,31 +1191,29 @@ $("artForm").addEventListener("submit", async event => {
             ...uploadedExtraUrls
         ];
 
+        const price = $("artPrice").value;
+        const width = $("artWidth").value;
+        const height = $("artHeight").value;
+
         const row = {
             title: $("artTitle").value.trim(),
-
-            price: $("artPrice").value === ""
-                ? null
-                : Number($("artPrice").value),
-
+            price: price === "" ? null : Number(price),
             category_id: $("artCategory").value || null,
-
-            width_cm: $("artWidth").value === ""
-                ? null
-                : Number($("artWidth").value),
-
-            height_cm: $("artHeight").value === ""
-                ? null
-                : Number($("artHeight").value),
-
+            width_cm: width === "" ? null : Number(width),
+            height_cm: height === "" ? null : Number(height),
             description: $("artDescription").value.trim(),
-
             published: $("artPublished").checked,
-
-            image_url: image_url,
-
+            image_url: imageUrl,
             extra_images: allExtraImages
         };
+
+        if (!row.title) {
+            throw new Error("Введи название картины.");
+        }
+
+        if (row.price !== null && (!Number.isFinite(row.price) || row.price < 0)) {
+            throw new Error("Проверь цену картины.");
+        }
 
         let result;
 
@@ -1214,8 +1230,7 @@ $("artForm").addEventListener("submit", async event => {
 
         if (result.error) {
             throw new Error(
-                "Ошибка сохранения в базе данных: " +
-                result.error.message
+                "Ошибка сохранения в базе данных: " + result.error.message
             );
         }
 
@@ -1223,8 +1238,7 @@ $("artForm").addEventListener("submit", async event => {
 
         say(
             "Картина сохранена. Дополнительных фотографий: " +
-            allExtraImages.length +
-            "."
+            allExtraImages.length + "."
         );
 
         await loadArtworks();
@@ -1246,7 +1260,6 @@ $("artForm").addEventListener("submit", async event => {
 
 async function loadOrders() {
     const box = $("ordersList");
-
     box.textContent = "Загружаем заказы…";
 
     const { data, error } = await db
@@ -1255,12 +1268,11 @@ async function loadOrders() {
         .order("created_at", { ascending: false });
 
     if (error) {
-        box.textContent =
-            "Не удалось загрузить заказы: " + error.message;
+        box.textContent = "Не удалось загрузить заказы: " + error.message;
         return;
     }
 
-    if (!data || data.length === 0) {
+    if (!data || !data.length) {
         box.textContent = "Заказов пока нет.";
         return;
     }
@@ -1274,136 +1286,130 @@ async function loadOrders() {
         ["cancelled", "Отменён"]
     ];
 
-    box.innerHTML = `
-        <div class="tablewrap">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Дата</th>
-                        <th>Покупатель</th>
-                        <th>Детали</th>
-                        <th>Сумма</th>
-                        <th>Статус</th>
-                        <th>Действия</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    ${data.map(order => {
-                        const custom = order.order_type === "custom";
+    const table = document.createElement("div");
+    table.className = "tablewrap";
 
-                        const items = Array.isArray(order.items)
-                            ? order.items.map(item =>
-                                escapeHTML(
-                                    item.title ||
-                                    item.name ||
-                                    item.artwork_title ||
-                                    "Картина"
-                                )
-                            ).join("<br>")
-                            : "";
+    const tableElement = document.createElement("table");
 
-                        const details = custom
-                            ? `
-                                <b>Индивидуальный заказ</b><br>
-                                ${escapeHTML(order.custom_description || "—")}
-                                <br>Размер: ${escapeHTML(order.custom_size || "—")}
-                                <br>Бюджет: ${money(order.custom_budget)}
-                                ${order.reference_image_path
-                                    ? "<br><span class='small'>Есть референс-фотография</span>"
-                                    : ""}
-                            `
-                            : items || "—";
-
-                        const date = order.created_at
-                            ? new Date(order.created_at).toLocaleString("ru-RU")
-                            : "—";
-
-                        const statusOptions = statuses.map(
-                            ([value, label]) => `
-                                <option
-                                    value="${value}"
-                                    ${order.status === value ? "selected" : ""}
-                                >${label}</option>
-                            `
-                        ).join("");
-
-                        return `
-                            <tr>
-                                <td>
-                                    ${escapeHTML(date)}
-                                    <br>
-                                    <span class="badge">
-                                        ${custom ? "Индивидуальный" : "Обычный"}
-                                    </span>
-                                </td>
-
-                                <td>
-                                    ${escapeHTML(order.buyer_name || "—")}
-                                    <br>
-                                    ${escapeHTML(order.buyer_email || "—")}
-                                    <br>
-                                    <span class="small">
-                                        ${escapeHTML(
-                                            [
-                                                order.buyer_city,
-                                                order.buyer_country
-                                            ].filter(Boolean).join(", ")
-                                        )}
-                                    </span>
-                                </td>
-
-                                <td>
-                                    ${details}
-                                    <br>
-                                    <span class="small">
-                                        ${escapeHTML(order.buyer_comment || "")}
-                                    </span>
-                                </td>
-
-                                <td>
-                                    ${custom ? "—" : money(order.total)}
-                                </td>
-
-                                <td>
-                                    <select id="st-${makeSafeId(order.id)}">
-                                        ${statusOptions}
-                                    </select>
-                                </td>
-
-                                <td>
-                                    <button
-                                        onclick="saveOrderStatus(
-                                            '${makeSafeId(order.id)}'
-                                        )"
-                                    >
-                                        Сохранить статус
-                                    </button>
-
-                                    ${custom && order.reference_image_path
-                                        ? `
-                                            <button
-                                                class="secondary"
-                                                onclick="viewReference(
-                                                    '${escapeHTML(order.reference_image_path)}'
-                                                )"
-                                            >
-                                                Открыть фото
-                                            </button>
-                                        `
-                                        : ""}
-                                </td>
-                            </tr>
-                        `;
-                    }).join("")}
-                </tbody>
-            </table>
-        </div>
+    tableElement.innerHTML = `
+        <thead>
+            <tr>
+                <th>Дата</th>
+                <th>Покупатель</th>
+                <th>Детали</th>
+                <th>Сумма</th>
+                <th>Статус</th>
+                <th>Действия</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
     `;
+
+    const tbody = tableElement.querySelector("tbody");
+
+    data.forEach(order => {
+        const custom = order.order_type === "custom";
+
+        const items = Array.isArray(order.items)
+            ? order.items.map(item =>
+                item.title || item.name || item.artwork_title || "Картина"
+            ).join(", ")
+            : "";
+
+        const date = order.created_at
+            ? new Date(order.created_at).toLocaleString("ru-RU")
+            : "—";
+
+        const tr = document.createElement("tr");
+
+        const dateCell = document.createElement("td");
+        dateCell.textContent = date;
+
+        const badge = document.createElement("span");
+        badge.className = "badge";
+        badge.textContent = custom ? "Индивидуальный" : "Обычный";
+        dateCell.append(document.createElement("br"), badge);
+
+        const buyerCell = document.createElement("td");
+        buyerCell.textContent = [
+            order.buyer_name || "—",
+            order.buyer_email || "—",
+            [order.buyer_city, order.buyer_country].filter(Boolean).join(", ")
+        ].join("\n");
+        buyerCell.style.whiteSpace = "pre-line";
+
+        const detailsCell = document.createElement("td");
+
+        if (custom) {
+            detailsCell.textContent =
+                "Индивидуальный заказ\n" +
+                (order.custom_description || "—") +
+                "\nРазмер: " + (order.custom_size || "—") +
+                "\nБюджет: " + money(order.custom_budget) +
+                (order.reference_image_path ? "\nЕсть референс-фотография" : "");
+        } else {
+            detailsCell.textContent = items || "—";
+        }
+
+        const comment = document.createElement("p");
+        comment.className = "small";
+        comment.textContent = order.buyer_comment || "";
+        detailsCell.appendChild(comment);
+
+        const totalCell = document.createElement("td");
+        totalCell.textContent = custom ? "—" : money(order.total);
+
+        const statusCell = document.createElement("td");
+        const statusSelect = document.createElement("select");
+        statusSelect.id = "st-" + makeSafeId(order.id);
+
+        statuses.forEach(([value, label]) => {
+            const option = document.createElement("option");
+            option.value = value;
+            option.textContent = label;
+            option.selected = order.status === value;
+            statusSelect.appendChild(option);
+        });
+
+        statusCell.appendChild(statusSelect);
+
+        const actionsCell = document.createElement("td");
+
+        const saveButton = document.createElement("button");
+        saveButton.type = "button";
+        saveButton.textContent = "Сохранить статус";
+        saveButton.addEventListener("click", () => saveOrderStatus(order.id));
+        actionsCell.appendChild(saveButton);
+
+        if (custom && order.reference_image_path) {
+            const photoButton = document.createElement("button");
+            photoButton.type = "button";
+            photoButton.className = "secondary";
+            photoButton.textContent = "Открыть фото";
+            photoButton.addEventListener("click", () => {
+                viewReference(order.reference_image_path);
+            });
+            actionsCell.appendChild(photoButton);
+        }
+
+        tr.append(
+            dateCell,
+            buyerCell,
+            detailsCell,
+            totalCell,
+            statusCell,
+            actionsCell
+        );
+
+        tbody.appendChild(tr);
+    });
+
+    table.appendChild(tableElement);
+    box.replaceChildren(table);
 }
 
-window.saveOrderStatus = async id => {
-    const statusElement = $("st-" + id);
-
+async function saveOrderStatus(id) {
+    const statusElement = $("st-" + makeSafeId(id));
     if (!statusElement) return;
 
     const { error } = await db
@@ -1417,42 +1423,39 @@ window.saveOrderStatus = async id => {
     }
 
     say("Статус заказа сохранён.");
-
     await loadOrders();
-};
+}
 
-window.viewReference = async path => {
+async function viewReference(path) {
     const { data, error } = await db.storage
         .from("custom-references")
         .createSignedUrl(path, 300);
 
     if (error) {
-        say(
-            "Не удалось открыть референс-фотографию: " +
-            error.message
-        );
+        say("Не удалось открыть референс-фотографию: " + error.message);
         return;
     }
 
-    window.open(
-        data.signedUrl,
-        "_blank",
-        "noopener,noreferrer"
-    );
-};
+    window.open(data.signedUrl, "_blank", "noopener,noreferrer");
+}
 
 $("reloadOrders").addEventListener("click", loadOrders);
 
-/* ---------------- ЗАПУСК ---------------- */
+/* ---------------- ПРОВЕРКА СЕССИИ ---------------- */
 
-db.auth.onAuthStateChange((_event, session) => {
-    if (session) {
-        init();
+db.auth.onAuthStateChange((event, session) => {
+    if (session && !initialized) {
+        setTimeout(() => init(), 0);
+    }
+
+    if (event === "SIGNED_OUT") {
+        initialized = false;
+        $("dashboard").classList.add("hidden");
+        $("login").classList.remove("hidden");
     }
 });
 
 init();
-
 </script>
 </body>
 </html>
