@@ -1,19 +1,1458 @@
-<!doctype html>
-<html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>Olga Morlang – Admin</title><style>
-:root{--bg:#101b35;--panel:#18294a;--gold:#e6c27a;--line:#405071;--text:#f7f0e4}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:15px Arial,sans-serif}main{max-width:1200px;margin:auto;padding:22px}.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px;margin:14px 0}h1,h2{font-family:Georgia,serif;font-weight:normal}h1{color:var(--gold)}label{display:grid;gap:6px;margin:10px 0}input,textarea,select{padding:11px;border-radius:8px;border:1px solid var(--line);background:#101b35;color:white;width:100%}button{background:var(--gold);color:#182039;border:0;border-radius:8px;padding:10px 14px;cursor:pointer;font-weight:bold;margin:4px 4px 4px 0}.secondary{background:#293b5c;color:white;border:1px solid var(--line)}.hidden{display:none!important}.tabs{display:flex;flex-wrap:wrap;gap:5px}.msg{white-space:pre-wrap;color:#ffe0a0}.tablewrap{overflow:auto}table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:10px;border-bottom:1px solid var(--line);vertical-align:top}td{min-width:110px}.small{font-size:12px;color:#c9d4e8}.badge{display:inline-block;border:1px solid var(--gold);border-radius:20px;padding:4px 8px;color:var(--gold);font-size:12px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}img.thumb{width:100px;max-height:100px;object-fit:contain}.actions{display:flex;gap:5px;flex-wrap:wrap}
-</style></head><body><main><h1>Olga Morlang · Adminbereich</h1><p class="small">Nur für autorisierte Administratoren. Diese Seite nicht im öffentlichen Menü verlinken.</p>
-<section id="login" class="card"><h2>Anmelden</h2><form id="loginForm"><label>E-Mail<input id="email" type="email" required autocomplete="username"></label><label>Passwort<input id="password" type="password" required autocomplete="current-password"></label><button>Anmelden</button></form><p id="loginMsg" class="msg"></p></section>
-<div id="dashboard" class="hidden"><div class="card"><div class="tabs"><button data-tab="orders">Bestellungen</button><button data-tab="artworks">Gemälde</button><button data-tab="categories">Kategorien</button><button id="logout" class="secondary">Abmelden</button></div><p id="status" class="msg"></p></div>
-<section id="orders" class="card"><h2>Bestellungen & individuelle Anfragen</h2><button id="reloadOrders" class="secondary">Aktualisieren</button><div id="ordersList"></div></section>
-<section id="artworks" class="card hidden"><h2>Gemälde</h2><form id="artForm"><input id="artId" type="hidden"><div class="grid"><label>Titel<input id="artTitle" required></label><label>Preis (€)<input id="artPrice" type="number" min="0" step="0.01"></label><label>Kategorie<select id="artCategory"></select></label><label>Bilddatei<input id="artFile" type="file" accept="image/*"></label><label>Breite (cm)<input id="artWidth" type="number" min="0"></label><label>Höhe (cm)<input id="artHeight" type="number" min="0"></label></div><label>Beschreibung<textarea id="artDescription"></textarea></label><label><span><input id="artPublished" type="checkbox" style="width:auto"> Öffentlich anzeigen</span></label><button>Gemälde speichern</button><button type="button" id="artReset" class="secondary">Formular leeren</button></form><div id="artList"></div></section>
-<section id="categories" class="card hidden"><h2>Kategorien</h2><form id="catForm"><label>Name<input id="catName" required></label><button>Kategorie hinzufügen</button></form><div id="catList"></div></section></div></main>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script>
-const SUPABASE_URL='https://lcjtsyxeklltyoxovvzr.supabase.co';const SUPABASE_KEY='sb_publishable_Z5y2_ni_klXhEFU7I-OljA_JZcsyCVJ';const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);let categories=[];const $=id=>document.getElementById(id);function say(t){$('status').textContent=t}function esc(v=''){return String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}function money(v){return v==null?'—':new Intl.NumberFormat('de-DE',{style:'currency',currency:'EUR'}).format(Number(v)||0)}
-$('loginForm').addEventListener('submit',async e=>{e.preventDefault();$('loginMsg').textContent='Anmeldung läuft …';const {error}=await db.auth.signInWithPassword({email:$('email').value,password:$('password').value});if(error){$('loginMsg').textContent=error.message;return}await init()});async function init(){const {data:{user}}=await db.auth.getUser();if(!user){$('login').classList.remove('hidden');$('dashboard').classList.add('hidden');return}const {data:allowed,error}=await db.rpc('is_admin');if(error||allowed!==true){$('loginMsg').textContent='Dieses Konto ist nicht als Administrator freigeschaltet.';await db.auth.signOut();return}$('login').classList.add('hidden');$('dashboard').classList.remove('hidden');await loadCategories();await loadOrders();await loadArtworks()}
-$('logout').onclick=async()=>{await db.auth.signOut();location.reload()};document.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{document.querySelectorAll('#dashboard>section').forEach(s=>s.classList.add('hidden'));$(b.dataset.tab).classList.remove('hidden')});
-async function loadOrders(){const box=$('ordersList');box.innerHTML='Lade …';const {data,error}=await db.from('orders').select('*').order('created_at',{ascending:false});if(error){box.textContent='Fehler beim Laden: '+error.message;return}if(!data?.length){box.textContent='Noch keine Bestellungen.';return}box.innerHTML='<div class="tablewrap"><table><thead><tr><th>Datum / Typ</th><th>Kunde</th><th>Details</th><th>Betrag</th><th>Status</th><th>Aktion</th></tr></thead><tbody>'+data.map(o=>{const custom=o.order_type==='custom';let details=custom?`<b>Individuelle Anfrage</b><br>${esc(o.custom_description||'—')}<br>Größe: ${esc(o.custom_size||'—')}<br>Budget: ${money(o.custom_budget)}<br>${o.reference_image_path?'<span class="small">Referenzbild hinterlegt</span>':''}`:(Array.isArray(o.items)?o.items.map(i=>esc(i.title||i.name||i.artwork_title||'Gemälde')).join('<br>'):esc(JSON.stringify(o.items||[])));return `<tr><td>${esc(new Date(o.created_at).toLocaleString('de-DE'))}<br><span class="badge">${custom?'Individuell':'Gemälde'}</span></td><td>${esc(o.buyer_name||'—')}<br>${esc(o.buyer_email||'—')}<br><span class="small">${esc([o.buyer_city,o.buyer_country].filter(Boolean).join(', '))}</span></td><td>${details}<br><span class="small">${esc(o.buyer_comment||'')}</span></td><td>${custom?'—':money(o.total)}</td><td><select id="st-${esc(o.id)}"><option ${o.status==='new'?'selected':''} value="new">Neu</option><option ${o.status==='pending'?'selected':''} value="pending">In Bearbeitung</option><option ${o.status==='confirmed'?'selected':''} value="confirmed">Bestätigt</option><option ${o.status==='shipped'?'selected':''} value="shipped">Versendet</option><option ${o.status==='completed'?'selected':''} value="completed">Abgeschlossen</option><option ${o.status==='cancelled'?'selected':''} value="cancelled">Storniert</option></select></td><td><button onclick="saveStatus('${String(o.id).replace(/'/g,'')}','${custom?'custom':'artwork'}')">Speichern</button>${custom&&o.reference_image_path?`<button class="secondary" onclick="viewReference('${esc(o.reference_image_path)}')">Referenzbild</button>`:''}</td></tr>`}).join('')+'</tbody></table></div>'}
-window.saveStatus=async(id,type)=>{const status=$('st-'+id).value;const {error}=await db.from('orders').update({status}).eq('id',id);say(error?'Status konnte nicht gespeichert werden: '+error.message:'Status gespeichert.');if(!error)loadOrders()};window.viewReference=async(path)=>{const {data,error}=await db.storage.from('custom-references').createSignedUrl(path,300);if(error){say('Bild konnte nicht geöffnet werden: '+error.message);return}window.open(data.signedUrl,'_blank','noopener')};$('reloadOrders').onclick=loadOrders;
-async function loadCategories(){const {data,error}=await db.from('categories').select('*').order('name');if(error){say('Kategorien: '+error.message);return}categories=data||[];$('artCategory').innerHTML=categories.map(c=>`<option value="${esc(c.id)}">${esc(c.name)}</option>`).join('');$('catList').innerHTML=categories.map(c=>`<p>${esc(c.name)} <button class="secondary" onclick="deleteCategory('${String(c.id).replace(/'/g,'')}')">Löschen</button></p>`).join('')||'Noch keine Kategorien.'} $('catForm').onsubmit=async e=>{e.preventDefault();const {error}=await db.from('categories').insert({name:$('catName').value.trim()});if(error){say(error.message);return}$('catName').value='';await loadCategories();say('Kategorie hinzugefügt.')};window.deleteCategory=async id=>{if(!confirm('Kategorie löschen?'))return;const {error}=await db.from('categories').delete().eq('id',id);say(error?error.message:'Kategorie gelöscht.');await loadCategories()};
-async function loadArtworks(){const {data,error}=await db.from('artworks').select('*').order('created_at',{ascending:false});if(error){$('artList').textContent='Fehler: '+error.message;return}$('artList').innerHTML=(data||[]).map(a=>`<div class="card"><img class="thumb" src="${esc(a.image_url||'')}" alt=""><b>${esc(a.title)}</b> · ${money(a.price)} · ${a.published?'öffentlich':'Entwurf'}<div>${esc(a.description||'')}</div><div class="actions"><button onclick="editArt('${String(a.id).replace(/'/g,'')}')">Bearbeiten</button><button class="secondary" onclick="toggleArt('${String(a.id).replace(/'/g,'')}',${!a.published})">${a.published?'Verbergen':'Veröffentlichen'}</button><button class="secondary" onclick="deleteArt('${String(a.id).replace(/'/g,'')}')">Löschen</button></div></div>`).join('')||'Noch keine Gemälde.'}
-window.editArt=async id=>{const {data,error}=await db.from('artworks').select('*').eq('id',id).single();if(error){say(error.message);return}$('artId').value=data.id;$('artTitle').value=data.title||'';$('artPrice').value=data.price??'';$('artCategory').value=data.category_id||'';$('artWidth').value=data.width_cm??'';$('artHeight').value=data.height_cm??'';$('artDescription').value=data.description||'';$('artPublished').checked=!!data.published;window.scrollTo({top:0,behavior:'smooth'})};window.toggleArt=async(id,published)=>{const {error}=await db.from('artworks').update({published}).eq('id',id);say(error?error.message:'Sichtbarkeit geändert.');loadArtworks()};window.deleteArt=async id=>{if(!confirm('Gemälde wirklich löschen?'))return;const {error}=await db.from('artworks').delete().eq('id',id);say(error?error.message:'Gemälde gelöscht.');loadArtworks()};$('artReset').onclick=()=>{$('artForm').reset();$('artId').value=''};$('artForm').onsubmit=async e=>{e.preventDefault();say('Speichere …');let image_url=null;const file=$('artFile').files[0];if(file){const safe=file.name.replace(/[^a-zA-Z0-9._-]/g,'_');const path=Date.now()+'-'+crypto.randomUUID()+'-'+safe;const up=await db.storage.from('artworks').upload(path,file,{upsert:false});if(up.error){say('Upload fehlgeschlagen: '+up.error.message);return}image_url=db.storage.from('artworks').getPublicUrl(path).data.publicUrl}else if($('artId').value){const old=await db.from('artworks').select('image_url').eq('id',$('artId').value).single();image_url=old.data?.image_url}if(!image_url){say('Bitte ein Bild auswählen.');return}const row={title:$('artTitle').value.trim(),price:$('artPrice').value===''?null:Number($('artPrice').value),category_id:$('artCategory').value||null,width_cm:$('artWidth').value===''?null:Number($('artWidth').value),height_cm:$('artHeight').value===''?null:Number($('artHeight').value),description:$('artDescription').value,published:$('artPublished').checked,image_url};const id=$('artId').value;const result=id?await db.from('artworks').update(row).eq('id',id):await db.from('artworks').insert(row);if(result.error){say('Speichern fehlgeschlagen: '+result.error.message);return}$('artForm').reset();$('artId').value='';say('Gemälde gespeichert.');await loadArtworks()};db.auth.onAuthStateChange((_event,session)=>{if(session)init()});init();
-</script></body></html>
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Olga Morlang — Панель администратора</title>
+
+<style>
+:root {
+    --bg: #101b35;
+    --panel: #18294a;
+    --gold: #e6c27a;
+    --line: #405071;
+    --text: #f7f0e4;
+    --muted: #c9d4e8;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font: 15px Arial, sans-serif;
+}
+
+main {
+    max-width: 1200px;
+    margin: auto;
+    padding: 22px;
+}
+
+h1, h2, h3 {
+    font-family: Georgia, serif;
+    font-weight: normal;
+}
+
+h1 {
+    color: var(--gold);
+}
+
+.card {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 18px;
+    margin: 14px 0;
+}
+
+label {
+    display: grid;
+    gap: 7px;
+    margin: 12px 0;
+}
+
+input, textarea, select {
+    width: 100%;
+    padding: 11px;
+    border-radius: 8px;
+    border: 1px solid var(--line);
+    background: var(--bg);
+    color: white;
+    font: inherit;
+}
+
+input[type="checkbox"] {
+    width: auto;
+}
+
+input[type="file"] {
+    max-width: 100%;
+}
+
+textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+button {
+    background: var(--gold);
+    color: #182039;
+    border: 0;
+    border-radius: 8px;
+    padding: 10px 14px;
+    cursor: pointer;
+    font-weight: bold;
+    margin: 4px 4px 4px 0;
+}
+
+button:hover {
+    opacity: .88;
+}
+
+.secondary {
+    background: #293b5c;
+    color: white;
+    border: 1px solid var(--line);
+}
+
+.danger {
+    background: #8e3030;
+    color: white;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.msg {
+    white-space: pre-wrap;
+    color: #ffe0a0;
+    overflow-wrap: anywhere;
+}
+
+.small {
+    font-size: 12px;
+    color: var(--muted);
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+}
+
+.tablewrap {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    text-align: left;
+    padding: 10px;
+    border-bottom: 1px solid var(--line);
+    vertical-align: top;
+}
+
+.badge {
+    display: inline-block;
+    border: 1px solid var(--gold);
+    border-radius: 20px;
+    padding: 4px 8px;
+    color: var(--gold);
+    font-size: 12px;
+}
+
+.artwork-card {
+    display: grid;
+    grid-template-columns: 130px minmax(0, 1fr);
+    gap: 16px;
+    align-items: start;
+}
+
+.artwork-main-image {
+    width: 130px;
+    height: 130px;
+    object-fit: contain;
+    background: #0c1529;
+    border-radius: 8px;
+}
+
+.photo-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin: 12px 0;
+}
+
+.photo-item {
+    width: 125px;
+    border: 1px solid var(--line);
+    padding: 7px;
+    border-radius: 8px;
+    background: #101b35;
+}
+
+.photo-item img {
+    width: 100%;
+    height: 100px;
+    object-fit: contain;
+}
+
+.photo-item button {
+    width: 100%;
+    font-size: 12px;
+    margin-top: 6px;
+}
+
+.photo-item .order-buttons {
+    display: flex;
+    gap: 3px;
+}
+
+.photo-item .order-buttons button {
+    padding: 6px;
+}
+
+.photo-label {
+    font-size: 12px;
+    color: var(--muted);
+    overflow-wrap: anywhere;
+}
+
+.notice {
+    padding: 12px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    margin: 10px 0;
+    color: var(--muted);
+}
+
+.actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+
+@media (max-width: 600px) {
+    main {
+        padding: 12px;
+    }
+
+    .artwork-card {
+        grid-template-columns: 1fr;
+    }
+
+    .artwork-main-image {
+        width: 100%;
+        height: 220px;
+    }
+}
+</style>
+</head>
+
+<body>
+<main>
+
+<h1>Olga Morlang — Администратор</h1>
+
+<p class="small">
+Закрытая панель управления сайтом.
+</p>
+
+<section id="login" class="card">
+    <h2>Вход</h2>
+
+    <form id="loginForm">
+        <label>
+            Электронная почта
+            <input
+                id="email"
+                type="email"
+                required
+                autocomplete="username"
+            >
+        </label>
+
+        <label>
+            Пароль
+            <input
+                id="password"
+                type="password"
+                required
+                autocomplete="current-password"
+            >
+        </label>
+
+        <button type="submit">Войти</button>
+    </form>
+
+    <p id="loginMsg" class="msg"></p>
+</section>
+
+<div id="dashboard" class="hidden">
+
+    <section class="card">
+        <div class="tabs">
+            <button data-tab="orders">Заказы</button>
+            <button data-tab="artworks">Картины</button>
+            <button data-tab="categories">Категории</button>
+            <button id="logout" class="secondary">Выйти</button>
+        </div>
+
+        <p id="status" class="msg"></p>
+    </section>
+
+    <!-- ЗАКАЗЫ -->
+
+    <section id="orders" class="card">
+        <h2>Заказы и индивидуальные запросы</h2>
+
+        <button id="reloadOrders" class="secondary">
+            Обновить заказы
+        </button>
+
+        <div id="ordersList"></div>
+    </section>
+
+    <!-- КАРТИНЫ -->
+
+    <section id="artworks" class="card hidden">
+
+        <h2>Управление картинами</h2>
+
+        <form id="artForm">
+
+            <input id="artId" type="hidden">
+
+            <div class="grid">
+
+                <label>
+                    Название картины
+                    <input id="artTitle" required>
+                </label>
+
+                <label>
+                    Цена (€)
+                    <input
+                        id="artPrice"
+                        type="number"
+                        min="0"
+                        step="0.01"
+                    >
+                </label>
+
+                <label>
+                    Категория
+                    <select id="artCategory">
+                        <option value="">Без категории</option>
+                    </select>
+                </label>
+
+                <label>
+                    Главная фотография
+                    <input
+                        id="artFile"
+                        type="file"
+                        accept="image/jpeg,image/png,image/webp,image/gif"
+                    >
+                    <span class="small">
+                        Для новой картины обязательно.
+                        Для существующей можно оставить пустым.
+                    </span>
+                </label>
+
+                <label>
+                    Ширина (см)
+                    <input id="artWidth" type="number" min="0">
+                </label>
+
+                <label>
+                    Высота (см)
+                    <input id="artHeight" type="number" min="0">
+                </label>
+
+            </div>
+
+            <label>
+                Описание картины
+                <textarea id="artDescription"></textarea>
+            </label>
+
+            <label>
+                <span>
+                    <input
+                        id="artPublished"
+                        type="checkbox"
+                    >
+                    Опубликовать картину на сайте
+                </span>
+            </label>
+
+            <hr>
+
+            <h3>Дополнительные фотографии</h3>
+
+            <p class="small">
+                Выбери сразу несколько фотографий одной картины.
+                Они будут привязаны к этой картине, а не станут
+                отдельными товарами.
+            </p>
+
+            <label>
+                Добавить фотографии
+                <input
+                    id="extraFiles"
+                    type="file"
+                    accept="image/jpeg,image/png,image/webp,image/gif"
+                    multiple
+                >
+            </label>
+
+            <div class="notice">
+                Уже сохранённые фотографии можно просматривать,
+                удалять и переставлять местами. Первая фотография
+                в списке дополнительных изображений будет первой
+                после главной фотографии.
+            </div>
+
+            <h3>Сохранённые дополнительные фотографии</h3>
+            <div id="savedPhotos" class="photo-grid"></div>
+
+            <h3>Новые фотографии</h3>
+            <div id="newPhotos" class="photo-grid"></div>
+
+            <button type="submit">
+                Сохранить картину
+            </button>
+
+            <button
+                type="button"
+                id="artReset"
+                class="secondary"
+            >
+                Очистить форму
+            </button>
+
+        </form>
+
+        <hr>
+
+        <h2>Существующие картины</h2>
+        <div id="artList"></div>
+
+    </section>
+
+    <!-- КАТЕГОРИИ -->
+
+    <section id="categories" class="card hidden">
+
+        <h2>Категории картин</h2>
+
+        <form id="catForm">
+            <label>
+                Название категории
+                <input id="catName" required>
+            </label>
+
+            <button type="submit">
+                Добавить категорию
+            </button>
+        </form>
+
+        <div id="catList"></div>
+
+    </section>
+
+</div>
+
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+"use strict";
+
+/*
+ * Подключение к существующему проекту Supabase.
+ * Publishable key предназначен для клиентского приложения.
+ * Никогда не вставляй сюда service_role key.
+ */
+
+const SUPABASE_URL =
+    "https://lcjtsyxeklltyoxovvzr.supabase.co";
+
+const SUPABASE_KEY =
+    "sb_publishable_Z5y2_ni_klXhEFU7I-OljA_JZcsyCVJ";
+
+const db = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
+
+const $ = id => document.getElementById(id);
+
+let categories = [];
+let savedExtraImages = [];
+let pendingExtraFiles = [];
+let currentMainImage = null;
+
+const ALLOWED_IMAGE_TYPES = [
+    "image/jpeg",
+    "image/png",
+    "image/webp",
+    "image/gif"
+];
+
+const MAX_IMAGE_SIZE = 10 * 1024 * 1024;
+
+function say(message) {
+    $("status").textContent = message;
+}
+
+function escapeHTML(value = "") {
+    return String(value).replace(/[&<>"']/g, char => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+    })[char]);
+}
+
+function money(value) {
+    if (value === null || value === undefined || value === "") {
+        return "—";
+    }
+
+    return new Intl.NumberFormat("ru-RU", {
+        style: "currency",
+        currency: "EUR"
+    }).format(Number(value) || 0);
+}
+
+function makeSafeId(value) {
+    return String(value).replace(/[^a-zA-Z0-9_-]/g, "");
+}
+
+function validateImage(file) {
+    if (!file) {
+        throw new Error("Файл не выбран.");
+    }
+
+    if (!ALLOWED_IMAGE_TYPES.includes(file.type)) {
+        throw new Error(
+            "Разрешены JPG, PNG, WEBP и GIF."
+        );
+    }
+
+    if (file.size > MAX_IMAGE_SIZE) {
+        throw new Error(
+            "Размер одной фотографии не должен превышать 10 МБ."
+        );
+    }
+}
+
+/* ---------------- ВХОД И ВЫХОД ---------------- */
+
+$("loginForm").addEventListener("submit", async event => {
+    event.preventDefault();
+
+    $("loginMsg").textContent = "Выполняется вход…";
+
+    const { error } = await db.auth.signInWithPassword({
+        email: $("email").value.trim(),
+        password: $("password").value
+    });
+
+    if (error) {
+        $("loginMsg").textContent =
+            "Ошибка входа: " + error.message;
+        return;
+    }
+
+    await init();
+});
+
+async function init() {
+    const {
+        data: { user },
+        error: userError
+    } = await db.auth.getUser();
+
+    if (userError || !user) {
+        $("login").classList.remove("hidden");
+        $("dashboard").classList.add("hidden");
+        return;
+    }
+
+    const {
+        data: allowed,
+        error
+    } = await db.rpc("is_admin");
+
+    if (error || allowed !== true) {
+        $("loginMsg").textContent =
+            "У этого аккаунта нет прав администратора.";
+
+        await db.auth.signOut();
+        return;
+    }
+
+    $("login").classList.add("hidden");
+    $("dashboard").classList.remove("hidden");
+
+    await loadCategories();
+    await loadOrders();
+    await loadArtworks();
+}
+
+$("logout").addEventListener("click", async () => {
+    await db.auth.signOut();
+    location.reload();
+});
+
+document.querySelectorAll("[data-tab]").forEach(button => {
+    button.addEventListener("click", () => {
+        document.querySelectorAll("#dashboard > section")
+            .forEach(section => section.classList.add("hidden"));
+
+        $(button.dataset.tab).classList.remove("hidden");
+    });
+});
+
+/* ---------------- ЗАГРУЗКА ФОТОГРАФИЙ ---------------- */
+
+async function uploadImage(file) {
+    validateImage(file);
+
+    const extension = file.name.includes(".")
+        ? file.name.split(".").pop().toLowerCase()
+        : "jpg";
+
+    const allowedExtensions = [
+        "jpg", "jpeg", "png", "webp", "gif"
+    ];
+
+    const safeExtension = allowedExtensions.includes(extension)
+        ? extension
+        : "jpg";
+
+    const path =
+        "paintings/" +
+        crypto.randomUUID() +
+        "." +
+        safeExtension;
+
+    const { data, error } = await db.storage
+        .from("artworks")
+        .upload(path, file, {
+            cacheControl: "3600",
+            upsert: false,
+            contentType: file.type
+        });
+
+    if (error) {
+        throw new Error(
+            "Не удалось загрузить фотографию: " + error.message
+        );
+    }
+
+    const { data: publicData } = db.storage
+        .from("artworks")
+        .getPublicUrl(data.path);
+
+    return publicData.publicUrl;
+}
+
+/* ---------------- ДОПОЛНИТЕЛЬНЫЕ ФОТО ---------------- */
+
+function normalizeExtraImages(value) {
+    if (!Array.isArray(value)) {
+        return [];
+    }
+
+    return value.filter(item =>
+        typeof item === "string" &&
+        item.trim() !== ""
+    );
+}
+
+function renderSavedPhotos() {
+    const box = $("savedPhotos");
+    box.replaceChildren();
+
+    if (savedExtraImages.length === 0) {
+        box.innerHTML =
+            '<p class="small">Дополнительных фотографий пока нет.</p>';
+        return;
+    }
+
+    savedExtraImages.forEach((url, index) => {
+        const item = document.createElement("div");
+        item.className = "photo-item";
+
+        const image = document.createElement("img");
+        image.src = url;
+        image.alt = "Дополнительная фотография " + (index + 1);
+
+        const label = document.createElement("div");
+        label.className = "photo-label";
+        label.textContent = "Фото " + (index + 1);
+
+        const controls = document.createElement("div");
+        controls.className = "order-buttons";
+
+        const left = document.createElement("button");
+        left.type = "button";
+        left.className = "secondary";
+        left.textContent = "←";
+        left.title = "Переместить влево";
+        left.disabled = index === 0;
+
+        left.addEventListener("click", () => {
+            if (index === 0) return;
+
+            [
+                savedExtraImages[index - 1],
+                savedExtraImages[index]
+            ] = [
+                savedExtraImages[index],
+                savedExtraImages[index - 1]
+            ];
+
+            renderSavedPhotos();
+        });
+
+        const right = document.createElement("button");
+        right.type = "button";
+        right.className = "secondary";
+        right.textContent = "→";
+        right.title = "Переместить вправо";
+        right.disabled =
+            index === savedExtraImages.length - 1;
+
+        right.addEventListener("click", () => {
+            if (index >= savedExtraImages.length - 1) return;
+
+            [
+                savedExtraImages[index],
+                savedExtraImages[index + 1]
+            ] = [
+                savedExtraImages[index + 1],
+                savedExtraImages[index]
+            ];
+
+            renderSavedPhotos();
+        });
+
+        controls.append(left, right);
+
+        const remove = document.createElement("button");
+        remove.type = "button";
+        remove.className = "danger";
+        remove.textContent = "Убрать из картины";
+
+        remove.addEventListener("click", () => {
+            savedExtraImages.splice(index, 1);
+            renderSavedPhotos();
+        });
+
+        item.append(image, label, controls, remove);
+        box.appendChild(item);
+    });
+}
+
+function renderNewPhotos() {
+    const box = $("newPhotos");
+    box.replaceChildren();
+
+    if (pendingExtraFiles.length === 0) {
+        box.innerHTML =
+            '<p class="small">Новых фотографий не выбрано.</p>';
+        return;
+    }
+
+    pendingExtraFiles.forEach((file, index) => {
+        const item = document.createElement("div");
+        item.className = "photo-item";
+
+        const image = document.createElement("img");
+        const objectUrl = URL.createObjectURL(file);
+        image.src = objectUrl;
+        image.alt = file.name;
+
+        image.onload = () => URL.revokeObjectURL(objectUrl);
+
+        const label = document.createElement("div");
+        label.className = "photo-label";
+        label.textContent = file.name;
+
+        const controls = document.createElement("div");
+        controls.className = "order-buttons";
+
+        const left = document.createElement("button");
+        left.type = "button";
+        left.className = "secondary";
+        left.textContent = "←";
+        left.disabled = index === 0;
+
+        left.addEventListener("click", () => {
+            if (index === 0) return;
+
+            [
+                pendingExtraFiles[index - 1],
+                pendingExtraFiles[index]
+            ] = [
+                pendingExtraFiles[index],
+                pendingExtraFiles[index - 1]
+            ];
+
+            renderNewPhotos();
+        });
+
+        const right = document.createElement("button");
+        right.type = "button";
+        right.className = "secondary";
+        right.textContent = "→";
+        right.disabled =
+            index === pendingExtraFiles.length - 1;
+
+        right.addEventListener("click", () => {
+            if (index >= pendingExtraFiles.length - 1) return;
+
+            [
+                pendingExtraFiles[index],
+                pendingExtraFiles[index + 1]
+            ] = [
+                pendingExtraFiles[index + 1],
+                pendingExtraFiles[index]
+            ];
+
+            renderNewPhotos();
+        });
+
+        controls.append(left, right);
+
+        const remove = document.createElement("button");
+        remove.type = "button";
+        remove.className = "danger";
+        remove.textContent = "Убрать";
+
+        remove.addEventListener("click", () => {
+            pendingExtraFiles.splice(index, 1);
+            renderNewPhotos();
+        });
+
+        item.append(image, label, controls, remove);
+        box.appendChild(item);
+    });
+}
+
+$("extraFiles").addEventListener("change", event => {
+    const selected = Array.from(event.target.files || []);
+
+    try {
+        selected.forEach(validateImage);
+
+        pendingExtraFiles.push(...selected);
+
+        renderNewPhotos();
+
+        $("status").textContent =
+            "Выбрано дополнительных фотографий: " +
+            pendingExtraFiles.length;
+    } catch (error) {
+        alert(error.message);
+    }
+
+    // Позволяет выбрать тот же файл ещё раз после удаления.
+    event.target.value = "";
+});
+
+/* ---------------- КАТЕГОРИИ ---------------- */
+
+async function loadCategories() {
+    const { data, error } = await db
+        .from("categories")
+        .select("*")
+        .order("name");
+
+    if (error) {
+        say("Не удалось загрузить категории: " + error.message);
+        return;
+    }
+
+    categories = data || [];
+
+    const currentValue = $("artCategory").value;
+
+    $("artCategory").innerHTML =
+        '<option value="">Без категории</option>' +
+        categories.map(category =>
+            `<option value="${escapeHTML(category.id)}">${
+                escapeHTML(category.name)
+            }</option>`
+        ).join("");
+
+    if (categories.some(category =>
+        String(category.id) === currentValue
+    )) {
+        $("artCategory").value = currentValue;
+    }
+
+    $("catList").innerHTML = categories.map(category => `
+        <div class="card">
+            <b>${escapeHTML(category.name)}</b>
+            <button
+                class="danger"
+                onclick="deleteCategory('${makeSafeId(category.id)}')"
+            >
+                Удалить
+            </button>
+        </div>
+    `).join("") || "Категорий пока нет.";
+}
+
+$("catForm").addEventListener("submit", async event => {
+    event.preventDefault();
+
+    const name = $("catName").value.trim();
+
+    if (!name) return;
+
+    const { error } = await db
+        .from("categories")
+        .insert({ name });
+
+    if (error) {
+        say("Ошибка добавления категории: " + error.message);
+        return;
+    }
+
+    $("catName").value = "";
+
+    await loadCategories();
+
+    say("Категория добавлена.");
+});
+
+window.deleteCategory = async id => {
+    if (!confirm(
+        "Удалить категорию? Сначала убедись, что она не нужна картинам."
+    )) {
+        return;
+    }
+
+    const { error } = await db
+        .from("categories")
+        .delete()
+        .eq("id", id);
+
+    if (error) {
+        say("Не удалось удалить категорию: " + error.message);
+        return;
+    }
+
+    await loadCategories();
+
+    say("Категория удалена.");
+};
+
+/* ---------------- КАРТИНЫ ---------------- */
+
+async function loadArtworks() {
+    const { data, error } = await db
+        .from("artworks")
+        .select("*")
+        .order("created_at", { ascending: false });
+
+    if (error) {
+        $("artList").textContent =
+            "Ошибка загрузки картин: " + error.message;
+        return;
+    }
+
+    $("artList").innerHTML = (data || []).map(artwork => {
+        const extras = normalizeExtraImages(artwork.extra_images);
+
+        return `
+            <div class="card artwork-card">
+                <img
+                    class="artwork-main-image"
+                    src="${escapeHTML(artwork.image_url || "")}"
+                    alt="${escapeHTML(artwork.title || "Картина")}"
+                >
+
+                <div>
+                    <h3>${escapeHTML(artwork.title || "Без названия")}</h3>
+
+                    <p>${money(artwork.price)}</p>
+
+                    <p class="small">
+                        ${artwork.published ? "Опубликована" : "Черновик"}
+                        · Дополнительных фото: ${extras.length}
+                    </p>
+
+                    <p>${escapeHTML(artwork.description || "")}</p>
+
+                    <div class="actions">
+                        <button
+                            onclick="editArt('${makeSafeId(artwork.id)}')"
+                        >
+                            Редактировать
+                        </button>
+
+                        <button
+                            class="secondary"
+                            onclick="toggleArt(
+                                '${makeSafeId(artwork.id)}',
+                                ${!artwork.published}
+                            )"
+                        >
+                            ${artwork.published ? "Скрыть" : "Опубликовать"}
+                        </button>
+
+                        <button
+                            class="danger"
+                            onclick="deleteArt('${makeSafeId(artwork.id)}')"
+                        >
+                            Удалить картину
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `;
+    }).join("") || "Картин пока нет.";
+}
+
+window.editArt = async id => {
+    const { data, error } = await db
+        .from("artworks")
+        .select("*")
+        .eq("id", id)
+        .single();
+
+    if (error) {
+        say("Не удалось открыть картину: " + error.message);
+        return;
+    }
+
+    $("artId").value = data.id;
+    $("artTitle").value = data.title || "";
+    $("artPrice").value = data.price ?? "";
+    $("artCategory").value = data.category_id || "";
+    $("artWidth").value = data.width_cm ?? "";
+    $("artHeight").value = data.height_cm ?? "";
+    $("artDescription").value = data.description || "";
+    $("artPublished").checked = !!data.published;
+
+    currentMainImage = data.image_url || null;
+
+    savedExtraImages = normalizeExtraImages(data.extra_images);
+    pendingExtraFiles = [];
+
+    $("artFile").value = "";
+    $("extraFiles").value = "";
+
+    renderSavedPhotos();
+    renderNewPhotos();
+
+    $("artworks").classList.remove("hidden");
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+
+    say("Картина открыта для редактирования.");
+};
+
+window.toggleArt = async (id, published) => {
+    const { error } = await db
+        .from("artworks")
+        .update({ published })
+        .eq("id", id);
+
+    if (error) {
+        say("Не удалось изменить публикацию: " + error.message);
+        return;
+    }
+
+    say(published
+        ? "Картина опубликована."
+        : "Картина скрыта."
+    );
+
+    await loadArtworks();
+};
+
+window.deleteArt = async id => {
+    if (!confirm(
+        "Удалить картину из базы данных? Это действие нельзя отменить."
+    )) {
+        return;
+    }
+
+    const { error } = await db
+        .from("artworks")
+        .delete()
+        .eq("id", id);
+
+    if (error) {
+        say("Не удалось удалить картину: " + error.message);
+        return;
+    }
+
+    say("Картина удалена из базы данных.");
+
+    await loadArtworks();
+};
+
+function resetArtworkForm() {
+    $("artForm").reset();
+
+    $("artId").value = "";
+
+    currentMainImage = null;
+    savedExtraImages = [];
+    pendingExtraFiles = [];
+
+    renderSavedPhotos();
+    renderNewPhotos();
+
+    say("Форма очищена.");
+}
+
+$("artReset").addEventListener("click", resetArtworkForm);
+
+$("artForm").addEventListener("submit", async event => {
+    event.preventDefault();
+
+    const submitButton =
+        $("artForm").querySelector('button[type="submit"]');
+
+    submitButton.disabled = true;
+
+    try {
+        say("Сохраняем картину…");
+
+        const id = $("artId").value;
+        const mainFile = $("artFile").files[0];
+
+        let image_url = currentMainImage;
+
+        if (mainFile) {
+            say("Загружаем главную фотографию…");
+            image_url = await uploadImage(mainFile);
+        }
+
+        if (!image_url) {
+            throw new Error(
+                "Выбери главную фотографию картины."
+            );
+        }
+
+        const uploadedExtraUrls = [];
+
+        for (let index = 0;
+             index < pendingExtraFiles.length;
+             index++) {
+
+            say(
+                "Загружаем дополнительную фотографию " +
+                (index + 1) +
+                " из " +
+                pendingExtraFiles.length +
+                "…"
+            );
+
+            const url = await uploadImage(
+                pendingExtraFiles[index]
+            );
+
+            uploadedExtraUrls.push(url);
+        }
+
+        const allExtraImages = [
+            ...savedExtraImages,
+            ...uploadedExtraUrls
+        ];
+
+        const row = {
+            title: $("artTitle").value.trim(),
+
+            price: $("artPrice").value === ""
+                ? null
+                : Number($("artPrice").value),
+
+            category_id: $("artCategory").value || null,
+
+            width_cm: $("artWidth").value === ""
+                ? null
+                : Number($("artWidth").value),
+
+            height_cm: $("artHeight").value === ""
+                ? null
+                : Number($("artHeight").value),
+
+            description: $("artDescription").value.trim(),
+
+            published: $("artPublished").checked,
+
+            image_url: image_url,
+
+            extra_images: allExtraImages
+        };
+
+        let result;
+
+        if (id) {
+            result = await db
+                .from("artworks")
+                .update(row)
+                .eq("id", id);
+        } else {
+            result = await db
+                .from("artworks")
+                .insert(row);
+        }
+
+        if (result.error) {
+            throw new Error(
+                "Ошибка сохранения в базе данных: " +
+                result.error.message
+            );
+        }
+
+        resetArtworkForm();
+
+        say(
+            "Картина сохранена. Дополнительных фотографий: " +
+            allExtraImages.length +
+            "."
+        );
+
+        await loadArtworks();
+
+    } catch (error) {
+        console.error(error);
+
+        say(
+            "Не удалось сохранить картину: " +
+            (error.message || String(error))
+        );
+
+    } finally {
+        submitButton.disabled = false;
+    }
+});
+
+/* ---------------- ЗАКАЗЫ ---------------- */
+
+async function loadOrders() {
+    const box = $("ordersList");
+
+    box.textContent = "Загружаем заказы…";
+
+    const { data, error } = await db
+        .from("orders")
+        .select("*")
+        .order("created_at", { ascending: false });
+
+    if (error) {
+        box.textContent =
+            "Не удалось загрузить заказы: " + error.message;
+        return;
+    }
+
+    if (!data || data.length === 0) {
+        box.textContent = "Заказов пока нет.";
+        return;
+    }
+
+    const statuses = [
+        ["new", "Новый"],
+        ["pending", "В обработке"],
+        ["confirmed", "Подтверждён"],
+        ["shipped", "Отправлен"],
+        ["completed", "Завершён"],
+        ["cancelled", "Отменён"]
+    ];
+
+    box.innerHTML = `
+        <div class="tablewrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Дата</th>
+                        <th>Покупатель</th>
+                        <th>Детали</th>
+                        <th>Сумма</th>
+                        <th>Статус</th>
+                        <th>Действия</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${data.map(order => {
+                        const custom = order.order_type === "custom";
+
+                        const items = Array.isArray(order.items)
+                            ? order.items.map(item =>
+                                escapeHTML(
+                                    item.title ||
+                                    item.name ||
+                                    item.artwork_title ||
+                                    "Картина"
+                                )
+                            ).join("<br>")
+                            : "";
+
+                        const details = custom
+                            ? `
+                                <b>Индивидуальный заказ</b><br>
+                                ${escapeHTML(order.custom_description || "—")}
+                                <br>Размер: ${escapeHTML(order.custom_size || "—")}
+                                <br>Бюджет: ${money(order.custom_budget)}
+                                ${order.reference_image_path
+                                    ? "<br><span class='small'>Есть референс-фотография</span>"
+                                    : ""}
+                            `
+                            : items || "—";
+
+                        const date = order.created_at
+                            ? new Date(order.created_at).toLocaleString("ru-RU")
+                            : "—";
+
+                        const statusOptions = statuses.map(
+                            ([value, label]) => `
+                                <option
+                                    value="${value}"
+                                    ${order.status === value ? "selected" : ""}
+                                >${label}</option>
+                            `
+                        ).join("");
+
+                        return `
+                            <tr>
+                                <td>
+                                    ${escapeHTML(date)}
+                                    <br>
+                                    <span class="badge">
+                                        ${custom ? "Индивидуальный" : "Обычный"}
+                                    </span>
+                                </td>
+
+                                <td>
+                                    ${escapeHTML(order.buyer_name || "—")}
+                                    <br>
+                                    ${escapeHTML(order.buyer_email || "—")}
+                                    <br>
+                                    <span class="small">
+                                        ${escapeHTML(
+                                            [
+                                                order.buyer_city,
+                                                order.buyer_country
+                                            ].filter(Boolean).join(", ")
+                                        )}
+                                    </span>
+                                </td>
+
+                                <td>
+                                    ${details}
+                                    <br>
+                                    <span class="small">
+                                        ${escapeHTML(order.buyer_comment || "")}
+                                    </span>
+                                </td>
+
+                                <td>
+                                    ${custom ? "—" : money(order.total)}
+                                </td>
+
+                                <td>
+                                    <select id="st-${makeSafeId(order.id)}">
+                                        ${statusOptions}
+                                    </select>
+                                </td>
+
+                                <td>
+                                    <button
+                                        onclick="saveOrderStatus(
+                                            '${makeSafeId(order.id)}'
+                                        )"
+                                    >
+                                        Сохранить статус
+                                    </button>
+
+                                    ${custom && order.reference_image_path
+                                        ? `
+                                            <button
+                                                class="secondary"
+                                                onclick="viewReference(
+                                                    '${escapeHTML(order.reference_image_path)}'
+                                                )"
+                                            >
+                                                Открыть фото
+                                            </button>
+                                        `
+                                        : ""}
+                                </td>
+                            </tr>
+                        `;
+                    }).join("")}
+                </tbody>
+            </table>
+        </div>
+    `;
+}
+
+window.saveOrderStatus = async id => {
+    const statusElement = $("st-" + id);
+
+    if (!statusElement) return;
+
+    const { error } = await db
+        .from("orders")
+        .update({ status: statusElement.value })
+        .eq("id", id);
+
+    if (error) {
+        say("Не удалось сохранить статус: " + error.message);
+        return;
+    }
+
+    say("Статус заказа сохранён.");
+
+    await loadOrders();
+};
+
+window.viewReference = async path => {
+    const { data, error } = await db.storage
+        .from("custom-references")
+        .createSignedUrl(path, 300);
+
+    if (error) {
+        say(
+            "Не удалось открыть референс-фотографию: " +
+            error.message
+        );
+        return;
+    }
+
+    window.open(
+        data.signedUrl,
+        "_blank",
+        "noopener,noreferrer"
+    );
+};
+
+$("reloadOrders").addEventListener("click", loadOrders);
+
+/* ---------------- ЗАПУСК ---------------- */
+
+db.auth.onAuthStateChange((_event, session) => {
+    if (session) {
+        init();
+    }
+});
+
+init();
+
+</script>
+</body>
+</html>
